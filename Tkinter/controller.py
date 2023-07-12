@@ -1,19 +1,14 @@
 import sys
+sys.path.append('Views') # To add the Views path to the main Application.
 
-
-
-
-
-
+# Importing the files from the views folder
 from Views import main_page
 
 
 
 
-
-
 def calling_main_app():
-    pass
+    app_dashboard = main_page.main_page("Master" , 900 , 900)
 
 
 
