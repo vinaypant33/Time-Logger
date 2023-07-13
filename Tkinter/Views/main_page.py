@@ -4,14 +4,12 @@ import ttkbootstrap as btk
 from ctypes import windll
 import messagebox
 
-from tktooltip import ToolTip  # pip instakk tkinter-tooltip
-from idlelib.tooltip import Hovertip # have got this solution from itnernet and will cehck and udnerstand this later 
 
 
 # Importing Pre Made Modules : 
 import colors
 import styles 
-
+import tool_tip
 
 class main_page():
 
@@ -174,7 +172,6 @@ class main_page():
         self.open_close_button.configure(height=1 , width=2)
 
         # Binding the controls : 
-        # self.main_page.bind("<Enter>" , self.main_name)
         self.titlebar.bind("<Button-1>" , self.mouse_click)
         self.titlebar.bind("<B1-Motion>" , self.mouse_move)
         self.open_close_button.bind("<Enter>" , lambda event : self.button_enter_exit(master=self.open_close_button , color_name=colors.app_base))
@@ -207,20 +204,11 @@ class main_page():
 
         # Calling main App : 
         self.main_page.after(10, lambda: self.set_appwindow(self.main_page)) # To make the icon visible in the application
-        # self.regular_animation() # This will run after running the main app
 
-
-        # # This toop tip part is not working : 
-        # tooltip_text = "This is a tooltip message."
-        # tooltip = styles.ToolTip(self.settings_button, tooltip_text)
-
-        # self.tip = Balloon(self.main_page)
-        # self.tip.bind_widget(self.settings_button,balloonmsg="www.tutorialspoint.com")
-        # ToolTip(self.settings_button, msg="Settings", delay=0.50) # Form bbeing removed from the screen will check and implement later.
-
-        # settingstip = Hovertip(self.settings_button,'Settings' , hover_delay=500) 
-        # hometip = Hovertip(self.home_button ,'Home' ,hover_delay=500)
-        # self.main_page.after(100 , lambda : self.close_animation)
+        tool_tip.ToolTip(self.settings_button , "Settings" , colors.app_base ,  colors.hover_2)
+        tool_tip.ToolTip(self.open_close_button , "Open close Sidebar" , colors.app_base ,  colors.hover_2)
+        tool_tip.ToolTip(self.home_button , "Home" , colors.app_base ,  colors.hover_2)
+        tool_tip.ToolTip(self.analytics_button , "Analytics" , colors.app_base ,  colors.hover_2)
         self.main_page.mainloop()
         
 
