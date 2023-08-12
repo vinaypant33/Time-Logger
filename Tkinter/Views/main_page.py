@@ -63,8 +63,10 @@ class main_page():
 
     def min_max(self):
         # Will add the messagebox for the  user : Custom messagebox
-        self.button_x = self.max_button.winfo_x() + self.main_page.winfo_x() - 100
-        self.button_y = self.max_button.winfo_y() + self.main_page.winfo_y() + 30
+        # self.button_x = self.max_button.winfo_x() + self.main_page.winfo_x() - 100
+        # self.button_y = self.max_button.winfo_y() + self.main_page.winfo_y() + 30
+        self.button_x   = self.main_page.winfo_screenwidth() // 2 - 82
+        self.button_y = self.main_page.winfo_screenheight() //2 - 50
         messagebox.Messagebox(165 ,100 , self.button_x , self.button_y , "Maximize Button Disabled ")
         # if self.maximized  ==  False:
         #     self.maximized = True

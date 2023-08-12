@@ -27,7 +27,7 @@ class ToolTip():
         y_loc = self.widget.winfo_rooty() + 25
         self.tool_tip.geometry(f'+{x_loc}+{y_loc}')
         self.label  = tk.Label(self.tool_tip , text=self.text).pack()
-        self.widget.after(1000 , self.hide_through_delay)
+        self.widget.after(700 , self.hide_through_delay)
 
 
     def hide_tooltip(self, event):

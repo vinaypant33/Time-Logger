@@ -12,8 +12,6 @@ import  styles
 
 class Messagebox():
 
-
-
     def __init__(self , width , height , x_location ,  y_location , current_message) -> None:
         self.messagebox  = tk.Tk()
         self.width  = width 

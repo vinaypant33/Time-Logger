@@ -1,5 +1,6 @@
 import sys
 sys.path.append('Views') # To add the Views path to the main Application.
+sys.path.append('Tkinter')
 
 # Importing the files from the views folder
 from Views import main_page
@@ -8,7 +9,7 @@ from Views import main_page
 
 
 def calling_main_app():
-    app_dashboard = main_page.main_page("Master" , 900 , 900)
+    app_dashboard = main_page.main_page("Master" , 400 , 600)
 
 
 
