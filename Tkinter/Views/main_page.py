@@ -3,7 +3,7 @@ from tkinter import ttk
 import ttkbootstrap as btk
 from ctypes import windll
 import messagebox
-
+import ui_controls
 
 
 # Importing Pre Made Modules : 
@@ -107,6 +107,7 @@ class main_page():
             self.sidebar_opened  = False
             self.clock_part_timer_sidebar.configure(width=5 , background=colors.pruple_color)
             self.left_sidebar.configure(background=colors.sidebar_base)
+            ui_controls.right_sidebar_controls.delete_all(ui_controls.right_sidebar_controls)
             # self.left_sidebar.configure(background=colors.other_controls_base)
             # self.close_animation() ## Too Expensive function and don't Think animation will look good in this : Will do this in Logo
             self.open_close_button.configure(text='\u2716')
@@ -115,6 +116,7 @@ class main_page():
             self.sidebar_opened = True
             self.left_sidebar.configure(background=colors.other_controls_base)
             self.clock_part_timer_sidebar.configure(width=self.width -30 , background=colors.other_controls_base)
+            ui_controls.right_sidebar_controls()
             
             self.open_close_button.configure(text="\u2261")
 
