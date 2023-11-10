@@ -7,7 +7,8 @@ import fonts
 import  styles
 import colors
 import messagebox
-import time 
+import time
+import home
 
 
 
@@ -66,8 +67,10 @@ class Main_Page():
             self.main_app.overrideredirect(True)
             self.main_app.state('normal')
 
-    def make_deiconify(self):
-        pass
+    # Buttons and other items hover and leave functions :
+    def button_enter_leave(self , master , colorname):
+        master.configure(background = colorname)
+    
 
     def close_animation(self): # Obselete function will use alter in some other animation
         self.main_app.overrideredirect(False)
@@ -79,6 +82,22 @@ class Main_Page():
         if self.main_app.wm_state() =='normal' and self.main_app.overrideredirect() != True:
             self.main_app.overrideredirect(True)
             self.set_appwindow(self.main_app)
+
+    def open_close_sidebar(self):
+        if self.sidebar_opened == True : 
+            self.sidebar_opened = False
+            self.clock_frame.configure(width=10 , background=colors.pruple_color)
+            self.open_close_sidebar_button.configure(text='\u2716')
+            # will make a class for making and deleting controls and then make them again when the sidebar is opened again 
+        elif self.sidebar_opened == False: 
+            self.sidebar_opened = True
+            self.clock_frame.configure(width=self.width  - self.sidebar_width ,  background=colors.Black)
+            self.open_close_sidebar_button.configure(text="\u2261")
+
+    
+    # Function for loading the home page : 
+    def calling_home(self):
+        self.main_home = home.Home(600,400 , self.home_frame)
 
 
     # Inititalizing class : 
@@ -102,40 +121,64 @@ class Main_Page():
         # Base variables  :  min max 
         self.minimized  = False
         self.maximized  = False
-        self.sidebar_opened  =  False
+        self.sidebar_opened  =  True
         self.sidebar_width  = 30
 
         '''Defining the controls '''
         # Upper Titlebar Control Buttons  : 
         self.title_bar  = tk.Frame(self.main_app , height=25 , background=colors.app_base)
         self.title_bar.pack_propagate(0)
-        self.close_button  = tk.Button(self.title_bar,text='\u2716' , height=2 , width=2 , command=self.closing_app)
+        # Title Bar for the main app  : 
+        self.titlebar_label  = tk.Label(self.title_bar , text="Task Tracker")
+        self.close_button  = tk.Button(self.title_bar,text='\u2716' , height=2 , width=3 , command=self.closing_app)
         self.maximize_button  = tk.Button(self.title_bar , text=u"\U0001F5D6" , height=2 , width=3 , command=self.max_button_clicked) # Will set the command for the same to new form for the message box
         self.minimize_button = tk.Button(self.title_bar , text=u'\u2014' ,height=2 , width =3  , command = self.min_button_clicked)
         # Sidebar and sidebar and Frame : 
         self.sidebar_frame  = tk.Frame(self.main_app , height=self.height , width = self.sidebar_width, background=colors.Blue)
         self.sidebar_frame.pack_propagate(0)
+        # sidebar frame for the main clock and current task 
+        self.clock_frame = tk.Frame(self.main_app , height=self.height , width=self.width - self.sidebar_width)
+        self.clock_frame.pack_propagate(0)
+        # Frame for the Home Button and the main app : 
+        self.home_frame = tk.Frame(self.main_app , height=self.height , width=self.width - self.sidebar_width - 10 ,background=colors.Dark_Gray)
+        self.home_frame.pack_propagate(0) # This makea a seperate frame for the home button 
         # Sidebar Buttons : 
-        self.open_close_sidebar  = tk.Button(self.sidebar_frame , height = 1  , width = 3 , text="\u2261")
-        self.home_button = tk.Button(self.sidebar_frame , height=1 , width=3 , text="\U0001F3E0")
+        self.open_close_sidebar_button  = tk.Button(self.sidebar_frame , height = 1  , width = 3 , text="\u2261" , command=self.open_close_sidebar)
+        self.home_button = tk.Button(self.sidebar_frame , height=1 , width=3 , text="\U0001F3E0" , command=self.calling_home)
         self.analytics_button  = tk.Button(self.sidebar_frame , height=1,width=3,text="\U0001F4CA")
         self.settings_button  = tk.Button(self.sidebar_frame , height=1, width = 3 , text="\u2699")
         # Sidebar clock frame which will be minimized in the another buttons and classes 
-        self.clock_sidebar  = tk.Frame(self.main_app , height=self.height  , width=self.width - self.sidebar_width)
+
         # Configuring the pre defined controls  : 
         self.title_bar.configure(width=self.width)
+        self.titlebar_label.configure(background=colors.app_base , foreground=colors.White)
         # Configuring the close button with the native method and then the other buttons with the styles class : 
         self.close_button.configure(background=colors.sidebar_base ,  activebackground=colors.Red ,  activeforeground=colors.White  , foreground=colors.White , relief="flat" , bd = 0 )
         styles.styles.button_styles(self.maximize_button ,colors.Dark_Blue , colors.White , colors.Red , colors.Green)
         styles.styles.button_styles(self.minimize_button , colors.Dark_Blue , colors.White , colors.Red , colors.Green)
 
-        styles.styles.button_styles(self.open_close_sidebar , colors.dark_black , colors.White  , colors.app_base , colors.dark_blue_color)
+        styles.styles.button_styles(self.open_close_sidebar_button , colors.dark_black , colors.White  , colors.app_base , colors.dark_blue_color)
         styles.styles.button_styles(self.home_button , colors.dark_black , colors.White , colors.app_base , colors.dark_blue_color)
         styles.styles.button_styles(self.analytics_button , colors.dark_black , colors.White , colors.app_base , colors.dark_blue_color)
         styles.styles.button_styles(self.settings_button , colors.dark_black , colors.White , colors.app_base , colors.dark_blue_color)
+        self.clock_frame.configure(background=colors.Green)
         # Binding the controls : 
         self.title_bar.bind("<Button-1>" , self.mouse_click)
         self.title_bar.bind("<B1-Motion>" , self.mouse_move)
+        self.close_button.bind("<Enter>" , lambda enter : self.button_enter_leave(self.close_button , colors.Dark_Burgundy))
+        self.close_button.bind("<Leave>" , lambda enter  : self.button_enter_leave(self.close_button , colors.app_base))
+        self.maximize_button.bind("<Enter>" , lambda enter : self.button_enter_leave(self.maximize_button , colors.Dark_Burgundy))
+        self.maximize_button.bind("<Leave>" , lambda enter : self.button_enter_leave(self.maximize_button , colors.app_base))
+        self.minimize_button.bind("<Enter>" , lambda enter : self.button_enter_leave(self.minimize_button , colors.Dark_Burgundy))
+        self.minimize_button.bind("<Leave>" , lambda enter : self.button_enter_leave(self.minimize_button , colors.app_base))
+        self.open_close_sidebar_button.bind("<Enter>" , lambda enter : self.button_enter_leave(self.open_close_sidebar_button , colors.Dark_Burgundy))
+        self.open_close_sidebar_button.bind("<Leave>" , lambda enter : self.button_enter_leave(self.open_close_sidebar_button , colors.app_base))
+        self.home_button.bind("<Enter>" , lambda enter : self.button_enter_leave(self.home_button , colors.Dark_Burgundy))
+        self.home_button.bind("<Leave>" , lambda enter : self.button_enter_leave(self.home_button , colors.app_base))
+        self.analytics_button.bind("<Enter>" , lambda enter : self.button_enter_leave(self.analytics_button , colors.Dark_Burgundy))
+        self.analytics_button.bind("<Leave>" , lambda enter : self.button_enter_leave(self.analytics_button , colors.app_base))
+        self.settings_button.bind("<Enter>" , lambda enter : self.button_enter_leave(self.settings_button , colors.Dark_Burgundy))
+        self.settings_button.bind("<Leave>" , lambda enter : self.button_enter_leave(self.settings_button , colors.app_base))
 
 
         # Calling the main app : for running the application in the loop
@@ -143,15 +186,21 @@ class Main_Page():
         
         # Packing the controls : 
         self.title_bar.pack()
+        self.titlebar_label.pack(side="left")
         self.close_button.pack(side="right" , padx=1, pady=1)
         self.maximize_button.pack(side="right")
         self.minimize_button.pack(side='right')
         # Sidebar and sidebar controls 
+        self.clock_frame.pack(side="right")
         self.sidebar_frame.pack(side="left")
-        self.open_close_sidebar.pack(side="top" , padx=1 ,pady=1)
+        self.open_close_sidebar_button.pack(side="top" , padx=1 ,pady=1)
         self.home_button.pack(side="top" , pady=1, padx=1)
         self.analytics_button.pack(side="top" , pady=1 , padx=1)
         self.settings_button.pack(side="bottom" , padx=1 , pady=1)
+
+
+        # Home frame 
+        self.home_frame.pack(side="right")
 
 
         self.main_app.after(10, lambda: self.set_appwindow(self.main_app)) # To make the icon visible in the application
