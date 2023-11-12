@@ -28,14 +28,18 @@ class Home():
 
     def __init__(self , width  , height , master ) -> None:
         self.home_page = master
+        # Temporary Code to check every thign 
+        # self.home_page.configure(background = "red")
         self.width  = width  
         self.height = height 
         # self.home_page.geometry(f"{self.width}x{self.height}")
         self.word_limit  = 40
         self.currnet_string  = "" # This will be changed each time a new text is added in the the textbox
         self.current_index  = 0
+        self.is_added  = False
 
         # For the text boxes and other controls  : 
+    def adding_controls(self):
         self.textbox_frame  = tk.Frame(self.home_page , height= 30 , width = self.width )
         self.textbox_frame.pack_propagate(0)
         self.master_frame = tk.Frame(self.home_page ,  height  = self.height , width= self.width )
@@ -45,7 +49,7 @@ class Home():
         self.entrybox  = tk.Entry(self.textbox_frame ,width  =35 ,   font = fonts.small_font_bold )
         self.add_button  = tk.Button(self.textbox_frame , text="Add Task" , command=self.adding_data)
         self.scroll = ttk.Scrollbar(self.master_frame , orient="vertical" )
-       
+        
         # Demo textbar for storing the current task
         # Binding the controls : 
         self.entrybox.bind("<KeyPress>" , self.check_word_limit)
@@ -55,12 +59,21 @@ class Home():
         self.added_text_frame.pack(side='top' , padx=1 , pady=1)
         self.entrybox.pack(side='left',padx=5)
         self.add_button.pack(side='right',  padx=5)
-        # self.scroll.pack(side="right" , fill="y")
+        self.scroll.pack(side="right" , fill="y")
         self.master_frame.pack()
 
-        
-
         self.home_page.mainloop()
+
+    def destroy_everything(self):
+        self.textbox_frame.destroy()
+        self.master_frame.destroy()
+        self.added_text_frame.destroy()
+        self.entrybox.destroy()
+        self.add_button.destroy()
+        self.scroll.destroy()
+        self.home_page.destroy()
+
+    
 
 class entry_box():
 
@@ -78,4 +91,8 @@ class entry_box():
 
 
 if __name__ == '__main__':
-    main_home  = Home(400 , 400 , "main")
+    main_home  = Home(400 , 400 , tk.Tk())
+    if main_home.is_added == False: 
+        main_home.adding_controls()
+        main_home.is_added = True
+    

@@ -9,6 +9,8 @@ import colors
 import messagebox
 import time
 import home
+import settings
+import analytics
 
 
 
@@ -96,8 +98,26 @@ class Main_Page():
 
     
     # Function for loading the home page : 
-    def calling_home(self):
-        self.main_home = home.Home(600,400 , self.home_frame)
+    def calling_the_tab(self ,current_tab):
+        self.curren_tab  = current_tab
+        if self.curren_tab == "Home" : 
+            self.home_added = True
+            self.settings_added = False
+            self.analytics_added  = False 
+
+        elif self.curren_tab == "Settings":
+            self.home_added = False 
+            self.settings_added = True
+            self.analytics_added = False
+        elif self.curren_tab  == "Analytics":
+            self.home_added = False
+            self.settings_added = False
+            self.analytics_added = True
+        
+        # Temporary code will delete later : 
+        print(self.curren_tab)
+        print(self.frame_width , self.frame_height)
+    
 
 
     # Inititalizing class : 
@@ -113,6 +133,9 @@ class Main_Page():
         self.main_app.geometry(f"{self.width}x{self.height}+{self.x_location}+{self.y_location}")
         # making the default titlebar base delete 
         self.main_app.overrideredirect(True)
+        self.current_tab = ""
+        self.frame_width  = 0
+        self.frame_height  = 0
 
         # calling the main app function to make the overredirect true  : 
         # Make fucntion to check and make another app.
@@ -123,6 +146,11 @@ class Main_Page():
         self.maximized  = False
         self.sidebar_opened  =  True
         self.sidebar_width  = 30
+        # checking for the connected tabs and make it visible as pe the button clicked
+        self.home_added  = False
+        self.settings_added = False
+        self.analytics_added  = False
+
 
         '''Defining the controls '''
         # Upper Titlebar Control Buttons  : 
@@ -140,13 +168,19 @@ class Main_Page():
         self.clock_frame = tk.Frame(self.main_app , height=self.height , width=self.width - self.sidebar_width)
         self.clock_frame.pack_propagate(0)
         # Frame for the Home Button and the main app : 
-        self.home_frame = tk.Frame(self.main_app , height=self.height , width=self.width - self.sidebar_width - 10 ,background=colors.Dark_Gray)
+        self.home_frame = tk.Frame(self.main_app , height=self.height , width=self.width - self.sidebar_width - 10 ,background=colors.Dark_Gray) # I am the main home frame for the controls to be loaded 
         self.home_frame.pack_propagate(0) # This makea a seperate frame for the home button 
+        self.settings_frame = tk.Frame(self.main_app , height=self.height  , width  = self.sidebar_width - 10 , background = colors.Dark_Burgundy)
+        self.settings_frame.pack_forget(0)
+        self.analytics_frame = tk.Frame(self.main_app , height = self.height , width = self.sidebar_width -10 , background=colors.Dark_Green)
+        self.analytics_frame.pack_forget(0)
+        self.frame_width  = self.width - self.sidebar_width - 10 - 5
+        self.frame_height  = self.height
         # Sidebar Buttons : 
         self.open_close_sidebar_button  = tk.Button(self.sidebar_frame , height = 1  , width = 3 , text="\u2261" , command=self.open_close_sidebar)
-        self.home_button = tk.Button(self.sidebar_frame , height=1 , width=3 , text="\U0001F3E0" , command=self.calling_home)
-        self.analytics_button  = tk.Button(self.sidebar_frame , height=1,width=3,text="\U0001F4CA")
-        self.settings_button  = tk.Button(self.sidebar_frame , height=1, width = 3 , text="\u2699")
+        self.home_button = tk.Button(self.sidebar_frame , height=1 , width=3 , text="\U0001F3E0" , command=lambda : self.calling_the_tab("Home") )
+        self.analytics_button  = tk.Button(self.sidebar_frame , height=1,width=3,text="\U0001F4CA"  , command=lambda : self.calling_the_tab("Analytics"))
+        self.settings_button  = tk.Button(self.sidebar_frame , height=1, width = 3 , text="\u2699" ,command=lambda : self.calling_the_tab("Settings") )
         # Sidebar clock frame which will be minimized in the another buttons and classes 
 
         # Configuring the pre defined controls  : 
@@ -200,7 +234,8 @@ class Main_Page():
 
 
         # Home frame 
-        self.home_frame.pack(side="right")
+        # loading all the frames all together : 
+        
 
 
         self.main_app.after(10, lambda: self.set_appwindow(self.main_app)) # To make the icon visible in the application
