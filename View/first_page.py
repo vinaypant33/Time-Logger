@@ -171,9 +171,9 @@ class Main_Page():
         self.home_frame = tk.Frame(self.main_app , height=self.height , width=self.width - self.sidebar_width - 10 ,background=colors.Dark_Gray) # I am the main home frame for the controls to be loaded 
         self.home_frame.pack_propagate(0) # This makea a seperate frame for the home button 
         self.settings_frame = tk.Frame(self.main_app , height=self.height  , width  = self.sidebar_width - 10 , background = colors.Dark_Burgundy)
-        self.settings_frame.pack_forget(0)
+        self.settings_frame.pack_propagate(0)
         self.analytics_frame = tk.Frame(self.main_app , height = self.height , width = self.sidebar_width -10 , background=colors.Dark_Green)
-        self.analytics_frame.pack_forget(0)
+        self.analytics_frame.pack_propagate(0)
         self.frame_width  = self.width - self.sidebar_width - 10 - 5
         self.frame_height  = self.height
         # Sidebar Buttons : 
