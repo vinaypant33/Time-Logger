@@ -62,9 +62,7 @@ class Home():
         self.add_button  = tk.Button(self.textbox_frame , text="Add Task" , command=self.adding_data)
         self.scroll = ttk.Scrollbar(self.master_frame , orient="vertical" )
         
-        # Configuring the controls :
-        styles.styles.button_styles(self.add_button , colors.app_base , colors.White, colors.Red , colors.dark_black)
-        self.entrybox.configure(bd= 0 , relief="sunken")
+        # Demo textbar for storing the current task
         # Binding the controls : 
         self.entrybox.bind("<KeyPress>" , self.check_word_limit)
         self.entrybox.bind('<Return>' , self.adding_enter_data)

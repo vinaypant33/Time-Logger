@@ -3,7 +3,7 @@ import tkinter as tk
 
 
 
-class Analytics():
+class Settings():
 
 
     def __init__(self , width , height , master ) -> None:
@@ -17,6 +17,5 @@ class Analytics():
         self.first_frame.configure(background="yellow")
 
         self.first_frame.pack()
-        self.first_frame.pack_forget()
 
         self.settings_app.mainloop()
