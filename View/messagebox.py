@@ -13,14 +13,14 @@ class Messagebox():
     def __init__(self , x_location , y_location , current_message  =None) -> None:
        
         self.messagebox  =  tk.Tk()
-        self.height = 100 
-        self.width  = 250
+        self.height = 150 
+        self.width  = 350
         self.x = x_location - (self.height // 2)
         self.y = y_location - (self.width // 2) 
 
         # Removing the title bar and Setting up the geometry
         self.messagebox.overrideredirect(True)
-        self.messagebox.geometry(f"{self.width}x{self.height}+{self.y}+{self.x}")
+        self.messagebox.geometry(f"{self.width}x{self.height}+{self.x}+{self.y}")
 
         self.messagebox.configure(background=colors.sidebar_base)
 

@@ -98,6 +98,7 @@ class Main_Page():
     
     # Function for loading the home page : 
     def calling_the_tab(self ,current_tab):
+        
         self.curren_tab  = current_tab
         if self.curren_tab == "Home" : 
             self.home_added = True
@@ -127,6 +128,7 @@ class Main_Page():
     def __init__(self , height , width , master = None) -> None:
         self.main_app = tk.Tk()
         self.height   = height
+        self.main_app.config(background=colors.Dark_Slate)
         self.width  = width
         self.main_app.title("Task Tracker")
         # Setting up the app location in the center of the screen 
@@ -236,23 +238,27 @@ class Main_Page():
         self.analytics_button.pack(side="top" , pady=1 , padx=1)
         self.settings_button.pack(side="bottom" , padx=1 , pady=1)
 
+        self.home_frame.pack()
+
 
         # Home frame 
         # loading all the frames all together : 
         home.Home(self.frame_width , self.frame_height , self.home_frame)
+        
+
+        
+        self.main_app.after(10, lambda: self.set_appwindow(self.main_app)) # To make the icon visible in the application
         settings.Settings(self.frame_width, self.frame_height , self.settings_frame)
         analytics.Analytics(self.frame_width , self.frame_height , self.settings_frame)
-
-
-        self.main_app.after(10, lambda: self.set_appwindow(self.main_app)) # To make the icon visible in the application
         self.main_app.mainloop() # This calls the main app
+        
         
 
 
 
 if __name__ == "__main__":
-    try:
-        main_application  = Main_Page(650 ,450)
-    except Exception as e :
-        print("Error in Running the Main File %s"  , e)
-    # main_application  = Main_Page(650 ,450)
+    # try:
+    #     main_application  = Main_Page(650 ,450)
+    # except Exception as e :
+    #     print("Error in Running the Main File %s"  , e)
+    main_application  = Main_Page(650 ,450)
