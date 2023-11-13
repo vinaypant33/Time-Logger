@@ -53,7 +53,6 @@ class Main_Page():
         current_height   = self.main_app.winfo_height()
         self.final_x = (current_x)  + current_width // 2
         self.final_y = (current_y) + current_height //2
-        
         messagebox.Messagebox(self.final_y , self.final_x , "Maximize Setting Disabled in Current App")
 
     def min_button_clicked(self):
@@ -104,7 +103,6 @@ class Main_Page():
             self.home_added = True
             self.settings_added = False
             self.analytics_added  = False 
-           
             try : 
                 self.home_frame.pack(side="right")
                 self.settings_frame.pack_forget()
@@ -131,11 +129,8 @@ class Main_Page():
                 self.settings_frame.pack_forget()
                 self.analytics_frame.pack(side="right")
             except:
-                print("")
-        # Temporary code will delete later : 
-        print(self.curren_tab)
-        print(self.frame_width , self.frame_height)
-    
+                print("Analytics setting up failed")
+       
 
 
     # Inititalizing class : 
