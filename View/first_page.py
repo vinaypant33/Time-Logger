@@ -9,6 +9,8 @@ import colors
 import messagebox
 import time
 import home
+import settings
+import analytics
 
 
 
@@ -49,10 +51,10 @@ class Main_Page():
         current_y = self.main_app.winfo_y()
         current_width  = self.main_app.winfo_width()
         current_height   = self.main_app.winfo_height()
-        final_x = (current_x)  + current_width // 2
-        final_y = (current_y) + current_height //2
+        self.final_x = (current_x)  + current_width // 2
+        self.final_y = (current_y) + current_height //2
         
-        messagebox.Messagebox(final_y , final_x , "Maximize Setting Disabled in Current App")
+        messagebox.Messagebox(self.final_y , self.final_x , "Maximize Setting Disabled in Current App")
 
     def min_button_clicked(self):
         self.main_app.overrideredirect(False)
@@ -96,8 +98,44 @@ class Main_Page():
 
     
     # Function for loading the home page : 
-    def calling_home(self):
-        self.main_home = home.Home(600,400 , self.home_frame)
+    def calling_the_tab(self ,current_tab):
+        self.curren_tab  = current_tab
+        if self.curren_tab == "Home" : 
+            self.home_added = True
+            self.settings_added = False
+            self.analytics_added  = False 
+           
+            try : 
+                self.home_frame.pack(side="right")
+                self.settings_frame.pack_forget()
+                self.analytics_frame.pack_forget()
+            except:
+                print("Setting of the Home page failed")
+                messagebox.Messsagebox(100,100 , "Setting up Messagebox failed")
+        elif self.curren_tab == "Settings":
+            self.home_added = False 
+            self.settings_added = True
+            self.analytics_added = False
+            try:
+                self.home_frame.pack_forget()
+                self.settings_frame.pack(side="right")
+                self.analytics_frame.pack_forget()
+            except:
+                print("settings setup is failed")
+        elif self.curren_tab  == "Analytics":
+            self.home_added = False
+            self.settings_added = False
+            self.analytics_added = True
+            try:
+                self.home_frame.pack_forget()
+                self.settings_frame.pack_forget()
+                self.analytics_frame.pack(side="right")
+            except:
+                print("")
+        # Temporary code will delete later : 
+        print(self.curren_tab)
+        print(self.frame_width , self.frame_height)
+    
 
 
     # Inititalizing class : 
@@ -113,6 +151,9 @@ class Main_Page():
         self.main_app.geometry(f"{self.width}x{self.height}+{self.x_location}+{self.y_location}")
         # making the default titlebar base delete 
         self.main_app.overrideredirect(True)
+        self.current_tab = ""
+        self.frame_width  = 0
+        self.frame_height  = 0
 
         # calling the main app function to make the overredirect true  : 
         # Make fucntion to check and make another app.
@@ -123,6 +164,11 @@ class Main_Page():
         self.maximized  = False
         self.sidebar_opened  =  True
         self.sidebar_width  = 30
+        # checking for the connected tabs and make it visible as pe the button clicked
+        self.home_added  = False
+        self.settings_added = False
+        self.analytics_added  = False
+
 
         '''Defining the controls '''
         # Upper Titlebar Control Buttons  : 
@@ -140,13 +186,19 @@ class Main_Page():
         self.clock_frame = tk.Frame(self.main_app , height=self.height , width=self.width - self.sidebar_width)
         self.clock_frame.pack_propagate(0)
         # Frame for the Home Button and the main app : 
-        self.home_frame = tk.Frame(self.main_app , height=self.height , width=self.width - self.sidebar_width - 10 ,background=colors.Dark_Gray)
+        self.home_frame = tk.Frame(self.main_app , height=self.height , width=self.width - self.sidebar_width - 10 ,background=colors.Dark_Gray) # I am the main home frame for the controls to be loaded 
         self.home_frame.pack_propagate(0) # This makea a seperate frame for the home button 
+        self.settings_frame = tk.Frame(self.main_app , height=self.height  , width=self.width - self.sidebar_width - 10 , background = colors.Dark_Burgundy)
+        self.settings_frame.pack_propagate(0)
+        self.analytics_frame = tk.Frame(self.main_app , height = self.height ,  width=self.width - self.sidebar_width - 10 , background=colors.Dark_Green)
+        self.analytics_frame.pack_propagate(0)
+        self.frame_width  = self.width - self.sidebar_width - 10 - 5
+        self.frame_height  = self.height
         # Sidebar Buttons : 
         self.open_close_sidebar_button  = tk.Button(self.sidebar_frame , height = 1  , width = 3 , text="\u2261" , command=self.open_close_sidebar)
-        self.home_button = tk.Button(self.sidebar_frame , height=1 , width=3 , text="\U0001F3E0" , command=self.calling_home)
-        self.analytics_button  = tk.Button(self.sidebar_frame , height=1,width=3,text="\U0001F4CA")
-        self.settings_button  = tk.Button(self.sidebar_frame , height=1, width = 3 , text="\u2699")
+        self.home_button = tk.Button(self.sidebar_frame , height=1 , width=3 , text="\U0001F3E0" , command=lambda : self.calling_the_tab("Home") )
+        self.analytics_button  = tk.Button(self.sidebar_frame , height=1,width=3,text="\U0001F4CA"  , command=lambda : self.calling_the_tab("Analytics"))
+        self.settings_button  = tk.Button(self.sidebar_frame , height=1, width = 3 , text="\u2699" ,command=lambda : self.calling_the_tab("Settings") )
         # Sidebar clock frame which will be minimized in the another buttons and classes 
 
         # Configuring the pre defined controls  : 
@@ -200,7 +252,14 @@ class Main_Page():
 
 
         # Home frame 
-        self.home_frame.pack(side="right")
+        # loading all the frames all together : 
+        self.home_page  = home.Home(self.frame_width , self.frame_height , self.home_frame)
+        self.home_page.adding_controls()
+        self.settings_page  = settings.Settings(self.frame_width  ,self.frame_height  , self.settings_frame)
+        self.analytics_page = analytics.Analytics(self.frame_width , self.frame_height , self.settings_frame)
+
+        # Setting up the home page as default : 
+        self.home_page.pack(side="right")
 
 
         self.main_app.after(10, lambda: self.set_appwindow(self.main_app)) # To make the icon visible in the application
@@ -210,4 +269,8 @@ class Main_Page():
 
 
 if __name__ == "__main__":
-    main_application  = Main_Page(650 ,450)
+    try:
+        main_application  = Main_Page(650 ,450)
+    except Exception as e :
+        print("Error in Running the Main File %s"  , e)
+    # main_application  = Main_Page(650 ,450)

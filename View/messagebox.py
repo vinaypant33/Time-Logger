@@ -12,7 +12,7 @@ class Messagebox():
 
     def __init__(self , x_location , y_location , current_message  =None) -> None:
        
-        self.messagebox  = tk.Tk()  
+        self.messagebox  =  tk.Tk()
         self.height = 100 
         self.width  = 250
         self.x = x_location - (self.height // 2)
