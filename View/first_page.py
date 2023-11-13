@@ -103,34 +103,15 @@ class Main_Page():
             self.home_added = True
             self.settings_added = False
             self.analytics_added  = False 
-            try : 
-                self.home_frame.pack(side="right")
-                self.settings_frame.pack_forget()
-                self.analytics_frame.pack_forget()
-            except:
-                print("Setting of the Home page failed")
-                messagebox.Messsagebox(100,100 , "Setting up Messagebox failed")
         elif self.curren_tab == "Settings":
             self.home_added = False 
             self.settings_added = True
             self.analytics_added = False
-            try:
-                self.home_frame.pack_forget()
-                self.settings_frame.pack(side="right")
-                self.analytics_frame.pack_forget()
-            except:
-                print("settings setup is failed")
         elif self.curren_tab  == "Analytics":
             self.home_added = False
             self.settings_added = False
             self.analytics_added = True
-            try:
-                self.home_frame.pack_forget()
-                self.settings_frame.pack_forget()
-                self.analytics_frame.pack(side="right")
-            except:
-                print("Analytics setting up failed")
-       
+
 
 
     # Inititalizing class : 
@@ -183,9 +164,9 @@ class Main_Page():
         # Frame for the Home Button and the main app : 
         self.home_frame = tk.Frame(self.main_app , height=self.height , width=self.width - self.sidebar_width - 10 ,background=colors.Dark_Gray) # I am the main home frame for the controls to be loaded 
         self.home_frame.pack_propagate(0) # This makea a seperate frame for the home button 
-        self.settings_frame = tk.Frame(self.main_app , height=self.height  , width=self.width - self.sidebar_width - 10 , background = colors.Dark_Burgundy)
+        self.settings_frame = tk.Frame(self.main_app , height=self.height  , width  = self.sidebar_width - 10 , background = colors.Dark_Burgundy)
         self.settings_frame.pack_propagate(0)
-        self.analytics_frame = tk.Frame(self.main_app , height = self.height ,  width=self.width - self.sidebar_width - 10 , background=colors.Dark_Green)
+        self.analytics_frame = tk.Frame(self.main_app , height = self.height , width = self.sidebar_width -10 , background=colors.Dark_Green)
         self.analytics_frame.pack_propagate(0)
         self.frame_width  = self.width - self.sidebar_width - 10 - 5
         self.frame_height  = self.height
@@ -248,13 +229,7 @@ class Main_Page():
 
         # Home frame 
         # loading all the frames all together : 
-        self.home_page  = home.Home(self.frame_width , self.frame_height , self.home_frame)
-        self.home_page.adding_controls()
-        self.settings_page  = settings.Settings(self.frame_width  ,self.frame_height  , self.settings_frame)
-        self.analytics_page = analytics.Analytics(self.frame_width , self.frame_height , self.settings_frame)
-
-        # Setting up the home page as default : 
-        self.home_page.pack(side="right")
+        
 
 
         self.main_app.after(10, lambda: self.set_appwindow(self.main_app)) # To make the icon visible in the application
