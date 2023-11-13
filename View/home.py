@@ -51,7 +51,7 @@ class Home():
         self.is_added  = False
 
         # For the text boxes and other controls  : 
-    def adding_controls(self):
+    # def adding_controls(self):
         self.textbox_frame  = tk.Frame(self.home_page , height= 30 , width = self.width )
         self.textbox_frame.pack_propagate(0)
         self.master_frame = tk.Frame(self.home_page ,  height  = self.height , width= self.width )

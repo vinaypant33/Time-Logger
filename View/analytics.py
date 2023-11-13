@@ -3,7 +3,7 @@ import tkinter as tk
 
 
 
-class Settings():
+class Analytics():
 
 
     def __init__(self , width , height , master ) -> None:
