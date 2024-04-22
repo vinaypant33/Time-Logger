@@ -1,19 +1,9 @@
-import tkinter as tk 
-import sys
-
-sys.path.append("View")
+import ttkbootstrap as ttk
+from ttkbootstrap.constants import *
 
 
 
-class main_app(): # Made a Static Class for the main application
+root = ttk.Window()
 
-    def run_main_app():
-        print("i am the main app")
+label = ttk.Label(root , text= "al;skdjfalk;sdfj")
 
-
-
-
-
-if __name__ == '__main__':
-    application  = main_app()
-    application.run_main_app()
