@@ -1,9 +1,11 @@
-import ttkbootstrap as ttk
-from ttkbootstrap.constants import *
+from View import main_page
 
 
 
-root = ttk.Window()
 
-label = ttk.Label(root , text= "al;skdjfalk;sdfj")
+
+
+# Setting up the constants :
+height  = 400
+width  = 600
 
