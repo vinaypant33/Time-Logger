@@ -24,7 +24,6 @@ class Main_app():
             self.app_icon.place(x = 3 , y = 10)
             self.settings_text  = f"{self.settings_unicode} "
             self.settings_button.config(text=self.settings_text)
-    
 
 
     def __init__(self) -> None:
@@ -39,8 +38,6 @@ class Main_app():
         Placing Controls
 
         '''
-
-       
 
         # Theme  : for Light : cosmo and minty - for meter widget : flatly , litera ,  for dark  : darkly cyborg 
 
