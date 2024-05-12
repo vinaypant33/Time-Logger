@@ -9,6 +9,8 @@ from tkinter import ttk
 from PIL import Image
 Image.CUBIC = Image.BICUBIC
 
+import calendar
+
 
 # Settings class for the settings top page : or the settings frame
 
@@ -159,6 +161,8 @@ class Main_app():
         self.calender_widget_frame  = btk.Frame(master=self.window , height=300 , width=400 , bootstyle="warning")
         self.task_frame  = btk.Frame(master = self.window , height=340 , width=810 , bootstyle  = "dark.TFrame")
         self.meter_widget_frame.pack_propagate(0)
+        self.calender_widget_frame.pack_propagate(0)
+        self.task_frame.pack_propagate(0)
 
 
         ## ----- Controls for the main frame  : 
@@ -180,6 +184,8 @@ class Main_app():
     interactive=True,
         """
 
+        self.calender  = btk.DateEntry(master = self.calender_widget_frame)
+        self.calender.pack()
         
 
 
