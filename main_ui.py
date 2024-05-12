@@ -5,13 +5,18 @@ from tkinter import ttk
 from PIL import Image, ImageTk
 from tkinter import ttk
 
+
+# Settings class for the settings top page : or the settings frame
+
+
+import settings
 class Main_app():
 
 
     def show_hide_sidebar(self):
         if self.sidebar.winfo_width() == 70:
             self.sidebar.config(width=850)
-            self.open_close_button.config(text="\u2771")
+            self.open_close_button.config(text="\u2770")
             self.open_close_button.place(x= 850,  y  = 662)
             self.app_icon.pack_forget()
             self.app_icon.place_forget()
@@ -19,11 +24,34 @@ class Main_app():
             self.settings_button.config(text=self.settings_text)
         else:
             self.sidebar.config(width=70)
-            self.open_close_button.config(text="\u2770")
+            self.open_close_button.config(text="\u2771")
             self.open_close_button.place(x= 70,  y  = 662)
             self.app_icon.place(x = 3 , y = 10)
             self.settings_text  = f"{self.settings_unicode} "
             self.settings_button.config(text=self.settings_text)
+
+
+    def show_settings(self):
+        # app = btk.Toplevel(title="Log Timer")
+        # app.iconbitmap("main_icon.ico")
+        # app.resizable(0 , 0)
+        # width  = 600
+        # self.top_level_x  = (self.window.winfo_x() //2 ) + (self.window.winfo_width() // 2)
+        # self.top_level_y = (self.window.winfo_y() //2 ) + (self.window.winfo_height() - 500)
+        # app.geometry(f"{600}x{600}+{self.top_level_x}+{self.top_level_y}")
+        # app.mainloop()
+        # pass # Make the main frame and will load the frame to this side bar 
+        if self.sidebar.winfo_width() == 850:
+                
+            if self.settings_frame.winfo_ismapped() == False:
+                self.settings_frame.place(x  = 4 , y = 10)
+            if self.settings_frame.winfo_ismapped() == True:
+                self.settings_frame.place_forget()
+        else:
+            pass
+
+
+
 
 
     def __init__(self) -> None:
@@ -42,7 +70,7 @@ class Main_app():
         # Theme  : for Light : cosmo and minty - for meter widget : flatly , litera ,  for dark  : darkly cyborg 
 
         # Defining Window, Size, Geometry icon and  x and y location
-        self.window = btk.Window(themename="cyborg")
+        self.window = btk.Window() # themename  = "minty"
         self.window.title("Log Timer")
         self.window.resizable(0 , 0)
         height  = 700
@@ -98,10 +126,12 @@ class Main_app():
         # self.analytics_button = btk.Button(master=self.sidebar , text=analytics_text , style='toolbutton' , width=100 , compound='left' )
         # self.task_button  = btk.Button(master=self.sidebar , text=task_text , style="error" , width=100 )
 
-        self.settings_button   = btk.Button(master=self.sidebar , text=self.settings_text )
+        self.settings_button   = btk.Button(master=self.sidebar , text=self.settings_text, command=self.show_settings)
         
-        self.open_close_button  = btk.Button(master=self.window , text="\u2770" , command=self.show_hide_sidebar) # The text would be changed depending on the sidebar width U+2771
+        self.open_close_button  = btk.Button(master=self.window , text="\u2771" , command=self.show_hide_sidebar) # The text would be changed depending on the sidebar width U+2771
         
+        self.settings_frame   = btk.Frame(master=self.sidebar  , height=650 , width = 830 , style="Custom.TFrame")
+        self.settings_frame.pack_propagate(0)
 
  
         # ------------------------------ # 
@@ -116,7 +146,8 @@ class Main_app():
         self.settings_button.pack(side='left', anchor='sw', padx=3, pady=10)
         # self.open_close_button.pack(side='right' , anchor="sw" , padx=3 , pady=10)
         self.open_close_button.place(x = 70 , y = 662)
-
+        # self.settings_frame.pack(pady=10 , padx=0 , anchor="w") # Make the settings frame pack in the sidebar app :: Pack is not working make the place 
+        
 
         # Starting the main app_main window
         self.window.mainloop()
