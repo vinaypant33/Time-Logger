@@ -9,7 +9,7 @@ from tkinter import ttk
 # Settings class for the settings top page : or the settings frame
 
 
-import settings
+from settings import Settings
 class Main_app():
 
 
@@ -22,6 +22,9 @@ class Main_app():
             self.app_icon.place_forget()
             self.settings_text  = f"{self.settings_unicode} {self.settings_text_1}"
             self.settings_button.config(text=self.settings_text)
+            self.timer_and_task_frame.place(x  = 4 , y = 10)
+            self.settings_frame.place_forget()
+
         else:
             self.sidebar.config(width=70)
             self.open_close_button.config(text="\u2771")
@@ -29,6 +32,8 @@ class Main_app():
             self.app_icon.place(x = 3 , y = 10)
             self.settings_text  = f"{self.settings_unicode} "
             self.settings_button.config(text=self.settings_text)
+            self.settings_frame.place_forget()
+            self.timer_and_task_frame.place_forget()
 
 
     def show_settings(self):
@@ -45,8 +50,11 @@ class Main_app():
                 
             if self.settings_frame.winfo_ismapped() == False:
                 self.settings_frame.place(x  = 4 , y = 10)
+                self.timer_and_task_frame.place_forget()
+                Settings(self.settings_frame)
             if self.settings_frame.winfo_ismapped() == True:
                 self.settings_frame.place_forget()
+                self.timer_and_task_frame.place(x=4,y=10)
         else:
             pass
 
@@ -70,7 +78,7 @@ class Main_app():
         # Theme  : for Light : cosmo and minty - for meter widget : flatly , litera ,  for dark  : darkly cyborg 
 
         # Defining Window, Size, Geometry icon and  x and y location
-        self.window = btk.Window() # themename  = "minty"
+        self.window = btk.Window(themename="minty") # themename  = "minty"
         self.window.title("Log Timer")
         self.window.resizable(0 , 0)
         height  = 700
@@ -101,7 +109,7 @@ class Main_app():
         self.sidebar  = btk.Frame(self.window , width=70  , height=500 , style="darkly") # width 200 to be changed to 400 or 500 depending on the timer 
         self.sidebar.pack_propagate(False)
 
-        self.app_icon = btk.Label(self.sidebar , image=self.logo_image , style="darkly")
+        self.app_icon = btk.Label(self.sidebar , image=self.logo_image , style="minty")
 
 
         home_icon_unicode = "\U0001F3E0"
@@ -130,10 +138,13 @@ class Main_app():
         
         self.open_close_button  = btk.Button(master=self.window , text="\u2771" , command=self.show_hide_sidebar) # The text would be changed depending on the sidebar width U+2771
         
-        self.settings_frame   = btk.Frame(master=self.sidebar  , height=650 , width = 830 , style="Custom.TFrame")
+        self.settings_frame   = btk.Frame(master=self.sidebar  , height=650 , width = 830 , style="minty")
         self.settings_frame.pack_propagate(0)
 
- 
+        self.timer_and_task_frame = btk.Frame(master = self.sidebar , height = 650 , width = 830 ) # Only task list would be added in here which will be used to add task with another frame
+
+        self.meter_widget_frame = btk.Frame(master=self.window,  height = 300 , width = 400 , style='danger.TFrame') # Would check other methods and themes availabel for the frame and for other controls 
+        self.calender_widget_frame  = btk.Frame(master=self.window , height=300 , width=400 , bootstyle="warning")
         # ------------------------------ # 
         # Placing the controls and setting up the frames to contain everything  : 
         self.sidebar.pack(side='left' , fill='y')
@@ -148,6 +159,12 @@ class Main_app():
         self.open_close_button.place(x = 70 , y = 662)
         # self.settings_frame.pack(pady=10 , padx=0 , anchor="w") # Make the settings frame pack in the sidebar app :: Pack is not working make the place 
         
+        # self.timer_and_task_frame.place(x  = 4 , y = 10)
+
+        # self.meter_widget_frame.place(x = 80 , y = 10)
+        self.meter_widget_frame.pack(side="top" , anchor='nw' , padx=10 , pady=10)
+        self.calender_widget_frame.pack(side="top" , anchor="ne" , padx=10 , pady=10)
+
 
         # Starting the main app_main window
         self.window.mainloop()
