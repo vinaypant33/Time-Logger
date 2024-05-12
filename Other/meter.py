@@ -16,9 +16,9 @@ meter.pack()
 # update the amount used directly
 meter.configure(amountused = 50)
 
-# update the amount used with another widget
-entry = ttk.Entry(textvariable=meter.amountusedvar)
-entry.pack(fill=X)
+# # update the amount used with another widget
+# entry = ttk.Entry(textvariable=meter.amountusedvar)
+# entry.pack(fill=X)
 
 # increment the amount by 10 steps
 meter.step(10)

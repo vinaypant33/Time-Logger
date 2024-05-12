@@ -5,6 +5,10 @@ from tkinter import ttk
 from PIL import Image, ImageTk
 from tkinter import ttk
 
+# As the meter widget is not working we are importing the Bicubic import :
+from PIL import Image
+Image.CUBIC = Image.BICUBIC
+
 
 # Settings class for the settings top page : or the settings frame
 
@@ -23,7 +27,11 @@ class Main_app():
             self.settings_text  = f"{self.settings_unicode} {self.settings_text_1}"
             self.settings_button.config(text=self.settings_text)
             self.timer_and_task_frame.place(x  = 4 , y = 10)
+            # Place forget the widgets and frame : 
             self.settings_frame.place_forget()
+            self.meter_widget_frame.place_forget()
+            self.calender_widget_frame.place_forget()
+            self.task_frame.place_forget()
 
         else:
             self.sidebar.config(width=70)
@@ -34,6 +42,10 @@ class Main_app():
             self.settings_button.config(text=self.settings_text)
             self.settings_frame.place_forget()
             self.timer_and_task_frame.place_forget()
+            self.meter_widget_frame.place(x = 80 , y = 10)
+            self.calender_widget_frame.place(x=490 , y = 10)
+            self.task_frame.place(x = 80 , y = 320)
+
 
 
     def show_settings(self):
@@ -78,7 +90,7 @@ class Main_app():
         # Theme  : for Light : cosmo and minty - for meter widget : flatly , litera ,  for dark  : darkly cyborg 
 
         # Defining Window, Size, Geometry icon and  x and y location
-        self.window = btk.Window(themename="minty") # themename  = "minty"
+        self.window = btk.Window(themename="darkly") # themename  = "minty"
         self.window.title("Log Timer")
         self.window.resizable(0 , 0)
         height  = 700
@@ -145,6 +157,33 @@ class Main_app():
 
         self.meter_widget_frame = btk.Frame(master=self.window,  height = 300 , width = 400 , style='danger.TFrame') # Would check other methods and themes availabel for the frame and for other controls 
         self.calender_widget_frame  = btk.Frame(master=self.window , height=300 , width=400 , bootstyle="warning")
+        self.task_frame  = btk.Frame(master = self.window , height=340 , width=810 , bootstyle  = "dark.TFrame")
+        self.meter_widget_frame.pack_propagate(0)
+
+
+        ## ----- Controls for the main frame  : 
+
+        '''
+        Meter widget for the main frame 
+        Make calender for the main frame
+        Make another frame for adding the tasks make another from for that and add tags and other things in the settings page 
+        Frame to be scrollable and make the scrollable table with the mainframe 
+        '''
+        self.meter_timer  = btk.Meter(master=self.meter_widget_frame ,metersize=250,amounttotal=60 , bootstyle="success", subtextstyle="warning" , interactive=True , subtext="Seconds")
+        self.total_timer_label = btk.Label(self.meter_widget_frame , text="00:00:00" , font=("Arial", 22, "bold"))
+        """
+        metersize=180,
+    padding=5,
+    amountused=25,
+    metertype="semi",
+    subtext="miles per hour",
+    interactive=True,
+        """
+
+        
+
+
+
         # ------------------------------ # 
         # Placing the controls and setting up the frames to contain everything  : 
         self.sidebar.pack(side='left' , fill='y')
@@ -161,9 +200,17 @@ class Main_app():
         
         # self.timer_and_task_frame.place(x  = 4 , y = 10)
 
-        # self.meter_widget_frame.place(x = 80 , y = 10)
-        self.meter_widget_frame.pack(side="top" , anchor='nw' , padx=10 , pady=10)
-        self.calender_widget_frame.pack(side="top" , anchor="ne" , padx=10 , pady=10)
+        self.meter_widget_frame.place(x = 80 , y = 10)
+        self.calender_widget_frame.place(x=490 , y = 10)
+        self.task_frame.place(x = 80 , y = 320)
+
+
+        # self.meter_widget_frame.pack(side="top" , anchor='nw' , padx=10 , pady=10)
+        # self.calender_widget_frame.pack(side="top" , anchor="ne" , padx=10 , pady=10)
+
+
+        self.meter_timer.pack(pady=(10,0))
+        self.total_timer_label.pack(pady=1)
 
 
         # Starting the main app_main window
