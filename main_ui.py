@@ -16,12 +16,32 @@ class Tab_app():
             self.theme_label.configure(text="Light")
         elif current_text == "Light":
             self.theme_label.configure(text="Dark")
+    
+    def adjust_sidebar(self):
+        if self.sidebar.winfo_width() == self.width*self.side_ratio:
+            self.open_close_button.place_forget()
+            self.sidebar.configure(width=self.width*self.adjust_ratio)
+            self.main_frame.configure(width=self.width*self.side_adjsut_ratio)
+            self.open_close_button.place(x = self.width*self.adjust_ratio , y = self.height - 29 )
+            self.open_close_button.configure(text="\u2770")
+            self.settings_frame.pack_forget()
+        elif self.sidebar.winfo_width() == self.width*self.adjust_ratio:
+            self.sidebar.configure(width=self.width*self.side_ratio)
+            self.main_frame.configure(width=self.width*self.current_ratio)
+            self.open_close_button.place_forget()
+            self.open_close_button.place(x = self.width * self.side_ratio , y = self.height - 29)
+            self.settings_frame.pack(side="bottom" , anchor="center" , fill="x")
+
+        
+
 
 
     def __init__(self , width  , height ) -> None:
 
 
-        
+        self.side_adjsut_ratio  = 0.10
+        self.adjust_ratio = 1 - self.side_adjsut_ratio
+
         self.side_ratio  = .20
         self.current_ratio  = 1 - self.side_ratio
 
@@ -58,9 +78,9 @@ class Tab_app():
 
 
 
-     
+        self.open_close_button  = btk.Button(master=self.tab_based_app , text="\u2771" , command=self.adjust_sidebar)
         
-
+        self.work_meter   = btk.Meter(master=self.main_frame)
 
 
 
@@ -82,6 +102,8 @@ class Tab_app():
         # self.theme_label.grid(row = 0 , column=0 , rowspan=10)
 
         # self.theme_label.place(x = 30 , y = 400)
+
+        self.open_close_button.place(x = self.width * self.side_ratio , y = self.height - 29)
 
 
 
