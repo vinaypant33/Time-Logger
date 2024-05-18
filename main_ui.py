@@ -29,15 +29,20 @@ class Tab_app():
             self.open_close_button.place(x = self.width*self.adjust_ratio , y = self.height - 29 )
             self.open_close_button.configure(text="\u2770")
             self.settings_frame.pack_forget()
+            self.work_meter.pack_forget()
+            self.main_timer.pack_forget()
         elif self.sidebar.winfo_width() == self.width*self.adjust_ratio:
             self.sidebar.configure(width=self.width*self.side_ratio)
             self.main_frame.configure(width=self.width*self.current_ratio)
             self.open_close_button.place_forget()
             self.open_close_button.place(x = self.width * self.side_ratio , y = self.height - 29)
             self.settings_frame.pack(side="bottom" , anchor="center" , fill="x")
-
-        
-
+            self.open_close_button.configure(text="\u2771")
+            self.work_meter.pack(padx=10 , pady=(10, 0))
+            self.main_timer.pack(padx=10 , pady=10)
+           
+    
+   
 
 
     def __init__(self , width  , height ) -> None:
@@ -84,8 +89,8 @@ class Tab_app():
 
         self.open_close_button  = btk.Button(master=self.tab_based_app , text="\u2771" , command=self.adjust_sidebar)
         
-        self.work_meter   = btk.Meter(master=self.main_frame , bootstyle="success").pack()
-
+        self.work_meter   = btk.Meter(master=self.main_frame ,metersize=300,amounttotal=60 , subtextstyle="warning" , interactive=True , subtext="Seconds")
+        self.main_timer  = btk.Label(master=self.main_frame ,text="00:00:00", font={"Arial" , 50})
 
 
 
@@ -107,7 +112,8 @@ class Tab_app():
         # self.theme_label.grid(row = 0 , column=0 , rowspan=10)
 
         # self.theme_label.place(x = 30 , y = 400)
-
+        self.work_meter.pack(padx=10 , pady=(10 , 0))
+        self.main_timer.pack(padx=10 , pady=10)
         self.open_close_button.place(x = self.width * self.side_ratio , y = self.height - 29)
 
 
