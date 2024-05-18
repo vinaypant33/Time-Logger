@@ -18,7 +18,6 @@ import calendar
 from settings import Settings
 class Main_app():
 
-
     def show_hide_sidebar(self):
         if self.sidebar.winfo_width() == 70:
             self.sidebar.config(width=850)
@@ -71,10 +70,6 @@ class Main_app():
                 self.timer_and_task_frame.place(x=4,y=10)
         else:
             pass
-
-
-
-
 
     def __init__(self) -> None:
         
@@ -186,9 +181,7 @@ class Main_app():
 
         self.calender  = btk.DateEntry(master = self.calender_widget_frame)
         self.calender.pack()
-        
-
-
+    
 
         # ------------------------------ # 
         # Placing the controls and setting up the frames to contain everything  : 
@@ -213,7 +206,6 @@ class Main_app():
 
         # self.meter_widget_frame.pack(side="top" , anchor='nw' , padx=10 , pady=10)
         # self.calender_widget_frame.pack(side="top" , anchor="ne" , padx=10 , pady=10)
-
 
         self.meter_timer.pack(pady=(10,0))
         self.total_timer_label.pack(pady=1)
