@@ -2,6 +2,10 @@ import tkinter as tk
 import ttkbootstrap as btk 
 
 
+# Image libarary to make the meter widget work : 
+from PIL import Image
+Image.CUBIC = Image.BICUBIC
+
 
 
 
@@ -80,7 +84,7 @@ class Tab_app():
 
         self.open_close_button  = btk.Button(master=self.tab_based_app , text="\u2771" , command=self.adjust_sidebar)
         
-        self.work_meter   = btk.Meter(master=self.main_frame)
+        self.work_meter   = btk.Meter(master=self.main_frame , bootstyle="success").pack()
 
 
 
@@ -91,6 +95,7 @@ class Tab_app():
         self.sidebar.pack(side="left")
 
         self.main_frame.pack()
+        self.main_frame.pack_propagate(0)
 
         self.settings_frame.pack(side="bottom" , anchor="center" , fill="x")
         # self.theme_label.pack(side="bottom" , anchor="w")
