@@ -9,11 +9,19 @@ import ttkbootstrap as btk
 class Tab_app():
 
 
+    def toggle_switch(self):
+        current_text  = self.toggle_switch.cget("text")
+
+        if current_text == "Dark":
+            print("toggle")
+        # if self.toggle_switch.cget("text") == "Dark":
+        #     print("Toggle")
+
+
     def __init__(self , width  , height ) -> None:
 
         
         
-
 
 
         self.height = height
@@ -42,7 +50,7 @@ class Tab_app():
         self.settings_frame.pack_propagate(0)
 
         self.theme_label  = btk.Label(master=self.settings_frame , text="Dark")
-        self.dark_light_switch  = btk.Checkbutton(master=self.settings_frame,bootstyle="square-toggle" )
+        self.dark_light_switch  = btk.Checkbutton(master=self.settings_frame,bootstyle="square-toggle" , command=self.toggle_switch )
 
 
         
