@@ -72,6 +72,7 @@ class MainPage():
         #---------------Placing the controls -------------------
         self.scollable_frame.pack()
         self.focus_meter_frame.pack(side = "left")
+        
         self.focus_label.pack()
 
         self.description_label.pack()
