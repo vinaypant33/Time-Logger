@@ -9,7 +9,7 @@ import ttkbootstrap as ttk
 from PIL import Image
 Image.CUBIC = Image.BICUBIC
 
-
+from pubsub import pub  # Used for message passing //  
 
 # Import Manually coded Modules : 
 from custom_controls import spinbox
@@ -18,7 +18,15 @@ from custom_controls import spinbox
 class MainPage():
 
 
+    def clock_timer_loading(self ):
+        
+        self.spinbox_meter_frame.configure(height = 500 , width = 400)
+        self.main_spinbox.closing_all()
+
+
     def __init__(self) -> None:
+
+
         self.window  = ctk.CTk()
 
         
@@ -53,13 +61,19 @@ class MainPage():
         self.focus_label  = ctk.CTkLabel(self.focus_meter_frame , text="Start Focus Session" )
         self.description_label  = ctk.CTkLabel(self.focus_meter_frame , text = " Select time ( minutes ) for which the focus session to be done ")
 
-        self.spinbox_meter_frame  = ctk.CTkFrame(self.focus_meter_frame , height=500 , width= 200 )
+        self.spinbox_meter_frame  = ctk.CTkFrame(self.focus_meter_frame , height=500 , width= 200 ) # Previous height and width is 200 x 200
         self.spinbox_meter_frame.pack_propagate(0)
 
         # Calling the spin box class for packing the spin box control
         self.main_spinbox  = spinbox.Spinbox(self.spinbox_meter_frame , height=100 , width=100)
+        
+
+        
 
 
+        ## Cehcking the incoming messages from other modules and classes :
+        pub.subscribe(self.clock_timer_loading , "focusclicked") 
+        
         #--------------Setting property of controls-------------
 
 

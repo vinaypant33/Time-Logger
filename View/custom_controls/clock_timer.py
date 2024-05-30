@@ -34,3 +34,14 @@ class CustomMeter(ctk.CTkCanvas):
         self.itemconfig(self.arc, extent=extent)
         self.itemconfig("text", text=f"{self.value}%")
         self.update()
+
+
+if __name__ =="__main__":
+
+    window  = tk.Tk()
+    hehe  = tk.Frame(window , background="green" , height=400 , width=400)
+    hehe.pack_propagate(0)
+    name = CustomMeter(hehe)
+    hehe.pack()
+    name.pack()
+    window.mainloop()

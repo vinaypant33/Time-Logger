@@ -4,11 +4,19 @@ import customtkinter as ctk
 
 from tkinter import messagebox
 
+from pubsub import pub
+
 '''
 Spinbox is to be done of three controls + button - button and the frame with the label
 '''
 
 class Spinbox():
+
+    
+
+    def focus_button_clicked(self):
+        pub.sendMessage("focusclicked" )
+    
 
     def change_number_adding(self):
         if self.timer_var >= self.max_time:
@@ -34,6 +42,8 @@ class Spinbox():
 
     def __init__(self , master, height = 400 , width   = 200) -> None:
 
+        self.istrue  = False
+
         # Max Minutes timer variabel and with the max cap of 30 Minutes : 
         self.timer_var  = 00
         self.max_time = 30
@@ -56,7 +66,7 @@ class Spinbox():
         ## setting the focus session button with the play and pause Image : 
         text  = '\u25B6'
         main_text  = "  Start Focus Session"
-        self.play_pause_button  = ctk.CTkButton(self.master , text=f"{text }{ main_text}")
+        self.play_pause_button  = ctk.CTkButton(self.master , text=f"{text }{ main_text}" , command=self.focus_button_clicked)
         
 
 
@@ -82,5 +92,9 @@ class Spinbox():
         # self.subtract_button.grid(row = 1 , column = 1 , pady = 1)
 
         # self.master.mainloop()
+    def closing_all(self):
+        self.main_frame.pack_forget()
+        self.no_breaks_text.place_forget()
+        self.play_pause_button.place_forget()
 
 
