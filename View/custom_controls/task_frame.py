@@ -3,6 +3,39 @@ from tkinter import ttk
 import customtkinter as ctk
 
 
+
+class TopControls():
+
+    def __init__(self , master) -> None:  # Condifer the height and width of the applicaton to be 400 400
+        self.master = master
+        self.taskname  = ctk.CTkEntry(master  , fg_color="red" , border_color="grey" , corner_radius=0 , border_width=1  , placeholder_text="Enter Task"  , bg_color="black")
+
+        self.grid_frame = ctk.CTkFrame(master , fg_color="green" , corner_radius=0)
+        self.comment_box  = ctk.CTkTextbox(self.grid_frame , corner_radius=0 , width = 300)
+        
+        self.comment_box_button  = ctk.CTkButton(self.grid_frame , text="Add Comment" , corner_radius= 0 )
+
+        self.sidebar_controls  = ctk.CTkFrame(self.grid_frame , fg_color="blue" , width=90 , corner_radius=0)
+        self.sidebar_controls.pack_propagate(0)
+
+
+        self.checklist_button  = ctk.CTkButton(self.sidebar_controls , text="Add Checklist"  ,  corner_radius= 0 )
+
+
+
+
+        self.taskname.pack(fill = "x")
+        self.grid_frame.pack(side="top" , anchor  = "w" , fill = "both" , expand  = True)
+        
+        self.sidebar_controls.pack(side="top" , anchor = "e" , fill = "y")
+
+        
+        # self.comment_box.pack(side = "left" , anchor = "w" , pady = 3)
+        self.comment_box.place(x = 0 , y = 0)
+        self.comment_box_button.pack(side= "top" , anchor  = "w" , pady = 5)
+        self.checklist_button.pack(pady = 3)
+
+
 class TaskAdd():
 
     def __init__(self , x_location  , y_location) -> None:
@@ -21,6 +54,7 @@ class TaskAdd():
 
         self.main_app.geometry(f"{400}x{400}+{self.x}+{self.y}")
 
+        caling_app = TopControls(self.main_app)
 
 
 
