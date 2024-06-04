@@ -39,6 +39,10 @@ class TopControls():
 class TaskAdd():
 
     def __init__(self , x_location  , y_location) -> None:
+
+        """
+
+        """
         self.main_app = ctk.CTkToplevel()  # This is the second frame which will have the same theme and properties
 
         self.x = x_location 
@@ -70,7 +74,10 @@ class TaskFrame():
 
         self.top_level  = TaskAdd(self.current_x , self.curernt_y)
         
-        
+        """
+        The below commented code is to be added in another function and then will be added in the main frame
+
+        """
 
         # This would be called after the double clicking the controls and call the main top level frame 
 
@@ -101,9 +108,14 @@ class TaskFrame():
 
 
 
-    def __init__(self , master = "sdf" , width = 400 ,  height  = 500) -> None:
-        self.master = ctk.CTk() # For the demo code will change this code later to the frame 
-        self.height  = height
+    def __init__(self , master  , width ,  height ) -> None:
+        """
+
+        This to be called from the main page and then the controls will work as usual
+        """
+        # self.master = ctk.CTk() # For the demo code will change this code later to the frame 
+        self.master = master
+        self.height   = height
         self.width  = width
         self.task_frame  = ctk.CTkFrame(self.master  , height=self.height , width=self.width , fg_color="green" , corner_radius=0 , border_color="blue" , border_width=0)
         self.task_frame.pack_propagate(0)
@@ -119,17 +131,20 @@ class TaskFrame():
         self.scrollable_frame.pack(side="bottom" , anchor  = "ne")
 
         self.task_frame.pack()
-        self.master.mainloop() ## This line will be deleted later for now considering this as the main application 
+    
+        # self.master.mainloop() ## This line will be deleted later for now considering this as the main application 
         # self.master.pack()
 
 
 
-class CurrentTask(TaskFrame):
+# class CurrentTask(TaskFrame):
 
-    def __init__(self, master="sdf", width=400, height=500) -> None:
-        super().__init__(master, width, height)
+#     def __init__(self, master="sdf", width=400, height=500) -> None:
+#         super().__init__(master, width, height)
 
-        print("i am initialized")
+#         print("i am initialized")
 
-name = TaskFrame()
+if __name__ =="__main__":
+
+    name = TaskFrame()
         
