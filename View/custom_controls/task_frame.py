@@ -3,148 +3,159 @@ from tkinter import ttk
 import customtkinter as ctk
 
 
-
-class TopControls():
-
-    def __init__(self , master) -> None:  # Condifer the height and width of the applicaton to be 400 400
-        self.master = master
-        self.taskname  = ctk.CTkEntry(master  , fg_color="red" , border_color="grey" , corner_radius=0 , border_width=1  , placeholder_text="Enter Task"  , bg_color="black")
-
-        self.grid_frame = ctk.CTkFrame(master , fg_color="green" , corner_radius=0)
-        self.comment_box  = ctk.CTkTextbox(self.grid_frame , corner_radius=0 , width = 300)
-        
-        self.comment_box_button  = ctk.CTkButton(self.grid_frame , text="Add Comment" , corner_radius= 0 )
-
-        self.sidebar_controls  = ctk.CTkFrame(self.grid_frame , fg_color="blue" , width=90 , corner_radius=0)
-        self.sidebar_controls.pack_propagate(0)
-
-
-        self.checklist_button  = ctk.CTkButton(self.sidebar_controls , text="Add Checklist"  ,  corner_radius= 0 )
+from pubsub import pub  
 
 
 
 
-        self.taskname.pack(fill = "x")
-        self.grid_frame.pack(side="top" , anchor  = "w" , fill = "both" , expand  = True)
-        
-        self.sidebar_controls.pack(side="top" , anchor = "e" , fill = "y")
-
-        
-        # self.comment_box.pack(side = "left" , anchor = "w" , pady = 3)
-        self.comment_box.place(x = 0 , y = 0)
-        self.comment_box_button.pack(side= "top" , anchor  = "w" , pady = 5)
-        self.checklist_button.pack(pady = 3)
 
 
 class TaskAdd():
+    """
+    This will be the main class and all the controls will be added with this class
 
-    def __init__(self , x_location  , y_location) -> None:
+    """
+    
+    def count_change(self):
+        self.count = 0 # The form count is added to the last and the text would be added in the main form  : 
 
-        """
+        self.each_task  = ctk.CTkFrame(self.scrollable_frame , width=self.scrollable_frame.winfo_width() , height=30 , fg_color="white" ,corner_radius=0)
+        self.each_task.pack_propagate(0)
+        self.checkbox  = ctk.CTkCheckBox(self.each_task , text="" , border_width=1 , border_color="blue" , height=1 , width=1 , corner_radius=0)
+        self.current_text_title  = ctk.CTkEntry(self.each_task , placeholder_text="Enter Task" , border_color="black" , border_width=1 , corner_radius=1 , width=200)
+        self.default_timer = ctk.CTkLabel(self.each_task , text="00:00:00" , font=("Arial" , 18 , "bold"))
 
-        """
-        self.main_app = ctk.CTkToplevel()  # This is the second frame which will have the same theme and properties
+        self.progress_bar  = ctk.CTkProgressBar(self.each_task , border_color="black" , corner_radius=0 , border_width=0 , height=15)
+        # self.progress_bar.configure()
+        self.progress_bar.set(value=0)
+        self.progress_bar["minimum"] = 0
+        self.progress_bar["maximum"] = 100
+    
+        self.checkbox.pack(padx = 1 , side = "left" , anchor = "w")
+        self.current_text_title.pack(side = "left" , padx = 1 , anchor = "w")
+        self.default_timer.pack(side = "left" , padx = 1 , anchor = "w")
+        self.progress_bar.pack(side = "left" , padx = 1 , anchor  = "w")
+        self.each_task.pack(padx=2 , pady = 5)
 
-        self.x = x_location 
-        self.y  = y_location 
-
-        # self.main_app.lift()
-        # self.main_app.focus_force() # These are not working as the app size is larger than the main app.
-        self.main_app.attributes('-topmost', True) # For showing the app to the top level : 
-
-
-        # Set the title and make the top level in the center of the main app  : 
-        self.main_app.title("Log Timer")
-
-        self.main_app.geometry(f"{400}x{400}+{self.x}+{self.y}")
-
-        caling_app = TopControls(self.main_app)
-
-
-
-        self.main_app.mainloop()
-
-
-class TaskFrame():
 
     def add_button_clicked(self):
-        # Check the current size of the window and the current location and make the app visible in the main app  :
-        self.current_x  =  (self.master.winfo_x())
-        self.curernt_y  = (self.master.winfo_y()+ 50) 
+        # To check if the top level is called once
+        self.count+=1
+        if self.count > 1:
+            print("One Form is Already Open - Close the open form first")
+        else:
+            current_x  = self.master.winfo_x()
+            current_y = self.master.winfo_y()
 
-        self.top_level  = TaskAdd(self.current_x , self.curernt_y)
+            Top_Control(x_location=current_x , y_location=current_y)
+
+
+    def __init__(self , master , width , height) -> None:
         
-        """
-        The below commented code is to be added in another function and then will be added in the main frame
-
-        """
-
-        # This would be called after the double clicking the controls and call the main top level frame 
-
-        # """
-        # Controls with the task name button and other controls to be added in the scrollable frame : 
-        # This would be changed later and the task are to be added from the top level whcih in turn includes the task and other properties 
-        # in the main scrollable frame
-        
-        # """
-        # self.each_task  = ctk.CTkFrame(self.scrollable_frame , width=self.scrollable_frame.winfo_width() , height=30 , fg_color="white" ,corner_radius=0)
-        # self.each_task.pack_propagate(0)
-        # self.checkbox  = ctk.CTkCheckBox(self.each_task , text="" , border_width=1 , border_color="blue" , height=1 , width=1 , corner_radius=0)
-        # self.current_text_title  = ctk.CTkEntry(self.each_task , placeholder_text="Enter Task" , border_color="black" , border_width=1 , corner_radius=1 , width=200)
-        # self.default_timer = ctk.CTkLabel(self.each_task , text="00:00:00" , font=("Arial" , 18 , "bold"))
-
-        # self.progress_bar  = ctk.CTkProgressBar(self.each_task , border_color="black" , corner_radius=0 , border_width=0 , height=15)
-        # # self.progress_bar.configure()
-        # self.progress_bar.set(value=0)
-        # self.progress_bar["minimum"] = 0
-        # self.progress_bar["maximum"] = 100
-    
-        # self.checkbox.pack(padx = 1 , side = "left" , anchor = "w")
-        # self.current_text_title.pack(side = "left" , padx = 1 , anchor = "w")
-        # self.default_timer.pack(side = "left" , padx = 1 , anchor = "w")
-        # self.progress_bar.pack(side = "left" , padx = 1 , anchor  = "w")
-        # self.each_task.pack(padx=2 , pady = 5)
-
-
-
-
-    def __init__(self , master  , width ,  height ) -> None:
-        """
-
-        This to be called from the main page and then the controls will work as usual
-        """
-        # self.master = ctk.CTk() # For the demo code will change this code later to the frame 
         self.master = master
-        self.height   = height
         self.width  = width
-        self.task_frame  = ctk.CTkFrame(self.master  , height=self.height , width=self.width , fg_color="green" , corner_radius=0 , border_color="blue" , border_width=0)
+        self.height  = height
+
+        self.count  = 0
+
+
+        # Controls for the main task app :
+
+        # Container for the main app 
+        self.task_frame  = ctk.CTkFrame(self.master , height=self.height , width=self.width , fg_color="green" , corner_radius=0 , border_color="blue" , border_width=1)
         self.task_frame.pack_propagate(0)
-        self.add_button   = ctk.CTkButton(self.task_frame , text="+" , width=50 , corner_radius=0 , command = self.add_button_clicked)
 
-        # self.add_button.pack(side = "right" , anchor = "ne" , padx = (0 , 0) , pady = (0 , 0 )
-        self.add_button.pack(anchor = "ne" , padx = 5 , pady = 5)
-
-
-        self.scrollable_frame  = ctk.CTkScrollableFrame(self.task_frame , height=self.height - 50 , width=self.width + 100 , fg_color="blue")
+        # Add Button it will show the top level app which will in turn allow to add text controls : 
+        self.add_button  = ctk.CTkButton(self.task_frame , text="+" , width=50 , corner_radius=0 , command=self.add_button_clicked )
 
 
-        self.scrollable_frame.pack(side="bottom" , anchor  = "ne")
+        # Scrollable frame : This will be the container for the main application and the tasks would be added in here : 
+        self.scrollable_frame  = ctk.CTkScrollableFrame(self.task_frame , height=self.height -30 , width=self.width , fg_color="red" , corner_radius=0 )
+
+
+        # Subscribing from the pbsub and checking messageboxes :
+        pub.subscribe(self.count_change,"closing")
+
 
         self.task_frame.pack()
-    
-        # self.master.mainloop() ## This line will be deleted later for now considering this as the main application 
-        # self.master.pack()
+        self.add_button.pack(anchor = "ne" , padx = 5 , pady = 5)
+        self.scrollable_frame.pack()
 
 
 
-# class CurrentTask(TaskFrame):
 
-#     def __init__(self, master="sdf", width=400, height=500) -> None:
-#         super().__init__(master, width, height)
 
-#         print("i am initialized")
+class Top_Control(TaskAdd):
 
-if __name__ =="__main__":
+    def on_close(self , event):
+        # This function is executed when each widget inside the top level is being destroyed
+        if event.widget == self.main_app:
+            pub.sendMessage("closing")
 
-    name = TaskFrame()
+
+
+
+    def __init__(self , master = None , width  = 450 , height  = 400, x_location = 100 , y_location  = 100 , count  = 1) -> None:
+
+       
+        self.master = master
+        self.width = width
+        self.height  = height
+        self.x = x_location
+        self.y = y_location
+
+
+
         
+        self.x  = self.x + 30
+        self.y = self.y + 80
+        # self.y = self.y - self.master.winfo_height() // 2
+
+       
+        # Calling the main top level and to be closed
+        self.main_app  = ctk.CTkToplevel()
+        self.main_app.resizable(0 , 0)
+        
+        self.main_app.attributes("-topmost" , True)
+        self.main_app.title("Log Timer")
+        self.main_app.geometry(f"{self.width}x{self.height}+{self.x}+{self.y}") # This to be changed to the location of x and y
+
+
+
+        # Setting up the controls for the top level :
+        self.task_name  = ctk.CTkEntry(self.main_app , fg_color="yellow" , border_color="black" , corner_radius=0 , border_width=1 , placeholder_text="Enter Task")
+        self.grid_frame = ctk.CTkScrollableFrame(self.main_app , fg_color="green" , corner_radius=0)
+
+        self.comment_box  = ctk.CTkTextbox(self.grid_frame , corner_radius=0 , width=300 )
+        self.comment_box_button  = ctk.CTkButton(self.grid_frame, text="Add Comment" , corner_radius= 0)
+
+        self.checklist_button  = ctk.CTkButton(self.grid_frame ,text = "Checklist" , corner_radius=0)
+        """ 
+        Function to define that would add checklist in the main app scrollbar and the color scheme to be changed as well : 
+        
+        """
+
+        ## Binding the controls : 
+        self.main_app.bind("<Destroy>" , lambda event: self.on_close(event))
+
+
+        # Placing the controls in the main app : 
+        self.task_name.pack(fill = "x")
+        self.grid_frame.pack(side = "top" , anchor=  "w" , fill="both" , expand = True)
+        self.comment_box.grid( row = 0 , column  = 0 , columnspan  = 16 , rowspan = 16)
+        self.comment_box_button.grid(row = 17 , column  = 0 )
+        self.checklist_button.grid(row = 0 , column = 18)
+
+
+
+
+
+
+
+if __name__ == "__main__":
+
+    window = ctk.CTk()
+    window.resizable(0 , 0 )
+    TaskAdd(window , 500 , 500)
+
+    window.mainloop()
