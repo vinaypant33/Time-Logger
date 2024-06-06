@@ -33,12 +33,18 @@ class TaskAdd():
         self.progress_bar.set(value=0)
         self.progress_bar["minimum"] = 0
         self.progress_bar["maximum"] = 100
+
+        self.start_stop_button  = ctk.CTkButton(self.each_task , text="\u25B6" , corner_radius=0 , border_width=0 , width = 25)
+
+
+
     
         self.checkbox.pack(padx = 1 , side = "left" , anchor = "w")
         self.current_text_title.pack(side = "left" , padx = 1 , anchor = "w")
         self.default_timer.pack(side = "left" , padx = 1 , anchor = "w")
         self.progress_bar.pack(side = "left" , padx = 1 , anchor  = "w")
         self.each_task.pack(padx=2 , pady = 5)
+        self.start_stop_button.pack(side = "left" , anchor = "w" , padx = (15 , 0))
 
 
 
@@ -70,11 +76,11 @@ class TaskAdd():
         # Controls for the main task app :
 
         # Container for the main app 
-        self.task_frame  = ctk.CTkFrame(self.master , height=self.height , width=self.width , corner_radius=0  , border_width=1)
+        self.task_frame  = ctk.CTkFrame(self.master , height=self.height , width=self.width , corner_radius=0  , border_width=1 , fg_color="#333333" )
         self.task_frame.pack_propagate(0)
 
         # Add Button it will show the top level app which will in turn allow to add text controls : 
-        self.add_button  = ctk.CTkButton(self.task_frame , text="+" , width=50 , corner_radius=0 , command=self.add_button_clicked )
+        self.add_button  = ctk.CTkButton(self.task_frame , text="+" , width=40 , corner_radius=0 , command=self.add_button_clicked , fg_color="#202020" )
 
 
         # Scrollable frame : This will be the container for the main application and the tasks would be added in here : 
@@ -181,6 +187,6 @@ if __name__ == "__main__":
 
     window = ctk.CTk()
     window.resizable(0 , 0 )
-    TaskAdd(window , 500 , 500)
+    TaskAdd(window , 600 , 600)
 
     window.mainloop()

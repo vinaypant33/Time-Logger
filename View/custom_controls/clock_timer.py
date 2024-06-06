@@ -17,7 +17,7 @@ class CustomMeter(ctk.CTkCanvas):
 
         self.arc = None
         self.create_meter_arc()
-        self.create_text(width // 2, height // 2, text="0%", font=("Helvetica", 12, "bold"), fill="white", tags="text")
+        self.create_text(width // 2, height // 2, text="0%", font=("Helvetica", 12, "bold"), fill="green", tags="text")
 
     def create_meter_arc(self):
         if self.arc:
@@ -25,7 +25,7 @@ class CustomMeter(ctk.CTkCanvas):
         self.arc = self.create_arc(
             10, 10, self.width - 10, self.height - 10,
             start=self.start_angle, extent=0,
-            outline="white", width=5, style=tk.ARC, tags="arc"
+            outline="green", width=5, style=tk.ARC, tags="arc"
         )
 
     def set_value(self, value):
@@ -39,7 +39,7 @@ class CustomMeter(ctk.CTkCanvas):
 if __name__ =="__main__":
 
     window  = tk.Tk()
-    hehe  = tk.Frame(window , background="green" , height=400 , width=400)
+    hehe  = tk.Frame(window , background="black", height=400 , width=400)
     hehe.pack_propagate(0)
     name = CustomMeter(hehe)
     hehe.pack()

@@ -12,7 +12,7 @@ from pubsub import pub  # Used for message passing //
 # Import Manually coded Modules : 
 from custom_controls import spinbox
 from custom_controls import task_frame
-
+from custom_controls import progress
 
 class MainPage():
 
@@ -65,7 +65,9 @@ class MainPage():
         # External Classes Called for Spinbox and Taskframe
         self.main_spinbox  = spinbox.Spinbox(self.spinbox_meter_frame , height=100 , width=100)
 
-        self.task_frame  = task_frame.TaskAdd(self.task_work_frame , width=500 , height=400)
+        self.task_frame  = task_frame.TaskAdd(self.task_work_frame , width=580 , height=400)
+
+        self.progress_frame   = progress.Analytics(self.analytics_frame , width=580 , height=300)
 
         #-------------Packing the controls----------------------
         self.scrollabe_frame.pack(expand  = True , fill = "y")
