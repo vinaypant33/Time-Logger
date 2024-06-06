@@ -26,6 +26,7 @@ class MainPage():
 
 
         self.window  = ctk.CTk()
+        
 
         # Sets the appearance mode of the application
         ctk.set_appearance_mode("dark")        # System and light are available

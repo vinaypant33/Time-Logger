@@ -22,7 +22,7 @@ class TaskAdd():
             print("length cannot be less than ")
 
     def open_top_form(self , event ,  current_text):
-        Top_Control(current_text=current_text)
+        Top_Control(x_location=self.placement_x , y_location=self.placement_y , current_text=current_text)
 
 
 
@@ -87,6 +87,7 @@ class TaskAdd():
         else:
             current_x  = self.master.winfo_x()
             current_y = self.master.winfo_y()
+            print(current_x)
             Top_Control(x_location=current_x , y_location=current_y)
 
      
@@ -98,6 +99,13 @@ class TaskAdd():
         self.width  = width
         self.height  = height
         self.count  = 0
+
+
+        self.placement_x = self.master.winfo_x()
+        self.placement_y = self.master.winfo_y()
+
+      
+      
          # Sets the appearance mode of the application
         ctk.set_appearance_mode("dark")        # System and light are available
         # Supported themes: green, dark-blue, blue # Sets the color of the widget
@@ -143,7 +151,7 @@ class Top_Control(TaskAdd):
         
 
 
-    def __init__(self , master = None , width  = 450 , height  = 400, x_location = 400 , y_location  = 400 , count  = 1 , current_text = "Enter Task") -> None:
+    def __init__(self , master = None , width  = 450 , height  = 400, x_location = 0, y_location  = 0 , count  = 1 , current_text = "Enter Task") -> None:
 
        
         self.master = master
@@ -155,9 +163,11 @@ class Top_Control(TaskAdd):
         self.current_text = current_text
         # self.y = self.y - self.master.winfo_height() // 2
 
-       
+        
         # Calling the main top level and to be closed
         self.main_app  = ctk.CTkToplevel()
+
+  
         self.main_app.resizable(0 , 0)
         self.main_app.attributes("-topmost" , True)
         self.main_app.title("Log Timer")
