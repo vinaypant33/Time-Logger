@@ -53,7 +53,7 @@ class MainPage():
         self.scrollabe_frame = ctk.CTkScrollableFrame(self.window , width=self.width , corner_radius= 0  )
         self.clock_timer_frame  = ctk.CTkFrame(self.scrollabe_frame , width=self.width - 10 , height=300 ,corner_radius= 0 )
         self.clock_timer_frame.pack_propagate(0)
-        self.task_work_frame  = ctk.CTkFrame(self.scrollabe_frame , width=400 , height=400 , corner_radius=0 , fg_color="red" )
+        self.task_work_frame  = ctk.CTkFrame(self.scrollabe_frame , width=600 , height=400 , corner_radius=0  )
         self.analytics_frame  = ctk.CTkFrame(self.scrollabe_frame , width=self.width , height=300 , corner_radius=  0 )
 
         self.focus_label   = ctk.CTkLabel(self.clock_timer_frame , text="Start Focus Session")
@@ -65,12 +65,12 @@ class MainPage():
         # External Classes Called for Spinbox and Taskframe
         self.main_spinbox  = spinbox.Spinbox(self.spinbox_meter_frame , height=100 , width=100)
 
-        self.task_frame  = task_frame.TaskAdd(self.task_work_frame , width=400 , height=400)
+        self.task_frame  = task_frame.TaskAdd(self.task_work_frame , width=500 , height=400)
 
         #-------------Packing the controls----------------------
         self.scrollabe_frame.pack(expand  = True , fill = "y")
         self.clock_timer_frame.pack(pady = 10 , padx=10)
-        self.task_work_frame.pack()
+        self.task_work_frame.pack(padx = 5)
         self.analytics_frame.pack(padx=10 , pady =10)
 
         self.focus_label.pack()

@@ -16,14 +16,17 @@ class TaskAdd():
 
     """
     
-    def count_change(self):
+    def count_change(self ,current_text):
         self.count = 0 # The form count is added to the last and the text would be added in the main form  : 
 
-        self.each_task  = ctk.CTkFrame(self.scrollable_frame , width=self.scrollable_frame.winfo_width() , height=30 , fg_color="white" ,corner_radius=0)
+        self.each_task  = ctk.CTkFrame(self.scrollable_frame , width=self.scrollable_frame.winfo_width() , height=30  ,corner_radius=0)
         self.each_task.pack_propagate(0)
-        self.checkbox  = ctk.CTkCheckBox(self.each_task , text="" , border_width=1 , border_color="blue" , height=1 , width=1 , corner_radius=0)
-        self.current_text_title  = ctk.CTkEntry(self.each_task , placeholder_text="Enter Task" , border_color="black" , border_width=1 , corner_radius=1 , width=200)
+        self.checkbox  = ctk.CTkCheckBox(self.each_task , text="" , border_width=1  , height=1 , width=1 , corner_radius=0)
+        self.current_text_title  = ctk.CTkEntry(self.each_task , placeholder_text="Enter Task" ,  border_width=1 , corner_radius=1 , width=200)
         self.default_timer = ctk.CTkLabel(self.each_task , text="00:00:00" , font=("Arial" , 18 , "bold"))
+
+        # self.current_text_title.configure(text = current_text)
+        self.current_text_title.insert( 0 , current_text)
 
         self.progress_bar  = ctk.CTkProgressBar(self.each_task , border_color="black" , corner_radius=0 , border_width=0 , height=15)
         # self.progress_bar.configure()
@@ -36,6 +39,7 @@ class TaskAdd():
         self.default_timer.pack(side = "left" , padx = 1 , anchor = "w")
         self.progress_bar.pack(side = "left" , padx = 1 , anchor  = "w")
         self.each_task.pack(padx=2 , pady = 5)
+
 
 
     def add_button_clicked(self):
@@ -57,12 +61,16 @@ class TaskAdd():
         self.height  = height
 
         self.count  = 0
-
+         # Sets the appearance mode of the application
+        ctk.set_appearance_mode("dark")        # System and light are available
+        
+        # Supported themes: green, dark-blue, blue # Sets the color of the widget
+        ctk.set_default_color_theme("blue")
 
         # Controls for the main task app :
 
         # Container for the main app 
-        self.task_frame  = ctk.CTkFrame(self.master , height=self.height , width=self.width , fg_color="green" , corner_radius=0 , border_color="blue" , border_width=1)
+        self.task_frame  = ctk.CTkFrame(self.master , height=self.height , width=self.width , corner_radius=0  , border_width=1)
         self.task_frame.pack_propagate(0)
 
         # Add Button it will show the top level app which will in turn allow to add text controls : 
@@ -70,11 +78,12 @@ class TaskAdd():
 
 
         # Scrollable frame : This will be the container for the main application and the tasks would be added in here : 
-        self.scrollable_frame  = ctk.CTkScrollableFrame(self.task_frame , height=self.height -30 , width=self.width , fg_color="red" , corner_radius=0 )
+        self.scrollable_frame  = ctk.CTkScrollableFrame(self.task_frame , height=self.height -30 , width=self.width , corner_radius=0 )
 
 
         # Subscribing from the pbsub and checking messageboxes :
         pub.subscribe(self.count_change,"closing")
+        pub.subscribe(self.count_change , "enterpressed")
 
 
         self.task_frame.pack()
@@ -87,12 +96,25 @@ class TaskAdd():
 
 class Top_Control(TaskAdd):
 
-    def on_close(self , event):
+    def on_close(self , event ):
         # This function is executed when each widget inside the top level is being destroyed
         if event.widget == self.main_app:
-            pub.sendMessage("closing")
+           
+            # self.current_text  = self.task_name.get()
+            pub.sendMessage("closing" , current_text  = self.current_text)
+            
+    
+    def return_pressed(self ,event):
+        pub.sendMessage("enterpressed" , current_text = self.current_text)
+        self.task_name.delete( 0 ,tk.END)
 
 
+    def temporary_function(self):
+        print(self.task_name.get())
+
+    def text_update(self):
+        self.current_text  = self.task_name.get()
+        
 
 
     def __init__(self , master = None , width  = 450 , height  = 400, x_location = 100 , y_location  = 100 , count  = 1) -> None:
@@ -114,6 +136,7 @@ class Top_Control(TaskAdd):
        
         # Calling the main top level and to be closed
         self.main_app  = ctk.CTkToplevel()
+       
         self.main_app.resizable(0 , 0)
         
         self.main_app.attributes("-topmost" , True)
@@ -123,24 +146,26 @@ class Top_Control(TaskAdd):
 
 
         # Setting up the controls for the top level :
-        self.task_name  = ctk.CTkEntry(self.main_app , fg_color="yellow" , border_color="black" , corner_radius=0 , border_width=1 , placeholder_text="Enter Task")
-        self.grid_frame = ctk.CTkScrollableFrame(self.main_app , fg_color="green" , corner_radius=0)
+        self.task_name  = ctk.CTkEntry(self.main_app  , border_color="skyblue" , corner_radius=0 , border_width=1 , placeholder_text="Enter Task")
+        self.grid_frame = ctk.CTkScrollableFrame(self.main_app , corner_radius=0)
 
         self.comment_box  = ctk.CTkTextbox(self.grid_frame , corner_radius=0 , width=300 )
         self.comment_box_button  = ctk.CTkButton(self.grid_frame, text="Add Comment" , corner_radius= 0)
 
-        self.checklist_button  = ctk.CTkButton(self.grid_frame ,text = "Checklist" , corner_radius=0)
+        self.checklist_button  = ctk.CTkButton(self.grid_frame ,text = "Checklist" , corner_radius=0 , command=self.temporary_function)
         """ 
         Function to define that would add checklist in the main app scrollbar and the color scheme to be changed as well : 
-        
         """
 
         ## Binding the controls : 
-        self.main_app.bind("<Destroy>" , lambda event: self.on_close(event))
+        self.current_text  = self.task_name.get()
+        self.task_name.bind('<KeyPress>' , lambda event : self.text_update())
+        # self.main_app.bind("<Destroy>" , lambda event: self.on_close(event))    # Will solve this later and to make sure the text works in closing the form 
+        self.task_name.bind("<Return>" , lambda event  :  self.return_pressed(event))
 
 
         # Placing the controls in the main app : 
-        self.task_name.pack(fill = "x")
+        self.task_name.pack(fill = "x" , padx = 5)
         self.grid_frame.pack(side = "top" , anchor=  "w" , fill="both" , expand = True)
         self.comment_box.grid( row = 0 , column  = 0 , columnspan  = 16 , rowspan = 16)
         self.comment_box_button.grid(row = 17 , column  = 0 )
