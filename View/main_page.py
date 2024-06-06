@@ -51,7 +51,7 @@ class MainPage():
 
         # Frames ( scrollable Main Frame and other Frames in whcih the controls would be defined )
         self.scrollabe_frame = ctk.CTkScrollableFrame(self.window , width=self.width , corner_radius= 0  )
-        self.clock_timer_frame  = ctk.CTkFrame(self.scrollabe_frame , width=self.width - 10 , height=300 ,corner_radius= 0 )
+        self.clock_timer_frame  = ctk.CTkFrame(self.scrollabe_frame , width=self.width - 10 , height=300 ,corner_radius= 0  )
         self.clock_timer_frame.pack_propagate(0)
         self.task_work_frame  = ctk.CTkFrame(self.scrollabe_frame , width=600 , height=400 , corner_radius=0  )
         self.analytics_frame  = ctk.CTkFrame(self.scrollabe_frame , width=self.width , height=300 , corner_radius=  0 )
