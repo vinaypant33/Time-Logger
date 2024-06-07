@@ -7,12 +7,23 @@ import ttkbootstrap as ttk
 from PIL import Image
 Image.CUBIC = Image.BICUBIC
 
-from pubsub import pub  # Used for message passing //  
+from pubsub import pub  # Used for message passing //
+
+
+import sys
+
+name  = sys.path.append('custom_controls')
 
 # Import Manually coded Modules : 
 from custom_controls import spinbox
 from custom_controls import task_frame
 from custom_controls import progress
+
+
+# import spinbox
+# import task_frame
+# import progress
+
 
 class MainPage():
 

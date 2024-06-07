@@ -8,7 +8,7 @@ from pubsub import pub
 
 
 
-
+from custom_controls.clock_timer import CustomMeter
 
 class TaskAdd():
     """
@@ -29,11 +29,11 @@ class TaskAdd():
     def add_task(self ):
         self.each_task  = ctk.CTkFrame(self.scrollable_frame , width=self.scrollable_frame.winfo_width() , height=30  ,corner_radius=0)
         self.each_task.pack_propagate(0)
-        self.checkbox  = ctk.CTkCheckBox(self.each_task , text="" , border_width=1  , height=1 , width=1 , corner_radius=0)
+        self.checkbox  = ctk.CTkCheckBox(self.each_task , text="" , border_width=1  , height=1 , width=1 , corner_radius=20)
         self.current_text_title  = ctk.CTkEntry(self.each_task , placeholder_text="Enter Task" ,  border_width=1 , corner_radius=1 , width=200)
         self.default_timer = ctk.CTkLabel(self.each_task , text="00:00:00" , font=("Arial" , 18 , "bold"))
         self.current_text = self.current_text_title.get()
-        self.current_text_title.focus_force()
+        self.current_text_title.focus()
         self.current_text_title.bind('<KeyPress>' , lambda event : self.text_update(event))
         self.current_text_title.bind('<Double-1>' , lambda event: self.open_top_form(event , current_text=self.current_text))
 
@@ -195,7 +195,7 @@ class Top_Control(TaskAdd):
 
 
         # Placing the controls in the main app : 
-        self.task_name.pack(fill = "x" , padx = 5)
+        self.task_name.pack(fill = "x" , padx = 5 , pady = 4)
         self.grid_frame.pack(side = "top" , anchor=  "w" , fill="both" , expand = True , pady = 10)
         self.comment_box.grid( row = 0 , column  = 0 , columnspan  = 16 , rowspan = 16)
         self.comment_box_button.grid(row = 17 , column  = 0 , pady = 10 )

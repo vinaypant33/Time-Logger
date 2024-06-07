@@ -3,6 +3,12 @@ import customtkinter as ctk
 from PIL import Image
 Image.CUBIC = Image.BICUBIC
 
+import sys
+
+sys.path.append('custom_controls')
+
+
+
 
 
 
@@ -43,6 +49,8 @@ class Analytics():
         """
         Will define the meter and the meter count with the text to show the current hours passed today  : on Hold for now  : 
         """
+
+        
 
 
         self.streak_text  = ctk.CTkLabel(self.streak_frame , text="Streak")
