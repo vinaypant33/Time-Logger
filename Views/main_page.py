@@ -1,0 +1,111 @@
+import tkinter as tk
+from tkinter import ttk
+import ttkbootstrap as btk
+
+
+
+
+
+class MainPage():
+
+
+    def __init__(self , width  = 500 , height  = 600) -> None:
+        self.main_app  = btk.Window()
+
+        self.height  = height
+        self.width   = width 
+
+        self.frame_height = 250
+        
+
+        self.main_app.resizable(0 , 0)
+        self.x_location = (self.main_app.winfo_screenwidth() // 2) - (self.width // 2)
+        self.y_location  = (self.main_app.winfo_screenheight() // 2) - (self.height // 2)
+        self.main_app.geometry(f"{self.width}x{self.height}+{self.x_location}+{self.y_location}")
+
+        # Setting up the title and the logo  
+        self.main_app.title("Time Logger")
+
+
+        self.bottom_frame  = btk.Frame(self.main_app , width=self.width , height=25 , bootstyle  = "info")
+        self.bottom_frame.pack_propagate(0)
+        # Setting up the canvas for the main frame  : 
+        self.main_canvas = tk.Canvas(self.main_app , background="red")
+        self.scrollbar  = ttk.Scrollbar(self.main_app, orient=tk.VERTICAL , command=self.main_canvas.yview)
+
+
+        self.controls_frame = ttk.Frame(self.main_canvas )
+
+        # numerial timer and button and meter widget would be in this frame 
+        self.timer_frame = ttk.Frame(self.controls_frame , width=self.width - 10 , height=self.frame_height , bootstyle ="info")
+
+        # Second frame : Task list and the number of tasks added in the main frame : 
+        self.task_frame  = btk.Frame(self.controls_frame , width=self.width - 10 , height = self.frame_height  , bootstyle  = "secondary")
+        # Third Frame  : # Meter Widget showing yestarday today and tomorrow task list 
+        self.analytics_frame  = btk.Frame(self.controls_frame , width=self.width -10 , height=self.frame_height , bootstyle = "danger")
+        
+        self.timer_frame.pack_propagate(0)
+        self.task_frame.pack_propagate(0)
+        self.analytics_frame.pack_propagate(0)
+
+        # Controls for the bottom frame  :  Each frame would hold the button widget 
+        self.theme_frame  = btk.Frame(self.bottom_frame  , width=150 , height = 25 , bootstyle  = "warning")
+        self.theme_frame.pack_propagate(0)
+        self.theme_checkbox = btk.Checkbutton(self.theme_frame, text="Change Theme" , bootstyle="dark-square-toggle")
+
+
+
+
+        ### Main Controls for Each Frame : 
+        # self.timerbox  = btk.Spinbox(self.timer_frame , bootstyle  = "dark" , from_=1, to=100 ) Not gonna use this making a custom control for this 
+
+        
+
+
+        # configuring Controls  : 
+        self.main_canvas.configure(yscrollcommand=self.scrollbar.set)
+
+        
+        
+        # Binding Controls  : 
+        self.main_canvas.bind('<Configure>' , lambda e: self.main_canvas.configure(scrollregion=self.main_canvas.bbox("all")))
+
+        
+        self.main_canvas.create_window((0,0) , window=self.controls_frame ,anchor="nw")
+
+
+
+
+
+
+
+
+
+
+        ### Packing the controls  :  Line by Line
+
+        self.bottom_frame.pack(side=tk.BOTTOM)
+        self.main_canvas.pack(side=tk.LEFT , fill=tk.BOTH , expand=1)
+        self.scrollbar.pack(side=tk.RIGHT , fill=tk.Y)
+
+        self.timer_frame.pack()
+        self.task_frame.pack()
+        self.analytics_frame.pack()
+        
+
+        self.theme_frame.pack(side="left" , anchor="w")
+
+        self.theme_checkbox.pack(side="left" ,anchor="center" , pady=4 , padx=15)
+
+    
+
+
+        self.main_app.mainloop()
+
+    
+
+
+
+
+if __name__ == '__main__':
+    MainPage()
