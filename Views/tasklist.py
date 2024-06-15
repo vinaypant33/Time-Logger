@@ -16,7 +16,7 @@ class TaskList():
         self.progressstyle = ttk.Style()
         self.progressstyle.configure("Thick.TProgressbar", thickness=20)
 
-        self.task_frame = btk.Frame(self.controls_frame , width=400 , height=30 ,bootstyle = "success")
+        self.task_frame = btk.Frame(self.controls_frame , width=400 , height=30)
         # self.task_frame.pack_propagate(0)
         self.check_var = btk.BooleanVar(value=False)
         # self.check_var.set(False)
@@ -28,7 +28,7 @@ class TaskList():
 
         self.start_stop_button  = btk.Button(self.task_frame , text='\u25B6' , width=3) # '\u23F8' "\u25B6"  \u23F9
 
-        self.task_frame.pack(padx=(3,4))
+        self.task_frame.pack(padx=(3,4) , pady=3)
         self.taskcheckbutton.pack(side=tk.LEFT)
         self.task_entry.pack(side=tk.LEFT ,padx =(5,0))
         self.timer_text.pack(side=tk.LEFT , padx=(5,0))
@@ -41,7 +41,7 @@ class TaskList():
 
     def add_controls(self):
 
-        self.temp_frame  = btk.Frame(self.controls_frame , height=200 , width=self.width , bootstyle  = "info")
+        self.temp_frame  = btk.Frame(self.controls_frame , height=200 , width=self.width )
         self.temp_frame.pack(padx=10 , pady=10)
         self.main_canvas.update_idletasks()
         self.main_canvas.configure(scrollregion=self.main_canvas.bbox("all"))
@@ -59,7 +59,7 @@ class TaskList():
         self.frame_height = 250
 
         # Setting up the canvas for the main frame  : 
-        self.main_canvas = tk.Canvas(self.main_app , background="red")
+        self.main_canvas = tk.Canvas(self.main_app )
         self.scrollbar  = ttk.Scrollbar(self.main_app, orient=tk.VERTICAL , command=self.main_canvas.yview)
         self.controls_frame = ttk.Frame(self.main_canvas)
         ##############-----------Main Controls------------------------##################

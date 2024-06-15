@@ -16,9 +16,9 @@ class Analytics():
         self.width    = width
         self.height  = height
 
-        self.yesterday_frame  = btk.Frame(self.master , height=height, width  = (self.width //3) , bootstyle = "info")
-        self.today_frame  = btk.Frame(self.master , height=height , width=(self.width //3) , bootstyle = "warning")
-        self.streak_days = btk.Frame(self.master , height=self.height , width=(self.width //3) , bootstyle = "success")
+        self.yesterday_frame  = btk.Frame(self.master , height=height, width  = (self.width //3) )
+        self.today_frame  = btk.Frame(self.master , height=height , width=(self.width //3) )
+        self.streak_days = btk.Frame(self.master , height=self.height , width=(self.width //3) )
 
 
         self.yesterday_frame.pack(side=tk.LEFT)

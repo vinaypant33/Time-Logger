@@ -25,7 +25,7 @@ class MainPage():
         text_icon  =  '\u23F8'# Unicode character for the button icon # '\u23F8' "\u25B6"  \u23F9
         main_text  = "Stop Focus Session"
         self.stop_button  = btk.Button(self.timer_frame , text=f"{text_icon}  { main_text}" , command=self.stop_focus_session)
-        self.stop_button.pack()
+        self.stop_button.pack(pady = 5)
 
 
     def theme_change(self):
@@ -91,19 +91,22 @@ class MainPage():
         self.controls_frame = ttk.Frame(self.main_canvas )
 
         # numerial timer and button and meter widget would be in this frame 
-        self.timer_frame = btk.Frame(self.controls_frame , width=self.width - 10 , height=self.frame_height , bootstyle ="info")
+        self.timer_frame = btk.Frame(self.controls_frame , width=self.width - 10 , height=self.frame_height )
+        
+        self.seperator  = btk.Separator(self.controls_frame )
 
         # Second frame : Task list and the number of tasks added in the main frame : 
-        self.task_frame  = btk.Frame(self.controls_frame , width=self.width - 10 , height = self.frame_height  , bootstyle  = "secondary")
+        self.task_frame  = btk.Frame(self.controls_frame , width=self.width - 10 , height = self.frame_height )
         # Third Frame  : # Meter Widget showing yestarday today and tomorrow task list 
-        self.analytics_frame  = btk.Frame(self.controls_frame , width=self.width -10 , height=self.frame_height , bootstyle = "danger")
+        self.seperator1  = btk.Separator(self.controls_frame )
+        self.analytics_frame  = btk.Frame(self.controls_frame , width=self.width -10 , height=self.frame_height )
         
         self.timer_frame.pack_propagate(0)
         self.task_frame.pack_propagate(0)
         self.analytics_frame.pack_propagate(0)
 
         # Controls for the bottom frame  :  Each frame would hold the button widget 
-        self.theme_frame  = btk.Frame(self.bottom_frame  , width=150 , height = 25 , bootstyle  = "warning")
+        self.theme_frame  = btk.Frame(self.bottom_frame  , width=150 , height = 25 )
         self.theme_frame.pack_propagate(0)
         self.theme_checkbox = btk.Checkbutton(self.theme_frame, text="Light Theme" , bootstyle="dark-square-toggle" , command=self.theme_change , variable=self.checkbox_value)
 
@@ -136,9 +139,11 @@ class MainPage():
         self.main_canvas.pack(side=tk.LEFT , fill=tk.BOTH , expand=1)
         self.scrollbar.pack(side=tk.RIGHT , fill=tk.Y)
         self.timer_frame.pack()
+        self.seperator.pack(fill=tk.X , pady=4)
         self.task_frame.pack()
+        self.seperator1.pack(fill=tk.X , pady = 4)
         self.analytics_frame.pack()
-        self.theme_frame.pack(side="left" , anchor="w")
+        self.theme_frame.pack(side="left" , anchor="w" , pady = 1)
         self.theme_checkbox.pack(side="left" ,anchor="center" , pady=4 , padx=15)
         self.play_pause_button.pack()
         tasklist.TaskList(self.task_frame)
