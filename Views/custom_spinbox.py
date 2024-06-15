@@ -5,6 +5,9 @@ from ttkbootstrap.constants import *
 from tkinter import messagebox
 
 
+from PIL import Image
+Image.CUBIC  = Image.BICUBIC
+
 class SpinBox():
 
     # style = btk.Style()
@@ -75,6 +78,10 @@ class SpinBox():
 
         self.add_button.pack(side=tk.TOP)
         self.subtract_button.pack(side=tk.BOTTOM )
+    
+    def close_all(self):
+        self.main_frame.pack_forget()
+
 
 class SpinMeterBox():
 
@@ -84,12 +91,17 @@ class SpinMeterBox():
         self.width = width
 
         # Make the control for the main button : 
-        self.timer_meter  = btk.Meter(self.master)
+        self.timer_meter  = btk.Meter(self.master , metersize=150 , bootstyle="primary" , subtextstyle="primary" , subtext="Minutes" , amountused=0 , amounttotal=60 , interactive=True , meterthickness=15)
+
+        self.timer_meter.pack()
+
+    def close_all(self):
+        self.timer_meter.pack_forget()
 
 
 if __name__ =='__main__':
 
     main = btk.Window()
-    SpinBox(main)
+    SpinMeterBox(main)
 
     main.mainloop()

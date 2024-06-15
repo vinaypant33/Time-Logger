@@ -9,8 +9,27 @@ import analytics_frame
 
 
 class MainPage():
+
+
+    def stop_focus_session(self):
+        self.custom_spinbox  = custom_spinbox.SpinBox(self.timer_frame)
+        self.meterbox.close_all()
+        self.stop_button.pack_forget()
+        self.play_pause_button.pack()
+
+
+    def start_focus_session(self):
+        self.play_pause_button.pack_forget()
+        self.custom_spinbox.close_all()
+        self.meterbox  = custom_spinbox.SpinMeterBox(self.timer_frame)
+        text_icon  =  '\u23F8'# Unicode character for the button icon # '\u23F8' "\u25B6"  \u23F9
+        main_text  = "Stop Focus Session"
+        self.stop_button  = btk.Button(self.timer_frame , text=f"{text_icon}  { main_text}" , command=self.stop_focus_session)
+        self.stop_button.pack()
+
+
     def theme_change(self):
-        
+
         # print(self.checkbox_value.get())
 
         if self.checkbox_value.get() == 0:
@@ -88,16 +107,12 @@ class MainPage():
         self.theme_frame.pack_propagate(0)
         self.theme_checkbox = btk.Checkbutton(self.theme_frame, text="Light Theme" , bootstyle="dark-square-toggle" , command=self.theme_change , variable=self.checkbox_value)
 
-    
 
 
         text_icon  =  '\u25B6' # Unicode character for the button icon
         main_text  = "Start Focus Session"
-        self.play_pause_button  = btk.Button(self.timer_frame , text=f"{text_icon}  { main_text}")
+        self.play_pause_button  = btk.Button(self.timer_frame , text=f"{text_icon}  { main_text}" , command=self.start_focus_session )
         self.focus_label  = btk.Label(self.timer_frame , text="Select time ( minutes ) for which the focus session is to be done")
-
-
-        
 
         ### Main Controls for Each Frame : 
         # self.timerbox  = btk.Spinbox(self.timer_frame , bootstyle  = "dark" , from_=1, to=100 ) Not gonna use this making a custom control for this 
@@ -116,7 +131,7 @@ class MainPage():
         self.main_canvas.create_window((0,0) , window=self.controls_frame ,anchor="nw")
         ######------------------Packing the controls------------------------######
         self.focus_label.pack(pady=15)
-        custom_spinbox.SpinBox(self.timer_frame)
+        self.custom_spinbox  = custom_spinbox.SpinBox(self.timer_frame)
         self.bottom_frame.pack(side=tk.BOTTOM)
         self.main_canvas.pack(side=tk.LEFT , fill=tk.BOTH , expand=1)
         self.scrollbar.pack(side=tk.RIGHT , fill=tk.Y)
@@ -132,6 +147,7 @@ class MainPage():
         self.main_app.mainloop()
 
     
+
 
 
 if __name__ == '__main__':
