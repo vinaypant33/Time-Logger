@@ -4,6 +4,8 @@ import ttkbootstrap as btk
 from tkinter import messagebox
 
 import custom_spinbox
+import tasklist
+import analytics_frame
 
 
 class MainPage():
@@ -107,6 +109,8 @@ class MainPage():
         self.theme_frame.pack(side="left" , anchor="w")
         self.theme_checkbox.pack(side="left" ,anchor="center" , pady=4 , padx=15)
         self.play_pause_button.pack()
+        tasklist.TaskList(self.task_frame)
+        analytics_frame.Analytics(self.analytics_frame , width=500 , height=250)
         # calling the main loop :
         self.main_app.mainloop()
 
