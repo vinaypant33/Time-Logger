@@ -89,7 +89,10 @@ class SpinBox():
         self.add_button.pack(side=tk.TOP)
         self.subtract_button.pack(side=tk.BOTTOM )
 
+class SpinMeterBox():
 
+    def __init__(self) -> None:
+        pass
 
 
 if __name__ =='__main__':
