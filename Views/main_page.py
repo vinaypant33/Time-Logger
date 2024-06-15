@@ -72,7 +72,7 @@ class MainPage():
     
 
 
-        text_icon  =  '\u25B6'
+        text_icon  =  '\u25B6' # Unicode character for the button icon
         main_text  = "Start Focus Session"
         self.play_pause_button  = btk.Button(self.timer_frame , text=f"{text_icon}  { main_text}")
         self.focus_label  = btk.Label(self.timer_frame , text="Select time ( minutes ) for which the focus session is to be done")
