@@ -40,11 +40,6 @@ class SpinBox():
         self.timer_var  = 00
         self.max_time = 30
 
-
-
-    
-
-
         self.main_frame  = btk.Frame(self.master , height=55 , width=150 , bootstyle  = "warning")
         self.main_frame.pack_propagate(0)
         self.side_frame = btk.Frame(self.main_frame , height=55 , width=120 , bootstyle  = "dark")
@@ -54,8 +49,6 @@ class SpinBox():
 
         self.add_button = btk.Button(self.main_frame , text="+" , command=self.change_number_adding )
         self.subtract_button = btk.Button(self.main_frame , text="- " , command=self.change_number_subtracting)
-
-
 
         # self.side_frame  = btk.Frame(self.main_frame , height=100 , width=self.width *.6 , bootstyle  = "info")
         # self.side_frame.pack_propagate(0)
@@ -67,10 +60,6 @@ class SpinBox():
 
         # ## setting the focus session button with the play and pause Image : 
 
-
-
-
-        
         # self.main_frame.pack(padx = 50 , pady = 50)
         # self.side_frame.pack(side = "left")
         # self.main_text.pack()
@@ -79,8 +68,6 @@ class SpinBox():
         # self.subtract_button.pack(side = "bottom")
 
         # self.no_breaks_text.place(x = 25 , y =150)
-
-
 
         self.main_frame.pack(pady = 30)
         self.side_frame.pack(side=tk.LEFT)
@@ -91,8 +78,13 @@ class SpinBox():
 
 class SpinMeterBox():
 
-    def __init__(self) -> None:
-        pass
+    def __init__(self , master  , height = 400 ,  width = 400) -> None:
+        self.master  = master 
+        self.height = height
+        self.width = width
+
+        # Make the control for the main button : 
+        self.timer_meter  = btk.Meter(self.master)
 
 
 if __name__ =='__main__':

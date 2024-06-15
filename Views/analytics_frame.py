@@ -33,9 +33,9 @@ class Analytics():
 
 
         ## Meter Widgets : 
-        self.yestarday_meter  = btk.Meter(self.yesterday_frame , metersize=162 ,bootstyle="primary", subtextstyle="primary" , subtext="Hours - Yesterday" , amountused=10,metertype="full" ,interactive=True)
-        self.today_meter  =btk.Meter(self.today_frame ,metersize=163 ,  bootstyle = "primary" , subtext="Hours - Today" , subtextstyle="primary" , amountused=10,metertype="full" ,interactive=True )
-        self.streak_meter  = btk.Meter(self.streak_days, metersize=162, bootstyle="primary" , subtext="Days - Streak" , subtextstyle="primary" , amountused=10,metertype="full",interactive=True)
+        self.yestarday_meter  = btk.Meter(self.yesterday_frame , metersize=162 ,bootstyle="primary", subtextstyle="primary" , subtext="Hours - Yesterday" , amountused=0,metertype="full" ,interactive=True, meterthickness=15 ,amounttotal=24)
+        self.today_meter  =btk.Meter(self.today_frame ,metersize=163 ,  bootstyle = "primary" , subtext="Hours - Today" , subtextstyle="primary" , amountused=0,metertype="full" ,interactive=True, meterthickness=15 , amounttotal=24 )
+        self.streak_meter  = btk.Meter(self.streak_days, metersize=162, bootstyle="primary" , subtext="Days - Streak" , subtextstyle="primary" , amountused=0,metertype="full",interactive=True , meterthickness=15 ,amounttotal=100)
 
 
 

@@ -9,6 +9,17 @@ import analytics_frame
 
 
 class MainPage():
+    def theme_change(self):
+        
+        # print(self.checkbox_value.get())
+
+        if self.checkbox_value.get() == 0:
+            self.theme_checkbox.configure(text="Light Theme")
+        elif self.checkbox_value.get() ==1:
+            self.theme_checkbox.configure(text="Dark Theme")
+
+        # self.theme_checkbox.configure(text="Dark Theme")
+
 
     '''
     Main class other forms / classes would be called from this class
@@ -47,6 +58,12 @@ class MainPage():
 
             Focus Label : Text for the focus session 
         '''
+        self.checkbox_value = btk.IntVar()
+
+
+
+
+
         self.bottom_frame  = btk.Frame(self.main_app , width=self.width , height=25 , bootstyle  = "info")
         self.bottom_frame.pack_propagate(0)
         # Setting up the canvas for the main frame  : 
@@ -69,7 +86,7 @@ class MainPage():
         # Controls for the bottom frame  :  Each frame would hold the button widget 
         self.theme_frame  = btk.Frame(self.bottom_frame  , width=150 , height = 25 , bootstyle  = "warning")
         self.theme_frame.pack_propagate(0)
-        self.theme_checkbox = btk.Checkbutton(self.theme_frame, text="Change Theme" , bootstyle="dark-square-toggle")
+        self.theme_checkbox = btk.Checkbutton(self.theme_frame, text="Light Theme" , bootstyle="dark-square-toggle" , command=self.theme_change , variable=self.checkbox_value)
 
     
 
