@@ -22,10 +22,14 @@ class MainPage():
         self.play_pause_button.pack_forget()
         self.custom_spinbox.close_all()
         self.meterbox  = custom_spinbox.SpinMeterBox(self.timer_frame)
+
         text_icon  =  '\u23F8'# Unicode character for the button icon # '\u23F8' "\u25B6"  \u23F9
         main_text  = "Stop Focus Session"
         self.stop_button  = btk.Button(self.timer_frame , text=f"{text_icon}  { main_text}" , command=self.stop_focus_session)
         self.stop_button.pack(pady = 5)
+        self.current_value  = self.custom_spinbox.timer_text.cget("text")
+        
+        self.meterbox.starting_timer(int(self.current_value))
 
 
     def theme_change(self):

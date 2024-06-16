@@ -5,6 +5,9 @@ from ttkbootstrap.constants import *
 from tkinter import messagebox
 
 from ttkbootstrap import Style
+import time
+from time import sleep ## Just to make the timer and test it in the meter frame 
+import winsound
 
 
 from PIL import Image
@@ -90,6 +93,34 @@ class SpinBox():
 
 
 class SpinMeterBox():
+
+    def increment(self , value):
+        if value-1 < self.max_value:
+            self.timer_meter.after(60000 , self.increment , value+1)
+            self.timer_meter.configure(amountused = value)
+        else:
+            winsound.Beep(1000 , 2000)
+
+
+
+
+    def starting_timer(self , max_value):
+        self.max_value  = max_value
+        self.timer_meter.configure(amounttotal = max_value)
+        self.increment(0)
+        # self.master.after(1000 , self.increment)
+        # Start the function to the timer
+        # time.sleep(2)
+        # for i in range(max_value):
+        #     # time.sleep(1)
+        #     self.master.after(1000, self.increment, i)
+
+            
+
+
+
+
+        
 
     def __init__(self , master  , height = 400 ,  width = 400) -> None:
         self.master  = master 
