@@ -56,6 +56,9 @@ class MainPage():
         self.y_location  = (self.main_app.winfo_screenheight() // 2) - (self.height // 2)
         self.main_app.geometry(f"{self.width}x{self.height}+{self.x_location}+{self.y_location}")
 
+        ## Const Variables for the controls  : 
+        button_front_style  = "light"
+
         # Setting up the title and the logo  
         self.main_app.title("Time Logger")
 
@@ -83,7 +86,7 @@ class MainPage():
 
 
 
-        self.bottom_frame  = btk.Frame(self.main_app , width=self.width , height=25 , bootstyle  = "info")
+        self.bottom_frame  = btk.Frame(self.main_app , width=self.width , height=28 , bootstyle  = "info")
         self.bottom_frame.pack_propagate(0)
         # Setting up the canvas for the main frame  : 
         self.main_canvas = tk.Canvas(self.main_app , background="red")
@@ -106,9 +109,38 @@ class MainPage():
         self.analytics_frame.pack_propagate(0)
 
         # Controls for the bottom frame  :  Each frame would hold the button widget 
-        self.theme_frame  = btk.Frame(self.bottom_frame  , width=150 , height = 25 )
+        self.theme_frame  = btk.Frame(self.bottom_frame  , width=125 , height = 28 )
         self.theme_frame.pack_propagate(0)
         self.theme_checkbox = btk.Checkbutton(self.theme_frame, text="Light Theme" , bootstyle="dark-square-toggle" , command=self.theme_change , variable=self.checkbox_value)
+
+        # Settings button : 
+        settings  = '\u2699'
+        settings_text = " Settings"
+
+        self.settings_frame  = btk.Frame(self.bottom_frame , width=125 , height=28 )
+        self.settings_frame.propagate(0)
+        self.settings_button   = btk.Button(self.settings_frame , text=f"{settings}{settings_text}" , bootstyle  = button_front_style)
+
+
+        analytics = '\U0001F4C9'
+        analytics_text  = " Analytics"
+        self.small_analytics_frame  = btk.Frame(self.bottom_frame , width=125 , height=28 )
+        self.small_analytics_frame.pack_propagate(0)
+        self.analytics_button  = btk.Button(self.small_analytics_frame , text=f'{analytics}{analytics_text}' , bootstyle  = button_front_style)
+
+
+        about = '\u2139'
+        about_text = " About"
+        self.about_frame = btk.Frame(self.bottom_frame , width=125 , height=28 )
+        self.about_frame.pack_propagate(0)
+        self.about_button = btk.Button(self.about_frame , text=f'{about}{about_text}' , bootstyle  = button_front_style)
+
+
+
+
+
+
+
 
 
 
@@ -145,6 +177,19 @@ class MainPage():
         self.analytics_frame.pack()
         self.theme_frame.pack(side="left" , anchor="w" , pady = 1)
         self.theme_checkbox.pack(side="left" ,anchor="center" , pady=4 , padx=15)
+        
+
+        
+
+       
+        
+        
+        self.settings_frame.pack(side=tk.LEFT , anchor="w" , pady=1)
+        self.settings_button.pack(side=tk.LEFT , anchor="center" , pady=0 , padx = (25 , 0))
+        self.small_analytics_frame.pack(side=tk.LEFT , anchor="w" , pady=1)
+        self.analytics_button.pack(side=tk.LEFT , anchor="center" , pady=0 , padx = (25 , 0))
+        self.about_frame.pack(side=tk.LEFT , anchor="w" , padx=0  , pady= (1 ,0))
+        self.about_button.pack(anchor="center")
         self.play_pause_button.pack()
         tasklist.TaskList(self.task_frame)
         analytics_frame.Analytics(self.analytics_frame , width=500 , height=250)
