@@ -54,7 +54,7 @@ class SpinBox():
         self.side_frame = btk.Frame(self.main_frame , height=55 , width=120 , bootstyle  = "primary")
         self.side_frame.pack_propagate(0)
 
-        self.timer_text = btk.Label(self.side_frame , text="00" , font=("Arial", 18) , style="info.TLabel", background="#007bff", foreground="#ffffff")
+        self.timer_text = btk.Label(self.side_frame , text="00" , font=("Arial", 18) , style="info.TLabel", background="#4582EC", foreground="#ffffff")
 
         self.add_button = btk.Button(self.main_frame , text="+" , command=self.change_number_adding )
         self.subtract_button = btk.Button(self.main_frame , text="- " , command=self.change_number_subtracting)
