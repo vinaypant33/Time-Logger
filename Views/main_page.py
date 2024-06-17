@@ -2,6 +2,9 @@ import tkinter as tk
 from tkinter import ttk
 import ttkbootstrap as btk
 from tkinter import messagebox
+from pubsub import pub
+
+
 
 import custom_spinbox
 import tasklist
@@ -31,6 +34,7 @@ class MainPage():
         
         self.meterbox.starting_timer(int(self.current_value))
 
+    
 
     def theme_change(self):
 
@@ -40,6 +44,23 @@ class MainPage():
             self.theme_checkbox.configure(text="Light Theme")
         elif self.checkbox_value.get() ==1:
             self.theme_checkbox.configure(text="Dark Theme")
+
+            # Theme Dark Theme :  Bootstyle to be changed : 
+            '''
+            
+            '''
+            
+            self.bottom_frame.configure(bootstyle  = "dark")
+            # self.theme_checkbox.configure( style="info.TCheckbox" , foreground = "#ffffff" , background  = "#1E1E1E")
+            # style="info.TLabel", background="#4582EC", foreground="#ffffff" will change the data for the cehckbox using this 
+            
+            self.task_frame.configure(bootstyle  = "dark")
+
+
+
+
+
+
 
         # self.theme_checkbox.configure(text="Dark Theme")
 
@@ -87,9 +108,6 @@ class MainPage():
         self.checkbox_value = btk.IntVar()
 
 
-
-
-
         self.bottom_frame  = btk.Frame(self.main_app , width=self.width , height=28 , bootstyle  = "info")
         self.bottom_frame.pack_propagate(0)
         # Setting up the canvas for the main frame  : 
@@ -125,7 +143,6 @@ class MainPage():
         self.settings_frame.propagate(0)
         self.settings_button   = btk.Button(self.settings_frame , text=f"{settings}{settings_text}" , bootstyle  = button_front_style)
 
-
         analytics = '\U0001F4C9'
         analytics_text  = " Analytics"
         self.small_analytics_frame  = btk.Frame(self.bottom_frame , width=125 , height=28 )
@@ -138,15 +155,6 @@ class MainPage():
         self.about_frame = btk.Frame(self.bottom_frame , width=125 , height=28 )
         self.about_frame.pack_propagate(0)
         self.about_button = btk.Button(self.about_frame , text=f'{about}{about_text}' , bootstyle  = button_front_style)
-
-
-
-
-
-
-
-
-
 
         text_icon  =  '\u25B6' # Unicode character for the button icon
         main_text  = "Start Focus Session"
@@ -182,11 +190,6 @@ class MainPage():
         self.theme_frame.pack(side="left" , anchor="w" , pady = 1)
         self.theme_checkbox.pack(side="left" ,anchor="center" , pady=4 , padx=15)
         
-
-        
-
-       
-        
         
         self.settings_frame.pack(side=tk.LEFT , anchor="w" , pady=1)
         self.settings_button.pack(side=tk.LEFT , anchor="center" , pady=0 , padx = (25 , 0))
@@ -198,6 +201,14 @@ class MainPage():
         tasklist.TaskList(self.task_frame)
         analytics_frame.Analytics(self.analytics_frame , width=500 , height=250)
         # calling the main loop :
+
+        
+
+        # Checking for the pubsub messages :
+        pub.subscribe(self.stop_focus_session, "timer_complete")
+
+
+
         self.main_app.mainloop()
 
     

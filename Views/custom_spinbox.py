@@ -10,6 +10,12 @@ from time import sleep ## Just to make the timer and test it in the meter frame
 import winsound
 
 
+import main_page
+
+from ttkbootstrap.toast import ToastNotification # To make the toast notifications 
+from pubsub import pub   # library used for message passing
+
+
 from PIL import Image
 Image.CUBIC  = Image.BICUBIC
 
@@ -94,10 +100,23 @@ class SpinBox():
 
 class SpinMeterBox():
 
+  
+    
+
     def increment(self , value):
-        if value-1 < self.max_value:
-            self.timer_meter.after(60000 , self.increment , value+1)
+        if value < self.max_value:
             self.timer_meter.configure(amountused = value)
+            self.timer_meter.after(6000 , self.increment , value+1) # fChange this in teh producttion to 60000 
+        elif value == self.max_value:
+            self.timer_meter.configure(amountused = value)
+            winsound.Beep(1000 ,3000)
+            toast  = ToastNotification("Time Logger" , "Focus Session Ended Resetting Timer : 00" , 40000)
+            toast.show_toast()
+
+            # Pubsub send message to reset the timer : 
+            self.timer_meter.after(4000 , pub.sendMessage("timer_complete"))
+            # pub.sendMessage("timer_complete")
+           
         else:
             winsound.Beep(1000 , 2000)
 
@@ -108,6 +127,8 @@ class SpinMeterBox():
         self.max_value  = max_value
         self.timer_meter.configure(amounttotal = max_value)
         self.increment(0)
+
+
         # self.master.after(1000 , self.increment)
         # Start the function to the timer
         # time.sleep(2)
@@ -115,12 +136,6 @@ class SpinMeterBox():
         #     # time.sleep(1)
         #     self.master.after(1000, self.increment, i)
 
-            
-
-
-
-
-        
 
     def __init__(self , master  , height = 400 ,  width = 400) -> None:
         self.master  = master 
