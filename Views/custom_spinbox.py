@@ -93,6 +93,9 @@ class SpinBox():
 
         self.add_button.pack(side=tk.TOP)
         self.subtract_button.pack(side=tk.BOTTOM )
+
+
+        
     
     def close_all(self):
         self.main_frame.pack_forget()
@@ -121,9 +124,11 @@ class SpinMeterBox():
             winsound.Beep(1000 , 2000)
 
 
-
+    def timer_clone(self):
+        print("message received")
 
     def starting_timer(self , max_value):
+      
         self.max_value  = max_value
         self.timer_meter.configure(amounttotal = max_value)
         self.increment(0)
@@ -142,10 +147,16 @@ class SpinMeterBox():
         self.height = height
         self.width = width
 
+        # Pubsub for the main timer : 
+        pub.subscribe(self.timer_clone , "starttimer")
+
         # Make the control for the main button : 
         self.timer_meter  = btk.Meter(self.master , metersize=150 , bootstyle="primary" , subtextstyle="primary" , subtext="Minutes" , amountused=0 , amounttotal=60 , interactive=True , meterthickness=15)
 
         self.timer_meter.pack()
+
+      
+
 
     def close_all(self):
         self.timer_meter.pack_forget()

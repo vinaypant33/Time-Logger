@@ -4,9 +4,18 @@ import ttkbootstrap as btk
 from tkinter import messagebox
 
 
+# import custom_spinbox 
+
+from pubsub import pub
+
 
 
 class TaskList():
+
+    def starting_timer(self):
+        # print("Start Timer")
+        pub.sendMessage("starttimer")
+        print("called")
 
 
     def entry_count (Self ,e  , value):
@@ -17,7 +26,7 @@ class TaskList():
 
 
 
-    def adding_tasklist(self):
+    def adding_tasklist(self , e = 0):
         
         # check if each of the entry widgets is not empty : 
         
@@ -42,14 +51,15 @@ class TaskList():
         self.entry_manager.append(self.task_entry)
 
         self.timer_text  = btk.Label(self.task_frame , text="00:00:00" , font = ("satoshi" , 12, "bold"))
-        self.progressbar  = btk.Progressbar(self.task_frame , style = "Thick.Horizontal.TProgressbar"  , value=20)
+        self.progressbar  = btk.Progressbar(self.task_frame , style = "Thick.Horizontal.TProgressbar"  , value=0)
 
-        self.start_stop_button  = btk.Button(self.task_frame , text='\u25B6' , width=3) # '\u23F8' "\u25B6"  \u23F9
+        self.start_stop_button  = btk.Button(self.task_frame , text='\u25B6' , width=3 , command=self.starting_timer ) # '\u23F8' "\u25B6"  \u23F9
 
 
 
         self.task_entry.bind("<KeyPress>" , lambda e : self.entry_count(e , self.task_entry.get()))
-
+        self.task_entry.bind("<Shift-Return>", lambda e : self.adding_tasklist())
+        self.task_entry.bind("<Escape>" , lambda e : self.task_frame.focus())
 
         self.task_frame.pack(padx=(3,4) , pady=3)
         self.taskcheckbutton.pack(side=tk.LEFT)
@@ -63,6 +73,7 @@ class TaskList():
 
         # To check the count and increment the same : 
         self.entry_widget_count+=1
+        self.task_entry.focus()
     
 
 
