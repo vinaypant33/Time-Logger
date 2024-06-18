@@ -18,6 +18,15 @@ class TaskList():
 
 
     def adding_tasklist(self):
+        
+        # check if each of the entry widgets is not empty : 
+        
+        for each in self.entry_manager:
+            if each.get() == "":
+                messagebox.showerror("Task Logger" , "Task description cannot be empty")
+                return
+       
+
        
         # Style defined for the progress bar
         self.progressstyle = ttk.Style()
@@ -30,6 +39,7 @@ class TaskList():
 
         self.taskcheckbutton  = btk.Checkbutton(self.task_frame , variable=self.check_var)
         self.task_entry = btk.Entry(self.task_frame , width=35)
+        self.entry_manager.append(self.task_entry)
 
         self.timer_text  = btk.Label(self.task_frame , text="00:00:00" , font = ("satoshi" , 12, "bold"))
         self.progressbar  = btk.Progressbar(self.task_frame , style = "Thick.Horizontal.TProgressbar"  , value=20)
@@ -51,6 +61,10 @@ class TaskList():
         self.main_canvas.update_idletasks()
         self.main_canvas.configure(scrollregion=self.main_canvas.bbox("all"))
 
+        # To check the count and increment the same : 
+        self.entry_widget_count+=1
+    
+
 
     def add_controls(self):
 
@@ -70,6 +84,10 @@ class TaskList():
         # Theme for the progressbar // will make seperate theme class in seperate file later : 
         # self.progressstyle = ttk.Style()
         # self.progressstyle.configure('Thick.Horizontal.TProgressbar', thickness=20)
+        self.entry_manager  = []
+        # Entry manager makes track of all the entry widgets called and makes sure none of the entry widgets is empty
+        self.entry_widget_count = 0 # Entry wounc will be changed later when the app is connected to database
+
 
 
         # Defining Base Controls :
