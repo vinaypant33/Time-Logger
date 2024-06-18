@@ -8,13 +8,20 @@ from tkinter import messagebox
 
 class TaskList():
 
-    
+
+    def entry_count (Self ,e  , value):
+        if len(value) > 34 : 
+            messagebox.showerror("Time Logger" , "Task Max Length Exceeded")
+            
+      
+
+
 
     def adding_tasklist(self):
        
         # Style defined for the progress bar
         self.progressstyle = ttk.Style()
-        self.progressstyle.configure("Thick.TProgressbar", thickness=20)
+        self.progressstyle.configure("Thick.TProgressbar", thickness=100)
 
         self.task_frame = btk.Frame(self.controls_frame , width=400 , height=30)
         # self.task_frame.pack_propagate(0)
@@ -23,10 +30,16 @@ class TaskList():
 
         self.taskcheckbutton  = btk.Checkbutton(self.task_frame , variable=self.check_var)
         self.task_entry = btk.Entry(self.task_frame , width=35)
+
         self.timer_text  = btk.Label(self.task_frame , text="00:00:00" , font = ("satoshi" , 12, "bold"))
-        self.progressbar  = btk.Progressbar(self.task_frame , style = "Thick.TProgressbar" )
+        self.progressbar  = btk.Progressbar(self.task_frame , style = "Thick.Horizontal.TProgressbar"  , value=20)
 
         self.start_stop_button  = btk.Button(self.task_frame , text='\u25B6' , width=3) # '\u23F8' "\u25B6"  \u23F9
+
+
+
+        self.task_entry.bind("<KeyPress>" , lambda e : self.entry_count(e , self.task_entry.get()))
+
 
         self.task_frame.pack(padx=(3,4) , pady=3)
         self.taskcheckbutton.pack(side=tk.LEFT)
@@ -52,6 +65,13 @@ class TaskList():
 
 
     def __init__(self ,master ,  width  = 500 , height  = 600) -> None:
+
+        
+        # Theme for the progressbar // will make seperate theme class in seperate file later : 
+        # self.progressstyle = ttk.Style()
+        # self.progressstyle.configure('Thick.Horizontal.TProgressbar', thickness=20)
+
+
         # Defining Base Controls :
         self.main_app  = master
         self.height  = height
@@ -75,7 +95,7 @@ class TaskList():
         self.controls_frame.bind("<Enter>" , lambda e : self.adding_tasklist)
         self.main_canvas.create_window((0,0) , window=self.controls_frame ,anchor="nw")
         ######------------------Packing the controls------------------------######
-    
+
         self.main_canvas.pack(side=tk.LEFT , fill=tk.BOTH , expand=1)
         # self.controls_frame.pack()
         self.scrollbar.pack(side=tk.RIGHT , fill=tk.Y)

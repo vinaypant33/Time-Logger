@@ -109,7 +109,7 @@ class SpinMeterBox():
             self.timer_meter.after(6000 , self.increment , value+1) # fChange this in teh producttion to 60000 
         elif value == self.max_value:
             self.timer_meter.configure(amountused = value)
-            winsound.Beep(1000 ,3000)
+            winsound.Beep(1000 ,2000)
             toast  = ToastNotification("Time Logger" , "Focus Session Ended Resetting Timer : 00" , 40000)
             toast.show_toast()
 
