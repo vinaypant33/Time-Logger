@@ -37,6 +37,13 @@ class MainPage():
         about_text = " About"
 
 
+        ## Settings and Themes Defination  :
+
+        self.checkbox_style  = ttk.Style()
+        self.checkbox_style.configure("Blue.TCheckbutton", background="blue" )
+
+
+
 
         '''
         MainPage Interface : Widgets :
@@ -65,7 +72,7 @@ class MainPage():
 
 
         # Other Wdgets  :  Buttons,Checkboxes etc.
-        self.light_dark_checkbox  = btk.Checkbutton(self.theme_frame_1 , text="Light Theme" , bootstyle = "dark-square-toggle" , variable=self.checkbox_value)
+        self.light_dark_checkbox  = btk.Checkbutton(self.theme_frame_1 , text="Light Theme" , bootstyle = "dark-square-toggle" , variable=self.checkbox_value )
         self.settings_button = btk.Button(self.theme_frame_2 , text=f"{settings_icon}{settings_text}")
         self.analytics_button  = btk.Button(self.theme_frame_3 , text=f"{analytics_icon}{analytics_text}")
         self.about_button  = btk.Button(self.theme_frame_4 , text=f"{about_icon}{about_text}")
