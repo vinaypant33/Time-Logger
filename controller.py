@@ -1,7 +1,7 @@
 import os
 import sys
 
-
+sys.path.append('Views')
 
 
 
@@ -9,11 +9,16 @@ import tkinter as tk
 from tkinter import ttk
 import ttkbootstrap as btk
 
+from Views import mainpage
+
 
 
 
 if __name__ == '__main__':
-    pass
+    main_application  = btk.Window()
+    mainpage.MainPage(main_application)
+    main_application.mainloop()
+    
 
 
 

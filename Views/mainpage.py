@@ -10,8 +10,10 @@ from pubsub import pub
 
 class MainPage():
 
-    def __init__(self , width  = 500 , height  = 600) -> None:
-        self.mainapp  = btk.Window()
+    def __init__(self , master , width  = 500 , height  = 600) -> None:
+        # self.mainapp  = btk.Window()
+        self.mainapp = master
+        self.mainapp = master
         self.height  = height
         self.width  = width
         self.mainapp.resizable(0,0)
@@ -64,11 +66,11 @@ class MainPage():
         self.task_seperator = btk.Separator(self.controls_frame)
         self.analytics_frame  = btk.Frame(self.controls_frame , width=self.frame_width , height=self.frame_height )
 
-        self.bottom_frame  = btk.Frame(self.mainapp , width=self.width , height  = self.bottom_frame__height , bootstyle  ='dark')
-        self.theme_frame_1 = btk.Frame(self.bottom_frame , width=self.bottom_frame_dividedwidth ,height=self.bottom_frame__height - 2)
-        self.theme_frame_2 = btk.Frame(self.bottom_frame , width=self.bottom_frame_dividedwidth , height=self.bottom_frame__height - 2)
-        self.theme_frame_3 = btk.Frame(self.bottom_frame , width=self.bottom_frame_dividedwidth , height = self.bottom_frame__height - 2)
-        self.theme_frame_4 = btk.Frame(self.bottom_frame , width=self.bottom_frame_dividedwidth , height = self.bottom_frame__height -2)
+        self.bottom_frame  = btk.Frame(self.mainapp , width=self.width , height  = self.bottom_frame__height , bootstyle  ='dark' )
+        self.theme_frame_1 = btk.Frame(self.bottom_frame , width=self.bottom_frame_dividedwidth ,height=self.bottom_frame__height - 2 )
+        self.theme_frame_2 = btk.Frame(self.bottom_frame , width=self.bottom_frame_dividedwidth , height=self.bottom_frame__height - 2 , bootstyle = "info")
+        self.theme_frame_3 = btk.Frame(self.bottom_frame , width=self.bottom_frame_dividedwidth , height = self.bottom_frame__height - 2 , bootstyle = "info")
+        self.theme_frame_4 = btk.Frame(self.bottom_frame , width=self.bottom_frame_dividedwidth , height = self.bottom_frame__height -2 , bootstyle = "info")
 
 
         # Other Wdgets  :  Buttons,Checkboxes etc.
@@ -100,6 +102,7 @@ class MainPage():
 
 
         ## Packing Controls :: 
+        # self.mainapp.
         self.bottom_frame.pack(side=tk.BOTTOM )
         self.canvas.pack(side=tk.LEFT , fill=tk.BOTH , expand=1)
         self.scrollbar.pack(side=tk.RIGHT , fill=tk.Y)
@@ -108,20 +111,21 @@ class MainPage():
         self.task_frame.pack()
         self.task_seperator.pack(fill=tk.X)
         self.analytics_frame.pack()
-        self.theme_frame_1.pack(side=tk.LEFT , anchor="w")
-        self.theme_frame_2.pack(side=tk.LEFT  , anchor = "w")
-        self.theme_frame_3.pack(side=tk.LEFT , anchor="w")
-        self.theme_frame_4.pack(side=tk.LEFT , anchor="w")
+        self.theme_frame_1.pack(side=tk.LEFT , anchor="w" )
+        self.theme_frame_2.pack(side=tk.LEFT  , anchor = "w" )
+        self.theme_frame_3.pack(side=tk.LEFT , anchor="w" )
+        self.theme_frame_4.pack(side=tk.LEFT , anchor="w" )
 
-        self.light_dark_checkbox.pack(padx=5 , pady= 10 , fill=tk.X)
-        self.settings_button.pack(pady=5 , fill=tk.X)
-        self.analytics_button.pack(pady=5 , fill=tk.X)
-        self.about_button.pack(pady=5 , fill=tk.X)
+        self.light_dark_checkbox.pack(padx=5 , pady= (10 , 0) , fill=tk.BOTH)
+        self.settings_button.pack(fill=tk.BOTH)
+        self.analytics_button.pack(fill=tk.BOTH)
+        self.about_button.pack(fill=tk.BOTH)
         
         
 
         # Make the window ::
         self.mainapp.mainloop()
+        
 
 
 
@@ -136,6 +140,8 @@ class MainPage():
 
 
 if __name__ == '__main__':
-
-    page  = MainPage()
+    main_application  = btk.Window()
+    MainPage(main_application)
+    main_application.mainloop()
+    # page  = MainPage()
     # del page 
