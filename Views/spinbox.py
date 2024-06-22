@@ -72,9 +72,12 @@ class SpinBox():
         self.subtract_button.pack(side=tk.BOTTOM , fill=tk.BOTH)
 
 
-    def __del__(self):
+    def delete(self):
         try:
-            self.main_frame.pack_forget()
+            # self.main_frame.pack_forget()
+            # self.no_breaks_text.pack_forget()
+            self.main_frame.destroy()
+            self.no_breaks_text.destroy()
         except Exception as e:
             print(e)
         
