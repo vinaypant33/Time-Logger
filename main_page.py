@@ -1,3 +1,7 @@
+import os
+import sys
+
+
 import tkinter as tk
 from tkinter import ttk
 import ttkbootstrap as btk
@@ -11,6 +15,9 @@ from ttkbootstrap.tooltip import ToolTip
 
 
 
+from Views import spinbox
+
+
 
 
 
@@ -22,7 +29,6 @@ window_width  = 500
 window_height  = 700
 x_location = ( main_window.winfo_screenwidth() //2 ) - (window_width // 2)
 y_location  = (main_window.winfo_screenheight() //2) - (window_height  // 2)
-
 main_window.resizable(0 , 0)
 main_window.geometry(f"{window_width}x{window_height}+{x_location}+{y_location}")
 
@@ -74,6 +80,7 @@ timer_frame.pack()
 task_frame.pack()
 analytics_frame.pack()
 text.pack(pady=(15 , 0))
+counter_spinbox  = spinbox.SpinBox(timer_frame)
 play_pause_button.pack(pady=(15,0))
 
 
