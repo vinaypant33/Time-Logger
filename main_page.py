@@ -15,14 +15,62 @@ from ttkbootstrap.tooltip import ToolTip
 
 from Views import spinbox
 from Views import spinmeter
+from Views import other_task_frame
+from Views import base_analytics
 
-
-main_window  = btk.Window(themename="lumen")
+main_window  = btk.Window(themename="flatly")
 '''
 Light Themes  :  flatly, journal, 
+Dark Theme  :  solar, darkly, 
+'''
+ 
+'''
+get the theme name from the main window and make it the main theme of the controls 
+bg_color = root.cget("background")
+
+USER_THEMES = {
+    "supercosmo": {
+        "type": "light",
+        "colors": {
+            "primary": "#2780e3",
+            "secondary": "#7E8081",
+            "success": "#3fb618",
+            "info": "#9954bb",
+            "warning": "#ff7518",
+            "danger": "#ff0039",
+            "light":"#F8F9FA",
+            "dark": "#373A3C",
+            "bg": "#ffffff",
+            "fg": "#373a3c",
+            "selectbg": "#7e8081",
+            "selectfg": "#ffffff",
+            "border": "#ced4da",
+            "inputfg": "#373a3c",
+            "inputbg": "#fdfdfe"
+        }
+    }
+}
+
 '''
 
 # Functions :: For the main application  ::
+# bg_color = main_window.cget("background")
+# print(bg_color)
+
+
+style = btk.Style()
+colors = set()
+for element in style.element_names():
+    for option in ('background', 'foreground', 'bordercolor', 'lightcolor', 'darkcolor', 'troughcolor', 'selectcolor'):
+        color = style.lookup(element, option)
+        if color:
+            colors.add(color)
+            print(color)
+
+
+
+
+
 
 def another_play_clicked():
     try:
@@ -101,22 +149,22 @@ scrollbar  = ttk.Scrollbar(main_window , orient=tk.VERTICAL , command=canvas.yvi
 controls_frame = ttk.Frame(canvas)
 
 timer_frame = btk.Frame(controls_frame , width=frame_width , height = frame_height , bootstyle  = "")
-task_frame   = btk.Frame(controls_frame , width=frame_width , height = frame_height , bootstyle  = "info")
-analytics_frame  = btk.Frame(controls_frame  , width=frame_width , height = frame_height , bootstyle = "primary")
+all_task_frame   = btk.Frame(controls_frame , width=frame_width , height = frame_height )
+analytics_frame  = btk.Frame(controls_frame  , width=frame_width , height = frame_height )
 text  = btk.Label(timer_frame , text="Select time to start focus session !!!")
 play_pause_button  = btk.Button(timer_frame , text=f"{play_icon}{play_text}" , command=play_clicked)
 
 ############## Configuring Controls #################
 canvas.configure(yscrollcommand=scrollbar)
 timer_frame.pack_propagate(0)
-task_frame.pack_propagate(0)
+all_task_frame.pack_propagate(0)
 analytics_frame.pack_propagate(0)
 
 
 ############### Binding Controls ####################
 canvas.bind("<Configure>" , lambda e: canvas.configure(scrollregion=canvas.bbox("all")))
 timer_frame.bind('<MouseWheel>' , lambda e :canvas.yview_scroll(-1 *int((e.delta / 120)) , "units"))
-task_frame.bind('<MouseWheel>' , lambda e :canvas.yview_scroll(-1 *int((e.delta / 120)) , "units"))
+all_task_frame.bind('<MouseWheel>' , lambda e :canvas.yview_scroll(-1 *int((e.delta / 120)) , "units"))
 analytics_frame.bind('<MouseWheel>' , lambda e :canvas.yview_scroll(-1 *int((e.delta / 120)) , "units"))
 canvas.create_window((0,0) , window=controls_frame , anchor='nw')
 
@@ -126,11 +174,16 @@ bottom_frame.pack(side=tk.BOTTOM)
 canvas.pack(side=tk.LEFT , fill=tk.BOTH , expand=True)
 scrollbar.pack(side=tk.RIGHT , fill=tk.Y)
 timer_frame.pack()
-task_frame.pack()
+all_task_frame.pack()
 analytics_frame.pack()
 text.pack(pady=(15 , 0))
 
+
+
+# Set the height and width - for the frames  : 
 counter_spinbox  = spinbox.SpinBox(timer_frame)
+main_task_list  = other_task_frame.Task_List(all_task_frame)
+analytics  = base_analytics.Base_Analytics(analytics_frame)
 play_pause_button.pack(pady=(3,0))
 
 

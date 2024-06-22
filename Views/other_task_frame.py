@@ -17,40 +17,32 @@ from tkinter import messagebox
 from PIL import Image
 Image.CUBIC = Image.BICUBIC
 
+
+
+
 class Task_List():
-
-
-   
 
     def starting_timer(self):
         # print("Start Timer")
         pub.sendMessage("starttimer")
 
-
     def entry_count (Self ,e  , value): 
-        if len(value) > 38 : 
+        if len(value) > 50 : 
             messagebox.showerror("Time Logger" , "Task Max Length Exceeded")
-            
-    
 
     def adding_tasklist(self , e = 0):
         
         # check if each of the entry widgets is not empty : 
-        
         for each in self.entry_manager:
             if each.get() == "":
                 messagebox.showerror("Task Logger" , "Task description cannot be empty")
                 return
        
-
         self.task_frame = btk.Frame(self.controls_frame , width=400 , height=30)
-
         self.check_var = btk.BooleanVar(value=False)
-
         self.taskcheckbutton  = btk.Checkbutton(self.task_frame , variable=self.check_var)
         self.task_entry = btk.Entry(self.task_frame , width=35)
         self.entry_manager.append(self.task_entry)
-
          # Theme for the progressbar // will make seperate theme class in seperate file later : 
         self.progressstyle = ttk.Style()
         self.progressstyle.configure("Thick.Horizontal.TFloodgauge", thickness=10)

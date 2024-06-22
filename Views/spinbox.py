@@ -54,7 +54,7 @@ class SpinBox():
         # Defining Controls  : 
         self.main_frame  = btk.Frame(self.master , height= 55 , width=150 , bootstyle  = "warning")
         self.side_frame  = btk.Frame(self.main_frame , height=55 , width=120 , bootstyle  = "primary")
-        self.main_text  = btk.Label(self.side_frame , text="00" , font=("Arial" , 20 , "bold") ,style="info.TLabel", background="#4582EC", foreground="#ffffff")
+        self.main_text  = btk.Label(self.side_frame , text="00" , font=("Arial" , 20 , "bold") ,style="info.TLabel", background="#2C3E50", foreground="#ffffff")
         self.add_button  = btk.Button(self.main_frame , text="+" , command=self.add_button_clicked)
         self.subtract_button  = btk.Button(self.main_frame , text="-" , command=self.subtract_button_clicked)
         self.no_breaks_text = btk.Label(self.master  ,text="No breaks in focus session")
