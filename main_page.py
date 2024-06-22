@@ -13,13 +13,14 @@ from ttkbootstrap.dialogs.dialogs import Messagebox
 import ttkbootstrap.icons
 from ttkbootstrap.tooltip import ToolTip
 
-
-
 from Views import spinbox
 from Views import spinmeter
 
 
-main_window  = btk.Window()
+main_window  = btk.Window(themename="lumen")
+'''
+Light Themes  :  flatly, journal, 
+'''
 
 # Functions :: For the main application  ::
 
@@ -57,18 +58,6 @@ def pause_clicked():
     global another_play_button
     another_play_button  = btk.Button(timer_frame , text=f"{play_icon}{play_text}" , command=another_play_clicked)
     another_play_button.pack(pady=(3,0))
-    
-#    meter_spinbox.delete()
-#    pause_button.destroy()
-#    global another_text
-#    another_text  = btk.Label(timer_frame , text="Select time to start focus session !!!")
-#    another_text.pack(pady=(15 , 0))
-#    global another_counter_spinbox
-#    another_counter_spinbox = spinbox.SpinBox(timer_frame)
-#    global another_play_pause_button
-#    another_play_pause_button  = btk.Button(timer_frame , text=f"{play_icon}{play_text}" , command=play_clicked)
-#    play_pause_button.pack(pady=(3,0))
-
 
 
 def play_clicked():
@@ -80,27 +69,6 @@ def play_clicked():
     global pause_button 
     pause_button  = btk.Button(timer_frame , text=f"{pause_icon}{pause_text}" , command=pause_clicked)
     pause_button.pack(pady=(20 , 0))
-
-
-
-    # global meter_spinbox
-    # meter_spinbox  = spinmeter.SpinMeter(timer_frame)
-    # try:
-    #     another_play_pause_button.destroy()
-    #     play_pause_button.destroy()
-    #     text.destroy()
-    #     another_text.destroy()
-    #     another_counter_spinbox.delete()
-    # except Exception as e:
-    #     print(e)
-    # # play_pause_button.pack_forget()
-    # counter_spinbox.delete()
-    # global pause_button  
-    # pause_button  = btk.Button(timer_frame ,text=f"{pause_icon}{pause_text}"  , command=pause_clicked)
-    # pause_button.pack(pady=(15,0))
-   
-
-
 
 
 # App Constants and General Parts : 
