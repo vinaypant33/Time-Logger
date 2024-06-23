@@ -24,10 +24,10 @@ class Task_List():
 
     def starting_timer(self):
         # print("Start Timer")
-        pub.sendMessage("starttimer")
+        pub.sendMessage("starttimer" , task_name  = self.task_entry.get())
 
     def entry_count (Self ,e  , value): 
-        if len(value) > 50 : 
+        if len(value) > 90 : 
             messagebox.showerror("Time Logger" , "Task Max Length Exceeded")
 
     def adding_tasklist(self , e = 0):
@@ -41,28 +41,28 @@ class Task_List():
         self.task_frame = btk.Frame(self.controls_frame , width=400 , height=30)
         self.check_var = btk.BooleanVar(value=False)
         self.taskcheckbutton  = btk.Checkbutton(self.task_frame , variable=self.check_var)
-        self.task_entry = btk.Entry(self.task_frame , width=35)
+        self.task_entry = btk.Entry(self.task_frame , width=70)
         self.entry_manager.append(self.task_entry)
          # Theme for the progressbar // will make seperate theme class in seperate file later : 
         self.progressstyle = ttk.Style()
         self.progressstyle.configure("Thick.Horizontal.TFloodgauge", thickness=10)
 
 
-        self.timer_text  = btk.Label(self.task_frame , text="  00:00:00 " , font = ("satoshi" , 12, "bold"))
-        self.spent_text = btk.Label(self.task_frame , text="  00:00:00" , font = ("satoshi" , 12, "bold"))
+        # self.timer_text  = btk.Label(self.task_frame , text="  01:00:00 " , font = ("satoshi" , 12, "bold"))
+        # self.spent_text = btk.Label(self.task_frame , text="  00:00:00" , font = ("satoshi" , 12, "bold"))
 
         #ToolTip(b2, text="This is dangerous", bootstyle=(DANGER, INVERSE))
 
         # Defining Tooltip for the controls  : 
         # ToolTip(self.timer_text , text="Max Time Allocated" , bootstyle=("primary", "inverse"))
-        ToolTip(self.timer_text , text="Max Time Allocated" , delay=300)
-        ToolTip(self.spent_text , text="Time Spent in Task" , delay=300)
+        # ToolTip(self.timer_text , text="Max Time Allocated" , delay=300)
+        # ToolTip(self.spent_text , text="Time Spent in Task" , delay=300)
 
         # self.progressbar  = ttk.Progressbar(self.task_frame , bootstyle  = "danger"  , value=20)
         # self.tempmeter  = btk.Meter(self.task_frame , metersize=100 , amounttotal=10 , amountused=4)
         
 
-        self.start_stop_button  = btk.Button(self.task_frame , text='\u25B6' , width=3 , command=self.starting_timer , bootstyle  = "light"  ) # '\u23F8' "\u25B6"  \u23F9
+        # self.start_stop_button  = btk.Button(self.task_frame , text='\u25B6' , width=3 , command=self.starting_timer , bootstyle  = "light"  ) # '\u23F8' "\u25B6"  \u23F9
 
         self.task_entry.bind("<KeyPress>" , lambda e : self.entry_count(e , self.task_entry.get()))
         self.task_entry.bind("<Shift-Return>", lambda e : self.adding_tasklist())
@@ -71,10 +71,10 @@ class Task_List():
         self.task_frame.pack(padx=(3,4) , pady=3)
         self.taskcheckbutton.pack(side=tk.LEFT)
         self.task_entry.pack(side=tk.LEFT ,padx =(5,0))
-        self.timer_text.pack(side=tk.LEFT , padx=(5,0))
+        # self.timer_text.pack(side=tk.LEFT , padx=(5,0))
         # self.progressbar.pack(side=tk.LEFT , padx =(5,0)) # making anohter completion time instead of progressbar 
-        self.spent_text.pack(side=tk.LEFT , padx =(5, 0))
-        self.start_stop_button.pack(side=tk.LEFT , padx=(3,5))
+        # self.spent_text.pack(side=tk.LEFT , padx =(5, 0))
+        # self.start_stop_button.pack(side=tk.LEFT , padx=(3,5))
 
         self.main_canvas.update_idletasks()
         self.main_canvas.configure(scrollregion=self.main_canvas.bbox("all"))

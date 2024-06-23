@@ -69,7 +69,10 @@ USER_THEMES = {
 #         if color:
 #             colors.add(color)
 #             print(color)
+    
 
+def task_timer(task_name):
+    print(task_name)
 
 def set_hourly_time(hourly_time):
     global current_hourly_time
@@ -204,7 +207,7 @@ play_pause_button.pack(pady=(3,0))
 
 
 pub.subscribe(set_hourly_time , 'hour')
-
+pub.subscribe(task_timer , "starttimer")
 
 
 
