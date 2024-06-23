@@ -26,9 +26,11 @@ class SpinBox():
             Messagebox.show_error("Error - Unable to Increase Time" , "Time Logger")
         elif self.timer_var < self.max_time and 0 <=self.timer_var <= 8:
             self.timer_var+=1
+            pub.sendMessage('hour' , hourly_time = self.timer_var)
             self.main_text.configure(text = str(f"0{self.timer_var}"))
         elif self.timer_var < self.max_time and 9 <= self.timer_var <= self.max_time:
             self.timer_var+=1
+            pub.sendMessage('hour' , hourly_time = self.timer_var)
             self.main_text.configure(text = str(f"{self.timer_var}"))
     
     def subtract_button_clicked(self):
@@ -36,9 +38,11 @@ class SpinBox():
             Messagebox.show_error( "Error - Unable to decrease timer - Please check max time settings" ,"Log Timer" )
         elif self.timer_var <= self.max_time and 11 <= self.timer_var :
             self.timer_var-=1
+            pub.sendMessage('hour' , hourly_time = self.timer_var)
             self.main_text.configure(text = str(self.timer_var))
         elif self.timer_var <= self.max_time and self.timer_var <= 11:
             self.timer_var-=1
+            pub.sendMessage('hour' , hourly_time = self.timer_var)
             self.main_text.configure(text =str(f"0{self.timer_var}"))
 
     def __init__(self , master ,  height  = 400 , width  = 200) -> None:

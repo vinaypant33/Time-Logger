@@ -18,6 +18,9 @@ from Views import spinmeter
 from Views import other_task_frame
 from Views import base_analytics
 
+# emoji  = ttkbootstrap.icons.Emoji
+# print(emoji.get('winking face')) Can be used later to make the emojis
+
 main_window  = btk.Window(themename="flatly")
 '''
 Light Themes  :  flatly, journal, 
@@ -58,32 +61,37 @@ USER_THEMES = {
 # print(bg_color)
 
 
-style = btk.Style()
-colors = set()
-for element in style.element_names():
-    for option in ('background', 'foreground', 'bordercolor', 'lightcolor', 'darkcolor', 'troughcolor', 'selectcolor'):
-        color = style.lookup(element, option)
-        if color:
-            colors.add(color)
-            print(color)
+# style = btk.Style()
+# colors = set()
+# for element in style.element_names():
+#     for option in ('background', 'foreground', 'bordercolor', 'lightcolor', 'darkcolor', 'troughcolor', 'selectcolor'):
+#         color = style.lookup(element, option)
+#         if color:
+#             colors.add(color)
+#             print(color)
 
 
-
-
+def set_hourly_time(hourly_time):
+    global current_hourly_time
+    current_hourly_time = hourly_time
+   
 
 
 def another_play_clicked():
-    try:
-        anohter_text.destroy()
-        another_timer.delete()
-        another_play_button.destroy()
-    except Exception as e:
-        print(e)
-    global another_timer_meter
-    another_timer_meter = spinmeter.SpinMeter(timer_frame)
-    global another_pause_button
-    another_pause_button = btk.Button(timer_frame ,text=f"{pause_icon}{pause_text}" , command=pause_clicked)
-    another_pause_button.pack(pady=(20 , 0))
+    if current_hourly_time == 0:
+       Messagebox.show_error("The Hours Cannot be Zero" , "Time Logger" , alert=True , parent=all_task_frame)
+    else:
+        try:
+            anohter_text.destroy()
+            another_timer.delete()
+            another_play_button.destroy()
+        except Exception as e:
+            print(e)
+        global another_timer_meter
+        another_timer_meter = spinmeter.SpinMeter(timer_frame)
+        global another_pause_button
+        another_pause_button = btk.Button(timer_frame ,text=f"{pause_icon}{pause_text}" , command=pause_clicked)
+        another_pause_button.pack(pady=(20 , 0))
 
 
 def pause_clicked():
@@ -109,14 +117,18 @@ def pause_clicked():
 
 
 def play_clicked():
-    counter_spinbox.delete()
-    play_pause_button.destroy()
-    text.destroy()
-    global timer_meter
-    timer_meter  = spinmeter.SpinMeter(timer_frame)
-    global pause_button 
-    pause_button  = btk.Button(timer_frame , text=f"{pause_icon}{pause_text}" , command=pause_clicked)
-    pause_button.pack(pady=(20 , 0))
+    if current_hourly_time == 0:
+        Messagebox.show_error("The Hours Cannot be Zero" , "Time Logger" , alert=True , parent=all_task_frame)
+    else:
+        counter_spinbox.delete()
+        play_pause_button.destroy()
+        text.destroy()
+        global timer_meter
+        timer_meter  = spinmeter.SpinMeter(timer_frame)
+        global pause_button 
+        pause_button  = btk.Button(timer_frame , text=f"{pause_icon}{pause_text}" , command=pause_clicked)
+        pause_button.pack(pady=(20 , 0))
+        pub.sendMessage("playclicked" , hour_time = current_hourly_time)
 
 
 # App Constants and General Parts : 
@@ -134,11 +146,12 @@ frame_width  = window_width
 bottom_frame_height  = 30
 frame_width  = window_width - 10
 frame_height  = 300
+current_hourly_time  = 0
 
 play_icon  = '\u25B6'
-pause_icon  = '\u23F8' # Unicode character for the button icon # '\u23F8' "\u25B6"  \u23F9
+pause_icon  = '\u23F9' # Unicode character for the button icon # '\u23F8' "\u25B6"  \u23F9
 play_text  = "  Start Focus Session"
-pause_text = "  Pause Focus Session"
+pause_text = "  Stop Focus Session"
 
 
 ############## Defining Controls ##################
@@ -185,6 +198,15 @@ counter_spinbox  = spinbox.SpinBox(timer_frame)
 main_task_list  = other_task_frame.Task_List(all_task_frame)
 analytics  = base_analytics.Base_Analytics(analytics_frame)
 play_pause_button.pack(pady=(3,0))
+
+
+
+
+
+pub.subscribe(set_hourly_time , 'hour')
+
+
+
 
 
 main_window.mainloop()

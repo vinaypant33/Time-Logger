@@ -118,7 +118,7 @@ class Task_List():
         add_text  = "\u002B"
         add_task  = " Add Task"
 
-        self.add_button  = btk.Button(self.controls_frame , text=f"{add_text}{add_task}" , command=self.adding_tasklist , bootstyle = "primary")
+        self.add_button  = btk.Button(self.controls_frame , text=f"{add_text}" , command=self.adding_tasklist , bootstyle = "primary")
         ####-------------------Configuring the contros-----------------#######
         self.main_canvas.configure(yscrollcommand=self.scrollbar.set)
         #####------------------Binding the Controls-----------------------######
