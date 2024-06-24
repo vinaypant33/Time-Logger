@@ -82,6 +82,7 @@ class Task_List():
         # To check the count and increment the same : 
         self.entry_widget_count+=1
         self.task_entry.focus()
+        self.main_canvas.yview_moveto(1.0)
     
     def add_controls(self):
 
@@ -117,7 +118,7 @@ class Task_List():
         ##############-----------Main Controls------------------------##################
         add_text  = "\u002B"
         add_task  = " Add Task"
-
+       
         self.add_button  = btk.Button(self.controls_frame , text=f"{add_text}" , command=self.adding_tasklist , bootstyle = "primary")
         ####-------------------Configuring the contros-----------------#######
         self.main_canvas.configure(yscrollcommand=self.scrollbar.set)
@@ -127,7 +128,7 @@ class Task_List():
         self.controls_frame.bind("<Enter>" , lambda e : self.adding_tasklist)
         self.main_canvas.create_window((0,0) , window=self.controls_frame ,anchor="nw")
         ######------------------Packing the controls------------------------######
-
+      
         self.main_canvas.pack(side=tk.LEFT , fill=tk.BOTH , expand=1)
         # self.controls_frame.pack()
         self.scrollbar.pack(side=tk.RIGHT , fill=tk.Y)
