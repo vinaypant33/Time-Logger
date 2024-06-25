@@ -30,10 +30,13 @@ class Task_List():
     #     print(event.widget)
 
     def delte_widget(self , e):
-        # e.widget.destroy()
+        e.widget.master.pack_forget()
+        print(e.widget)
         # print(e.widget)
-        for widget in self.entry_manager:
-            print(widget)
+        # for widget in self.entry_manager:
+        #     print(widget)
+        # for widget in self.checkbox_manager:
+        #     print(widget)
 
     '''
     make the demo fuctions which will be deleted later
@@ -61,6 +64,8 @@ class Task_List():
         self.taskcheckbutton  = btk.Checkbutton(self.task_frame , variable=self.check_var)
         self.task_entry = btk.Entry(self.task_frame , width=70 )
         self.entry_manager.append(self.task_entry)
+
+        self.checkbox_manager.append(self.taskcheckbutton)
        
          # Theme for the progressbar // will make seperate theme class in seperate file later : 
         self.progressstyle = ttk.Style()
@@ -122,6 +127,8 @@ class Task_List():
         
         
         self.entry_manager  = []
+
+        self.checkbox_manager = []
         # Entry manager makes track of all the entry widgets called and makes sure none of the entry widgets is empty
         self.entry_widget_count = 0 # Entry wounc will be changed later when the app is connected to database
 
