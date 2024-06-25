@@ -169,7 +169,7 @@ controls_frame = ttk.Frame(canvas)
 
 timer_frame = btk.Frame(controls_frame , width=frame_width , height = frame_height )
 seperator_1 = ttk.Separator(controls_frame)
-all_task_frame   = btk.Frame(controls_frame , width=frame_width , height = frame_height ) #, style='ThickBorder.TFrame', borderwidth=.5, relief='solid'
+all_task_frame   = btk.Frame(controls_frame , width=frame_width , height = frame_height , bootstyle  = "info" ) #, style='ThickBorder.TFrame', borderwidth=.5, relief='solid'
 seperator_2 = ttk.Separator(controls_frame)
 analytics_frame  = btk.Frame(controls_frame  , width=frame_width , height = frame_height )
 

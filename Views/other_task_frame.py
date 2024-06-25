@@ -22,6 +22,24 @@ Image.CUBIC = Image.BICUBIC
 
 class Task_List():
 
+
+    # def print(self , current_name , e):
+    #     print(current_name)
+
+    # def focus_selected (self , event):
+    #     print(event.widget)
+
+    def delte_widget(self , e):
+        # e.widget.destroy()
+        # print(e.widget)
+        for widget in self.entry_manager:
+            print(widget)
+
+    '''
+    make the demo fuctions which will be deleted later
+
+    '''
+
     def starting_timer(self):
         # print("Start Timer")
         pub.sendMessage("starttimer" , task_name  = self.task_entry.get())
@@ -38,11 +56,12 @@ class Task_List():
                 messagebox.showerror("Task Logger" , "Task description cannot be empty")
                 return
        
-        self.task_frame = btk.Frame(self.controls_frame , width=400 , height=30)
+        self.task_frame = btk.Frame(self.controls_frame , width=400 , height=30 )
         self.check_var = btk.BooleanVar(value=False)
         self.taskcheckbutton  = btk.Checkbutton(self.task_frame , variable=self.check_var)
-        self.task_entry = btk.Entry(self.task_frame , width=70)
+        self.task_entry = btk.Entry(self.task_frame , width=70 )
         self.entry_manager.append(self.task_entry)
+       
          # Theme for the progressbar // will make seperate theme class in seperate file later : 
         self.progressstyle = ttk.Style()
         self.progressstyle.configure("Thick.Horizontal.TFloodgauge", thickness=10)
@@ -67,8 +86,11 @@ class Task_List():
         self.task_entry.bind("<KeyPress>" , lambda e : self.entry_count(e , self.task_entry.get()))
         self.task_entry.bind("<Shift-Return>", lambda e : self.adding_tasklist())
         self.task_entry.bind("<Escape>" , lambda e : self.task_frame.focus())
+        self.task_entry.bind('<Shift-Delete>' , lambda e : self.delte_widget(e))
+        # self.task_entry.bind("<FocusIn>" , lambda e : self.focus_selected(e))
+        # self.task_entry.bind('<Return-Shift>' , self.print(self.task_entry)) 
 
-        self.task_frame.pack(padx=(3,4) , pady=3)
+        self.task_frame.pack(padx=(3,4) , pady=5)
         self.taskcheckbutton.pack(side=tk.LEFT)
         self.task_entry.pack(side=tk.LEFT ,padx =(5,0))
         # self.timer_text.pack(side=tk.LEFT , padx=(5,0))
@@ -107,9 +129,12 @@ class Task_List():
 
         # Defining Base Controls :
         self.main_app  = master
-        self.height  = height
-        self.width   = width 
+        self.height  = height - 10
+        self.width   = width  - 10
         self.frame_height = 250
+
+
+        self.curent_control_selected  =  ""
 
         # Setting up the canvas for the main frame  : 
         self.main_canvas = tk.Canvas(self.main_app )
@@ -129,7 +154,7 @@ class Task_List():
         self.main_canvas.create_window((0,0) , window=self.controls_frame ,anchor="nw")
         ######------------------Packing the controls------------------------######
       
-        self.main_canvas.pack(side=tk.LEFT , fill=tk.BOTH , expand=1)
+        self.main_canvas.pack(side=tk.LEFT , fill=tk.BOTH , expand=1 , pady=1)
         # self.controls_frame.pack()
         self.scrollbar.pack(side=tk.RIGHT , fill=tk.Y)
         self.add_button.pack(side=tk.BOTTOM, pady=10 , padx=10 , anchor="se")
