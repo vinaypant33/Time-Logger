@@ -3,6 +3,11 @@ from pubsub import pub
 from ttkbootstrap.dialogs import Messagebox
 
 
+from PIL import Image
+Image.CUBIC = Image.BICUBIC
+
+
+
 class Spinbox():
 
 
@@ -68,6 +73,9 @@ class Spinbox():
         # self.text_frame.pack(side='left')
         self.current_label.place(x = 30, y  =15)
 
+    def delete(self):
+        self.main_frame.pack_forget()
+
 
 
 
@@ -75,8 +83,11 @@ class Timer():
 
 
     def start_stop(self):
-        pass
 
+        if self.working == True :
+           pass
+        elif self.working == False:
+           pass
 
 
 
@@ -98,8 +109,9 @@ class Timer():
         self.checkbox_style.configure('custom.TCheckbutton' , font= ('Helvetica' , 9 , 'bold'))
 
         self.play_icon   = '\u25B6'
-        self.pause_icon  = '\u23F8'
+        self.stop_icon  = '\u23F9'
         self.checkvar = btk.IntVar()
+        self.working   = True
 
         # Defining Controls  : 
         self.main_frame  = btk.Frame(self.master , width=self.width , height=self.height)
@@ -107,11 +119,11 @@ class Timer():
 
         self.spinbox_frame  = btk.Frame(self.main_frame , height=120 , width=120 , bootstyle  = 'danger')
                 
-        Spinbox(self.spinbox_frame) # Loading the main spinbox class to this class : 
+        self.main_spin = Spinbox(self.spinbox_frame) # Loading the main spinbox class to this class : 
         
         self.time_type_selector  = btk.Combobox(self.main_frame , values=self.options , width=12)
         self.skip_breaks_checkbox = btk.Checkbutton(self.main_frame , text="Skip Breaks" , style='custom.TCheckbutton' , variable=self.checkvar)
-        self.start_stop_button  = btk.Button(self.main_frame , text=f'{self.play_icon} Start Focus Session')
+        self.start_stop_button  = btk.Button(self.main_frame , text=f'{self.play_icon} Start Focus Session' , command=self.start_stop)
 
         # Configuring Controls  : 
         self.main_frame.pack_propagate(0)
@@ -138,10 +150,44 @@ class Timer():
 class Running_Timer(Timer):
 
     def __init__(self, master, width=480, height=350) -> None:
-        super().__init__(master, width, height)
+        
+        self.master  = master
+        self.height = height
+        self.width = width
+        '''
+        3 meter for the second minutes and hours frame :  and stop meter button 
+        
+        '''
+        self.master  = master 
+
+        self.main_frame  = btk.Frame(self.master , height=self.height , width=self.width)
+        self.seconds_timer  = btk.Meter(self.main_frame , metersize=162 ,bootstyle="primary", subtextstyle="primary" , subtext="Seconds" , 
+                                        amountused=0,metertype="full" ,interactive=True, meterthickness=15 ,amounttotal=60,
+                                        )
+        
+        self.minutes_timer  = btk.Meter(self.main_frame , metersize=162 , bootstyle='primary' , subtextstyle='primary' , subtext='Minutes',
+                                        amountused=0 , metertype='full' , interactive=True , meterthickness=15 , amounttotal=60)
+        
+        self.hours_timer  = btk.Meter(self.main_frame , metersize=162 , bootstyle='primary' , subtextstyle='primary' , subtext='Hours',
+                                        amountused=0 , metertype='full' , interactive=True , meterthickness=15 , amounttotal=100)
+
 
         
 
+        # Configuring Controls : 
+
+        # Binding Controls : 
+
+
+        # Packing Controls : 
+        self.main_frame.pack()
+        self.seconds_timer.pack(side='right')
+        self.minutes_timer.pack(side='right')
+        self.hours_timer.pack(side='right')
+
+    def delete(self):
+        # self.main_frame.pack_forget()
+        self.main_frame.destroy()
 
 
 
@@ -150,6 +196,8 @@ if __name__ == '__main__':
     Timer(main_window )
 
     # Spinbox(main_window)
+
+    # Running_Timer(main_window)
     main_window.mainloop()
 
 
