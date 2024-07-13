@@ -17,6 +17,10 @@ from Views import spinbox
 from Views import spinmeter
 from Views import other_task_frame
 from Views import base_analytics
+<<<<<<< HEAD
+=======
+from Views import bottom_frame
+>>>>>>> main
 
 # emoji  = ttkbootstrap.icons.Emoji
 # print(emoji.get('winking face')) Can be used later to make the emojis
@@ -158,23 +162,60 @@ pause_text = "  Stop Focus Session"
 
 
 ############## Defining Controls ##################
+<<<<<<< HEAD
 bottom_frame  = btk.Frame(main_window , width=window_width , height=bottom_frame_height , bootstyle  = "info")
+=======
+# app_bottom_frame  = btk.Frame(main_window , width=window_width , height=bottom_frame_height , bootstyle  = "primary")
+# first_frame  = btk.Frame(app_bottom_frame , width=100 , height=30 , bootstyle  = "info")
+
+>>>>>>> main
 
 canvas  = tk.Canvas(main_window)
 scrollbar  = ttk.Scrollbar(main_window , orient=tk.VERTICAL , command=canvas.yview)
 controls_frame = ttk.Frame(canvas)
 
+<<<<<<< HEAD
 timer_frame = btk.Frame(controls_frame , width=frame_width , height = frame_height , bootstyle  = "")
 all_task_frame   = btk.Frame(controls_frame , width=frame_width , height = frame_height )
 analytics_frame  = btk.Frame(controls_frame  , width=frame_width , height = frame_height )
 text  = btk.Label(timer_frame , text="Select time to start focus session !!!")
 play_pause_button  = btk.Button(timer_frame , text=f"{play_icon}{play_text}" , command=play_clicked)
 
+=======
+timer_frame = btk.Frame(controls_frame , width=frame_width , height = frame_height )
+seperator_1 = ttk.Separator(controls_frame)
+all_task_frame   = btk.Frame(controls_frame , width=frame_width , height = frame_height , bootstyle  = "info" ) #, style='ThickBorder.TFrame', borderwidth=.5, relief='solid'
+seperator_2 = ttk.Separator(controls_frame)
+analytics_frame  = btk.Frame(controls_frame  , width=frame_width , height = frame_height )
+
+text  = btk.Label(timer_frame , text="Select time to start focus session !!!")
+play_pause_button  = btk.Button(timer_frame , text=f"{play_icon}{play_text}" , command=play_clicked)
+
+# Specifying the height and width of the frame  :
+# bottom_frame_height = app_bottom_frame.winfo_height()
+# bottom_frame_width  = app_bottom_frame.winfo_width()
+
+
+
+
+
+
+
+
+
+>>>>>>> main
 ############## Configuring Controls #################
 canvas.configure(yscrollcommand=scrollbar)
 timer_frame.pack_propagate(0)
 all_task_frame.pack_propagate(0)
 analytics_frame.pack_propagate(0)
+<<<<<<< HEAD
+=======
+# app_bottom_frame.pack_propagate(0)
+
+# first_frame.pack_propagate(0)
+
+>>>>>>> main
 
 
 ############### Binding Controls ####################
@@ -186,10 +227,25 @@ canvas.create_window((0,0) , window=controls_frame , anchor='nw')
 
 
 #################### Packing Controls ###############
+<<<<<<< HEAD
 bottom_frame.pack(side=tk.BOTTOM)
 canvas.pack(side=tk.LEFT , fill=tk.BOTH , expand=True)
 scrollbar.pack(side=tk.RIGHT , fill=tk.Y)
 timer_frame.pack()
+=======
+# app_bottom_frame.pack(side=tk.BOTTOM)
+# first_frame.place(x = 30 , y = 3)
+
+# Specifying the height and width of the frame  :
+# bottom_frame_height = app_bottom_frame.winfo_height()
+# bottom_frame_width  = app_bottom_frame.winfo_width()
+# bottom_frame_data  = bottom_frame.Bottom_Frame(app_bottom_frame , bottom_frame_width , bottom_frame_height)
+# first_frame.pack(side=tk.LEFT , anchor = "w")
+canvas.pack(side=tk.LEFT , fill=tk.BOTH , expand=True)
+scrollbar.pack(side=tk.RIGHT , fill=tk.Y)
+timer_frame.pack()
+# seperator_1.pack(side=tk.LEFT , fill=tk.X)
+>>>>>>> main
 all_task_frame.pack()
 analytics_frame.pack()
 text.pack(pady=(15 , 0))
@@ -200,6 +256,14 @@ text.pack(pady=(15 , 0))
 counter_spinbox  = spinbox.SpinBox(timer_frame)
 main_task_list  = other_task_frame.Task_List(all_task_frame)
 analytics  = base_analytics.Base_Analytics(analytics_frame)
+<<<<<<< HEAD
+=======
+
+
+
+
+
+>>>>>>> main
 play_pause_button.pack(pady=(3,0))
 
 

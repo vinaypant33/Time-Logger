@@ -22,6 +22,30 @@ Image.CUBIC = Image.BICUBIC
 
 class Task_List():
 
+<<<<<<< HEAD
+=======
+
+    # def print(self , current_name , e):
+    #     print(current_name)
+
+    # def focus_selected (self , event):
+    #     print(event.widget)
+
+    def delte_widget(self , e):
+        e.widget.master.pack_forget()
+        print(e.widget)
+        # print(e.widget)
+        # for widget in self.entry_manager:
+        #     print(widget)
+        # for widget in self.checkbox_manager:
+        #     print(widget)
+
+    '''
+    make the demo fuctions which will be deleted later
+
+    '''
+
+>>>>>>> main
     def starting_timer(self):
         # print("Start Timer")
         pub.sendMessage("starttimer" , task_name  = self.task_entry.get())
@@ -38,11 +62,22 @@ class Task_List():
                 messagebox.showerror("Task Logger" , "Task description cannot be empty")
                 return
        
+<<<<<<< HEAD
         self.task_frame = btk.Frame(self.controls_frame , width=400 , height=30)
         self.check_var = btk.BooleanVar(value=False)
         self.taskcheckbutton  = btk.Checkbutton(self.task_frame , variable=self.check_var)
         self.task_entry = btk.Entry(self.task_frame , width=70)
         self.entry_manager.append(self.task_entry)
+=======
+        self.task_frame = btk.Frame(self.controls_frame , width=400 , height=30 )
+        self.check_var = btk.BooleanVar(value=False)
+        self.taskcheckbutton  = btk.Checkbutton(self.task_frame , variable=self.check_var)
+        self.task_entry = btk.Entry(self.task_frame , width=70 )
+        self.entry_manager.append(self.task_entry)
+
+        self.checkbox_manager.append(self.taskcheckbutton)
+       
+>>>>>>> main
          # Theme for the progressbar // will make seperate theme class in seperate file later : 
         self.progressstyle = ttk.Style()
         self.progressstyle.configure("Thick.Horizontal.TFloodgauge", thickness=10)
@@ -67,8 +102,16 @@ class Task_List():
         self.task_entry.bind("<KeyPress>" , lambda e : self.entry_count(e , self.task_entry.get()))
         self.task_entry.bind("<Shift-Return>", lambda e : self.adding_tasklist())
         self.task_entry.bind("<Escape>" , lambda e : self.task_frame.focus())
+<<<<<<< HEAD
 
         self.task_frame.pack(padx=(3,4) , pady=3)
+=======
+        self.task_entry.bind('<Shift-Delete>' , lambda e : self.delte_widget(e))
+        # self.task_entry.bind("<FocusIn>" , lambda e : self.focus_selected(e))
+        # self.task_entry.bind('<Return-Shift>' , self.print(self.task_entry)) 
+
+        self.task_frame.pack(padx=(3,4) , pady=5)
+>>>>>>> main
         self.taskcheckbutton.pack(side=tk.LEFT)
         self.task_entry.pack(side=tk.LEFT ,padx =(5,0))
         # self.timer_text.pack(side=tk.LEFT , padx=(5,0))
@@ -82,6 +125,10 @@ class Task_List():
         # To check the count and increment the same : 
         self.entry_widget_count+=1
         self.task_entry.focus()
+<<<<<<< HEAD
+=======
+        self.main_canvas.yview_moveto(1.0)
+>>>>>>> main
     
     def add_controls(self):
 
@@ -99,6 +146,11 @@ class Task_List():
         
         
         self.entry_manager  = []
+<<<<<<< HEAD
+=======
+
+        self.checkbox_manager = []
+>>>>>>> main
         # Entry manager makes track of all the entry widgets called and makes sure none of the entry widgets is empty
         self.entry_widget_count = 0 # Entry wounc will be changed later when the app is connected to database
 
@@ -106,10 +158,20 @@ class Task_List():
 
         # Defining Base Controls :
         self.main_app  = master
+<<<<<<< HEAD
         self.height  = height
         self.width   = width 
         self.frame_height = 250
 
+=======
+        self.height  = height - 10
+        self.width   = width  - 10
+        self.frame_height = 250
+
+
+        self.curent_control_selected  =  ""
+
+>>>>>>> main
         # Setting up the canvas for the main frame  : 
         self.main_canvas = tk.Canvas(self.main_app )
         self.scrollbar  = ttk.Scrollbar(self.main_app, orient=tk.VERTICAL , command=self.main_canvas.yview)
@@ -117,7 +179,11 @@ class Task_List():
         ##############-----------Main Controls------------------------##################
         add_text  = "\u002B"
         add_task  = " Add Task"
+<<<<<<< HEAD
 
+=======
+       
+>>>>>>> main
         self.add_button  = btk.Button(self.controls_frame , text=f"{add_text}" , command=self.adding_tasklist , bootstyle = "primary")
         ####-------------------Configuring the contros-----------------#######
         self.main_canvas.configure(yscrollcommand=self.scrollbar.set)
@@ -127,8 +193,13 @@ class Task_List():
         self.controls_frame.bind("<Enter>" , lambda e : self.adding_tasklist)
         self.main_canvas.create_window((0,0) , window=self.controls_frame ,anchor="nw")
         ######------------------Packing the controls------------------------######
+<<<<<<< HEAD
 
         self.main_canvas.pack(side=tk.LEFT , fill=tk.BOTH , expand=1)
+=======
+      
+        self.main_canvas.pack(side=tk.LEFT , fill=tk.BOTH , expand=1 , pady=1)
+>>>>>>> main
         # self.controls_frame.pack()
         self.scrollbar.pack(side=tk.RIGHT , fill=tk.Y)
         self.add_button.pack(side=tk.BOTTOM, pady=10 , padx=10 , anchor="se")
