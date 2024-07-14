@@ -40,6 +40,9 @@ class Spinbox():
 
 
     def __init__(self , master) -> None:
+        
+        
+        
 
 
         # Constatns for the main app  : 
@@ -47,10 +50,13 @@ class Spinbox():
         self.max_time  = 30
     
         self.label_style  = btk.Style()
-        self.label_style.configure("Label.TLabel" , font = ('Helvetica' , 15 , 'bold'))
+        self.label_style.configure("Label.TLabel" , font = ('Helvetica' , 15 , 'bold') ,background=  '#303030' , foreground  = "#ffffff")
+        
+        self.frame_style  = btk.Style()
+        self.frame_style.configure('custom.TFrame' , background = '#303030')
         self.master = master
     
-        self.main_frame  = btk.Frame(self.master , height=54 , width=100 , bootstyle = 'info')
+        self.main_frame  = btk.Frame(self.master , height=54 , width=100 , style='custom.TFrame')
 
         self.main_frame.pack_propagate(0)
 
@@ -72,7 +78,7 @@ class Spinbox():
         self.add_button.pack(side='top' , anchor='ne')
         self.subtract_button.pack(side='bottom' , anchor='se')
         # self.text_frame.pack(side='left')
-        self.current_label.place(x = 30, y  =15)
+        self.current_label.place(x = 23, y  =15)
 
     def delete(self):
         self.main_frame.pack_forget()

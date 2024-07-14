@@ -20,7 +20,8 @@ from pubsub import pub
 
 
 from views import timer
-from views import task_frame
+from views.task_frame import Task_Frame
+from views.analytics import Analytics
 
 
 # Defining App Constants  : 
@@ -80,15 +81,33 @@ Three Frames :
 
 
 # Defining Contorls :
+frame_style = btk.Style()
+frame_style.configure('custom.TFrame' , background  = "#303030")
+bottom_frame  = btk.Frame(main_application , height=30 , style='custom.TFrame')
 
-bottom_frame  = btk.Frame(main_application , height=30 , bootstyle  = 'success')
+# Controls for the bottom frame  : 
+settings_icon = "\u2699"
+alarm_icon = '\u23F0'
+stopwatch_icon = '\u23F1'
+
+label_style  = btk.Style()
+label_style.configure("custom.TLabel" ,font = ('Helvetica' , 1) ,background=  '#303030' , foreground  = "#ffffff")
 
 
-main_scrolled_frame   = scrolled_frame(main_application , width=window_width , height=window_width  ,autohide=True , bootstyle='flatly')
-tiemr_frame = btk.Frame(main_scrolled_frame , width=frame_width , height=frame_height - 150 , bootstyle  = 'info')
+settings_button  = btk.Label(bottom_frame , text= f"{settings_icon} Settings" , style='custom.TLabel')
+settings_button.pack(side=tk.LEFT , pady=(3) ,padx=10)
+
+alarm_button  = btk.Label(bottom_frame , text= f"{alarm_icon} Alarm" , style='custom.TLabel')
+alarm_button.pack(side=tk.LEFT , pady=(3) ,padx=(95))
+
+stopwatch_button  = btk.Label(bottom_frame , text= f"{stopwatch_icon} Stopwatch" , style='custom.TLabel')
+stopwatch_button.pack(side=tk.RIGHT , pady=(3) ,padx=10)
+
+main_scrolled_frame   = scrolled_frame(main_application , width=window_width , height=window_width  ,autohide=True )
+tiemr_frame = btk.Frame(main_scrolled_frame , width=frame_width , height=frame_height - 150 )
 # timer_seperator  = btk.Separator(main_scrolled_frame , bootstyle  = 'danger' )
-task_frame = btk.Frame(main_scrolled_frame , width=frame_width , height=frame_height , bootstyle  = 'warning')
-analytics_frame  = btk.Frame(main_scrolled_frame , width=frame_width , height=frame_height - 100 , bootstyle  = "info")
+task_frame = btk.Frame(main_scrolled_frame , width=frame_width , height=frame_height )
+analytics_frame  = btk.Frame(main_scrolled_frame , width=frame_width , height=frame_height - 100 )
 
 # Configuring Controls : 
 tiemr_frame.pack_propagate(0)
@@ -100,15 +119,14 @@ analytics_frame.pack_propagate(0)
 
 
 
-
-
 # Packing Controls : 
 bottom_frame.pack(side=tk.BOTTOM  ,fill='x' , anchor='s')
 main_scrolled_frame.pack(expand=True , fill='both')
 tiemr_frame.pack(pady=0)
 # Calling the timer class Timer function : 
 timer.Timer(tiemr_frame)
-
+Task_Frame(task_frame)
+Analytics(analytics_frame)
 # timer_seperator.pack(fill='x')
 task_frame.pack(pady=0)
 analytics_frame.pack()

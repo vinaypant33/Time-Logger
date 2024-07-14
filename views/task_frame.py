@@ -36,7 +36,7 @@ class Task():
         self.stop_icon  = '\u23F9'
         
     
-        self.main_frame   = btk.Frame(self.master  , height=self.height , width = self.width , bootstyle  ='danger')
+        self.main_frame   = btk.Frame(self.master  , height=self.height , width = self.width )
         self.main_check = btk.Checkbutton(self.main_frame , variable=self.check_var)
         self.enter_text = btk.Entry(self.main_frame , width=450)
         
@@ -50,6 +50,8 @@ class Task():
         # self.enter_text.bind("<Leave>" , lambda e  : self.enter_text.icursor(0)) # sets teh cursor to the beginning 
         self.enter_text.bind("<Leave>"  , lambda e: self.enter_text.xview_moveto(0))
         self.enter_text.bind("<Enter>"  , lambda e: self.enter_text.xview_moveto(1))
+        self.enter_text.bind("<Shift-Return>"  , lambda e: self.enter_text.xview_moveto(1))
+        
         
         
         # self.enter_text.bind("<Shift-Return>" , lambda e : pub.sendMessage('shift'))
@@ -59,7 +61,7 @@ class Task():
         # self.enter_text.bind("<Shift-Return>", lambda e : Task_Frame.add_data(self))
         # self.enter_text.bind("<Escape>" , lambda e : self.main_frame.focus())
         
-        self.main_frame.pack()
+        self.main_frame.pack(padx=(0 , 5))
         self.main_check.pack(side=tk.LEFT , padx=(5, 0), pady=0 )
         self.enter_text.pack(side=tk.LEFT)
         
@@ -76,7 +78,7 @@ class Task_Frame():
             self.add_button.destroy()
             task  = Task(self.scroll_frame)
             self.task_manager.append(task)
-            self.add_button = btk.Button(self.scroll_frame , text="+" , bootstyle  = 'darkly' , command=self.add_data)
+            self.add_button = btk.Button(self.scroll_frame , text="+" , bootstyle  = 'primary' , command=self.add_data)
             self.add_button.pack(side=tk.RIGHT , anchor='ne' , padx=10 , pady=10)
             task.enter_text.focus()
             task.enter_text.bind("<Escape>" , lambda e : task.main_frame.focus())
@@ -94,12 +96,15 @@ class Task_Frame():
         self.task_manager  = []
         self.entry_manager_count  = 0
         
+        self.button_style  = btk.Style()
+        self.button_style.configure('custom.TButton' ,background=  '#303030')
+        
         self.main_frame  = btk.Frame(self.master , width=self.width , height=self.height , bootstyle  = 'info')
         self.scroll_frame  = scrolled_frame(self.main_frame , autohide=True , bootstyle='flatly')
         
         
         # Adding  + button for adding controls and button would shift downside with each control added  : 
-        self.add_button = btk.Button(self.scroll_frame , text="+" , bootstyle  = 'darkly' , command=self.add_data)
+        self.add_button = btk.Button(self.scroll_frame , text="+" ,command=self.add_data ,bootstyle  = 'primary')
         
         # Configuring Controls : 
         self.main_frame.pack_propagate(0)
