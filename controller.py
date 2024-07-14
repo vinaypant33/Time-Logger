@@ -25,9 +25,9 @@ from views import timer
 # Defining App Constants  : 
 primary_color  = ''
 window_base_color  = '#000000'
-window_width  = 450
+window_width  = 510
 window_height  = 700
-frame_height  = 350
+frame_height  = 460
 frame_width = 480
 
 main_application  = btk.Window(themename='flatly')
@@ -85,7 +85,7 @@ bottom_frame  = btk.Frame(main_application , height=30 , bootstyle  = 'success')
 
 main_scrolled_frame   = scrolled_frame(main_application , width=window_width , height=window_width  ,autohide=True , bootstyle='flatly')
 tiemr_frame = btk.Frame(main_scrolled_frame , width=frame_width , height=frame_height , bootstyle  = 'info')
-timer_seperator  = btk.Separator(main_scrolled_frame , bootstyle  = 'danger' )
+# timer_seperator  = btk.Separator(main_scrolled_frame , bootstyle  = 'danger' )
 task_frame = btk.Frame(main_scrolled_frame , width=frame_width , height=frame_height , bootstyle  = 'warning')
 analytics_frame  = btk.Frame(main_scrolled_frame , width=frame_width , height=frame_height , bootstyle  = "info")
 
@@ -107,7 +107,7 @@ main_scrolled_frame.pack(expand=True , fill='both')
 tiemr_frame.pack(pady=0)
 # Calling the timer class Timer function : 
 timer.Timer(tiemr_frame)
-timer_seperator.pack(fill='x')
+# timer_seperator.pack(fill='x')
 task_frame.pack(pady=0)
 analytics_frame.pack()
 

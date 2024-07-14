@@ -256,14 +256,14 @@ class Running_Timer(Timer):
 
         self.main_frame  = btk.Frame(self.master , height=self.height , width=self.width)
         self.seconds_timer  = btk.Meter(self.main_frame , metersize=162 ,bootstyle="primary", subtextstyle="primary" , subtext="Seconds" , 
-                                        amountused=0,metertype="full" ,interactive=True, meterthickness=15 ,amounttotal=60,
+                                        amountused=0,metertype="full" ,interactive=False, meterthickness=15 ,amounttotal=60,
                                         )
         
         self.minutes_timer  = btk.Meter(self.main_frame , metersize=162 , bootstyle='primary' , subtextstyle='primary' , subtext='Minutes',
-                                        amountused=0 , metertype='full' , interactive=True , meterthickness=15 , amounttotal=60)
+                                        amountused=0 , metertype='full' , interactive=False , meterthickness=15 , amounttotal=60)
         
         self.hours_timer  = btk.Meter(self.main_frame , metersize=162 , bootstyle='primary' , subtextstyle='primary' , subtext='Hours',
-                                        amountused=0 , metertype='full' , interactive=True , meterthickness=15 , amounttotal=100)
+                                        amountused=0 , metertype='full' , interactive=False , meterthickness=15 , amounttotal=100)
 
 
         # Configuring Controls : 
@@ -294,16 +294,18 @@ class Running_Timer(Timer):
             self.seconds_count+=1
             self.seconds_timer.configure(amountused = str(self.seconds_count))
             self.main_frame.after(1000 , self.seconds_timer_run)
+            
 
 
-    def temp_seconds_run(self):
-        pass
     
     
     def minutes_timer_run(self):
         if self.minutes_count >= int(self.initial_minutes):
-            print("Done")
+            toast  = ToastNotification("Time Logger" , "Focus Session Ended - Resetting Timer" , 4000)
+            toast.show_toast()
+            
             self.seconds_timer.configure(amountused=0)
+            self.main_frame.after(7000 , lambda : pub.sendMessage('reset_data'))
         else:
             if self.seconds_count == 60:
                 self.seconds_count = 0
@@ -316,7 +318,26 @@ class Running_Timer(Timer):
             
 
     def hours_timer_run(self):
-        pass
+        if self.hours_count >= int(self.initial_hours):
+            toast  = ToastNotification("Time Logger" , "Focus Session Ended - Resetting Timer" , 4000)
+            toast.show_toast()
+            self.seconds_timer.configure(amountused = 0)
+            self.minutes_timer.configure(amountused = 0)
+            self.main_frame.after(10000 , lambda : pub.sendMessage('reset_data'))
+        else:
+            if self.minutes_count == 60:
+                self.minutes_count = 0
+                self.hours_count+=1
+                self.minutes_timer.configure(amountused = str(self.minutes_count))
+            if self.seconds_count == 60:
+                self.seconds_count = 0
+                self.minutes_count+=1
+                self.seconds_timer.configure(amountused = str(self.seconds_count))
+                self.minutes_timer.configure(amountused = str(self.minutes_count))
+            self.seconds_count+=1
+            self.seconds_timer.configure(amountused = str(self.seconds_count))
+            self.main_frame.after(1000 , self.hours_timer_run)
+                    
 
     def timer_run(self , current_text  , count):
         if current_text == 'Seconds':
@@ -328,7 +349,9 @@ class Running_Timer(Timer):
             self.minutes_timer_run()
             
         elif current_text == 'Hours':
-            print("Passed in Hours")
+            self.initial_hours = count
+            self.hours_timer_run()
+            
 
 
 
