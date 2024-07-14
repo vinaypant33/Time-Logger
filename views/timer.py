@@ -85,9 +85,74 @@ class Timer():
     def start_stop(self):
 
         if self.working == True :
-           pass
+        #    print(self.checkvar.get())
+           self.time_selector  = self.time_type_selector.get()
+
+        #    print(self.main_spin.current_label.cget('text'))
+           self.count_value  = int(self.main_spin.current_label.cget('text'))
+
+           if self.count_value == 0:
+               Messagebox.show_error("Value cannot be zero" , "Time Logger")
+           else:
+               
+                try:
+                   self.main_spin.delete()
+                except Exception as error:
+                    print("Error For Exception")
+                    print(error)
+
+           
+        # if self.count_value == 0:
+        #        Messagebox.show_error("Value cannot be Zero")
+        # else:
+        #        print('done')
+            
+        #    if self.count_value == 0:
+        #        Messagebox.show_error("Value cannot be 0")
+        #     else:
+
+                
+        #    print(type(self.count_value))
+        #    print(self.count_value)
+        #    self.getfocus_label.destroy()
+
+               
+
+        #    self.spinbox_frame.destroy()
+                self.time_type_selector.destroy()
+                self.skip_breaks_checkbox.destroy()
+                global timer_meter_data 
+                timer_meter_data = Running_Timer(self.spinbox_frame)
+                timer_meter_data.timer_run(current_text=self.time_selector , count=self.count_value)
+                self.start_stop_button.configure(text=f"{self.stop_icon} Stop Focus Session")
+                self.working = False
+
+
         elif self.working == False:
-           pass
+           self.working = True 
+           timer_meter_data.delete()
+           self.spinbox_frame.destroy()
+           # Controls for the main applicatoin redefine :
+           self.start_stop_button.destroy()
+
+           self.getfocus_label  = btk.Label(self.main_frame , text="Get ready to focus" , bootstyle  = 'danger' , style='custom.TLabel')
+           self.spinbox_frame  = btk.Frame(self.main_frame , height=120 , width=120 , bootstyle  = 'danger')
+           self.main_spin = Spinbox(self.spinbox_frame) # Loading the main spinbox class to this class : 
+           self.time_type_selector  = btk.Combobox(self.main_frame , values=self.options , width=12)
+           self.skip_breaks_checkbox = btk.Checkbutton(self.main_frame , text="Skip Breaks" , style='custom.TCheckbutton' , variable=self.checkvar)
+           self.start_stop_button  = btk.Button(self.main_frame , text=f'{self.play_icon} Start Focus Session' , command=self.start_stop)
+           self.main_frame.pack_propagate(0)
+           self.time_type_selector.set('Hours')
+           self.checkvar.set(0)
+           self.skip_breaks_checkbox.bind("<Leave>" , lambda e : self.main_frame.focus())
+           self.start_stop_button.bind("<Leave>" , lambda e : self.main_frame.focus())
+           self.main_frame.pack()
+           self.getfocus_label.pack(pady=(10 ,0))
+           self.spinbox_frame.pack(pady = (10 , 0))
+           self.time_type_selector.pack(pady=(10, 0))
+           self.skip_breaks_checkbox.pack(pady=(10 , 0))
+           self.start_stop_button.pack(pady=(10 , 0))
+
 
 
 
@@ -99,7 +164,7 @@ class Timer():
         
 
 
-        # Custom Constatns : 
+        # Custom Constatns :  
         label_style  = btk.Style()
         label_style.configure("custom.TLabel" , font = ('Helvetica', 12 , 'bold'))
 
@@ -118,7 +183,8 @@ class Timer():
         self.getfocus_label  = btk.Label(self.main_frame , text="Get ready to focus" , bootstyle  = 'danger' , style='custom.TLabel')
 
         self.spinbox_frame  = btk.Frame(self.main_frame , height=120 , width=120 , bootstyle  = 'danger')
-                
+
+          
         self.main_spin = Spinbox(self.spinbox_frame) # Loading the main spinbox class to this class : 
         
         self.time_type_selector  = btk.Combobox(self.main_frame , values=self.options , width=12)
@@ -158,6 +224,14 @@ class Running_Timer(Timer):
         3 meter for the second minutes and hours frame :  and stop meter button 
         
         '''
+
+        self.seconds_count  = 0
+        self.minutes_count  = 0 
+        self.hours_count  = 0
+
+        self.initial_seconds  = 0
+        self.initial_minutes = 0
+        self.initial_hours = 0
         self.master  = master 
 
         self.main_frame  = btk.Frame(self.master , height=self.height , width=self.width)
@@ -171,8 +245,6 @@ class Running_Timer(Timer):
         self.hours_timer  = btk.Meter(self.main_frame , metersize=162 , bootstyle='primary' , subtextstyle='primary' , subtext='Hours',
                                         amountused=0 , metertype='full' , interactive=True , meterthickness=15 , amounttotal=100)
 
-
-        
 
         # Configuring Controls : 
 
@@ -188,6 +260,30 @@ class Running_Timer(Timer):
     def delete(self):
         # self.main_frame.pack_forget()
         self.main_frame.destroy()
+
+    def seconds_timer_run(self):
+        if self.seconds_count > int(self.initial_seconds):
+            return None
+        else:
+            self.seconds_count+=1
+            self.seconds_timer.configure(str(self.seconds_count))
+            self.main_frame.after(1000 , self.seconds_timer_run)
+
+    def minutes_timer_run(self):
+        pass
+
+    def hours_timer_run(self):
+        pass
+
+    def timer_run(self , current_text  , count):
+        if current_text == 'Seconds':
+            self.initial_seconds = count
+            print(self.initial_seconds)
+            self.seconds_timer_run()
+        elif current_text == 'Minutes':
+            print("Passed is minutes")
+        elif current_text == 'Hours':
+            print("Passed in Hours")
 
 
 

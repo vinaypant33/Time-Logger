@@ -37,6 +37,13 @@ Light Themes  : flatly, journal
 Dark Themes : solar darkly
 '''
 
+
+
+# Functions for the main applicatoin : 
+
+
+
+
 # Defining main window : parameters  : 
 main_application.title("Time Logger")
 
