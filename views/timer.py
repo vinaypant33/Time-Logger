@@ -1,12 +1,13 @@
 import ttkbootstrap as btk
 from pubsub import pub 
 from ttkbootstrap.dialogs import Messagebox
-
+from ttkbootstrap.toast import ToastNotification
 
 from PIL import Image
 Image.CUBIC = Image.BICUBIC
 
-
+from pubsub import pub
+from time import sleep
 
 class Spinbox():
 
@@ -81,6 +82,9 @@ class Spinbox():
 
 class Timer():
 
+    def reset_start_stop(self):
+        pass
+
 
     def start_stop(self):
 
@@ -131,6 +135,14 @@ class Timer():
         elif self.working == False:
            self.working = True 
            timer_meter_data.delete()
+           try:
+               self.getfocus_label.destroy()
+           except Exception as error:
+               print(error)
+            # try:
+            #         self.getfocus_label.destroy()
+            # except Exception as error:
+            #         print(error)
            self.spinbox_frame.destroy()
            # Controls for the main applicatoin redefine :
            self.start_stop_button.destroy()
@@ -211,6 +223,10 @@ class Timer():
         self.start_stop_button.pack(pady=(10 , 0))
 
 
+        # Pub send message  : 
+        pub.subscribe(self.start_stop , 'reset_data')
+
+
 
 
 class Running_Timer(Timer):
@@ -232,6 +248,10 @@ class Running_Timer(Timer):
         self.initial_seconds  = 0
         self.initial_minutes = 0
         self.initial_hours = 0
+        
+        self.seconds_cycle  = 0
+        self.minutes_cycle  = 0
+        
         self.master  = master 
 
         self.main_frame  = btk.Frame(self.master , height=self.height , width=self.width)
@@ -262,15 +282,38 @@ class Running_Timer(Timer):
         self.main_frame.destroy()
 
     def seconds_timer_run(self):
-        if self.seconds_count > int(self.initial_seconds):
-            return None
+        if self.seconds_count >= int(self.initial_seconds):
+
+            toast  = ToastNotification("Time Logger" , "Focus Session Ended - Resetting Timer" , 4000)
+            toast.show_toast()
+
+            # call the function for the main application : 
+            self.main_frame.after(3000 , lambda : pub.sendMessage('reset_data'))
+            # pub.sendMessage('reset_data')
         else:
             self.seconds_count+=1
-            self.seconds_timer.configure(str(self.seconds_count))
+            self.seconds_timer.configure(amountused = str(self.seconds_count))
             self.main_frame.after(1000 , self.seconds_timer_run)
 
-    def minutes_timer_run(self):
+
+    def temp_seconds_run(self):
         pass
+    
+    
+    def minutes_timer_run(self):
+        if self.minutes_count >= int(self.initial_minutes):
+            print("Done")
+            self.seconds_timer.configure(amountused=0)
+        else:
+            if self.seconds_count == 60:
+                self.seconds_count = 0
+                self.minutes_count+=1
+                self.minutes_timer.configure(amountused = str(self.minutes_count))
+            self.seconds_count+=1
+            self.seconds_timer.configure(amountused = str(self.seconds_count))
+            self.main_frame.after(1000 , self.minutes_timer_run)
+            
+            
 
     def hours_timer_run(self):
         pass
@@ -278,10 +321,12 @@ class Running_Timer(Timer):
     def timer_run(self , current_text  , count):
         if current_text == 'Seconds':
             self.initial_seconds = count
-            print(self.initial_seconds)
             self.seconds_timer_run()
         elif current_text == 'Minutes':
-            print("Passed is minutes")
+            self.initial_minutes = count 
+            self.seconds_cycle = count
+            self.minutes_timer_run()
+            
         elif current_text == 'Hours':
             print("Passed in Hours")
 
