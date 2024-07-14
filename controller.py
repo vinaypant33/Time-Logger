@@ -20,6 +20,7 @@ from pubsub import pub
 
 
 from views import timer
+from views import task_frame
 
 
 # Defining App Constants  : 
@@ -107,6 +108,7 @@ main_scrolled_frame.pack(expand=True , fill='both')
 tiemr_frame.pack(pady=0)
 # Calling the timer class Timer function : 
 timer.Timer(tiemr_frame)
+
 # timer_seperator.pack(fill='x')
 task_frame.pack(pady=0)
 analytics_frame.pack()
