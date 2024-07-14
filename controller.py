@@ -84,10 +84,10 @@ bottom_frame  = btk.Frame(main_application , height=30 , bootstyle  = 'success')
 
 
 main_scrolled_frame   = scrolled_frame(main_application , width=window_width , height=window_width  ,autohide=True , bootstyle='flatly')
-tiemr_frame = btk.Frame(main_scrolled_frame , width=frame_width , height=frame_height , bootstyle  = 'info')
+tiemr_frame = btk.Frame(main_scrolled_frame , width=frame_width , height=frame_height - 150 , bootstyle  = 'info')
 # timer_seperator  = btk.Separator(main_scrolled_frame , bootstyle  = 'danger' )
 task_frame = btk.Frame(main_scrolled_frame , width=frame_width , height=frame_height , bootstyle  = 'warning')
-analytics_frame  = btk.Frame(main_scrolled_frame , width=frame_width , height=frame_height , bootstyle  = "info")
+analytics_frame  = btk.Frame(main_scrolled_frame , width=frame_width , height=frame_height - 100 , bootstyle  = "info")
 
 # Configuring Controls : 
 tiemr_frame.pack_propagate(0)

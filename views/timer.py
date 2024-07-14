@@ -168,7 +168,7 @@ class Timer():
 
 
 
-    def __init__(self , master , width  = 480 , height  = 350) -> None:
+    def __init__(self , master , width  = 480 , height  = 300) -> None:
         self.master  = master
         self.height  = height
         self.width  = width 
@@ -284,28 +284,26 @@ class Running_Timer(Timer):
     def seconds_timer_run(self):
         if self.seconds_count >= int(self.initial_seconds):
 
-            toast  = ToastNotification("Time Logger" , "Focus Session Ended - Resetting Timer" , 4000)
+            toast  = ToastNotification("Time Logger" , "Focus Session Ended - Resetting Timer" , 5000)
             toast.show_toast()
 
             # call the function for the main application : 
-            self.main_frame.after(3000 , lambda : pub.sendMessage('reset_data'))
+            self.main_frame.after(2000 , lambda : pub.sendMessage('reset_data'))
             # pub.sendMessage('reset_data')
         else:
             self.seconds_count+=1
             self.seconds_timer.configure(amountused = str(self.seconds_count))
             self.main_frame.after(1000 , self.seconds_timer_run)
-            
 
 
-    
     
     def minutes_timer_run(self):
         if self.minutes_count >= int(self.initial_minutes):
-            toast  = ToastNotification("Time Logger" , "Focus Session Ended - Resetting Timer" , 4000)
+            toast  = ToastNotification("Time Logger" , "Focus Session Ended - Resetting Timer" , 5000)
             toast.show_toast()
             
             self.seconds_timer.configure(amountused=0)
-            self.main_frame.after(7000 , lambda : pub.sendMessage('reset_data'))
+            self.main_frame.after(2000 , lambda : pub.sendMessage('reset_data'))
         else:
             if self.seconds_count == 60:
                 self.seconds_count = 0
@@ -315,7 +313,7 @@ class Running_Timer(Timer):
             self.seconds_timer.configure(amountused = str(self.seconds_count))
             self.main_frame.after(1000 , self.minutes_timer_run)
             
-            
+
 
     def hours_timer_run(self):
         if self.hours_count >= int(self.initial_hours):
@@ -352,7 +350,6 @@ class Running_Timer(Timer):
             self.initial_hours = count
             self.hours_timer_run()
             
-
 
 
 if __name__ == '__main__':
