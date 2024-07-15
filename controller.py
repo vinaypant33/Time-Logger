@@ -82,7 +82,7 @@ Three Frames :
 
 # Defining Contorls :
 frame_style = btk.Style()
-frame_style.configure('custom.TFrame' , background  = "#303030")
+frame_style.configure('custom.TFrame' , background=  '#ffffff')
 bottom_frame  = btk.Frame(main_application , height=30 , style='custom.TFrame')
 
 # Controls for the bottom frame  : 
@@ -91,7 +91,7 @@ alarm_icon = '\u23F0'
 stopwatch_icon = '\u23F1'
 
 label_style  = btk.Style()
-label_style.configure("custom.TLabel" ,font = ('Helvetica' , 1) ,background=  '#303030' , foreground  = "#ffffff")
+label_style.configure("custom.TLabel" ,font = ('Helvetica' , 1) )
 
 
 settings_button  = btk.Label(bottom_frame , text= f"{settings_icon} Settings" , style='custom.TLabel')
@@ -120,7 +120,7 @@ analytics_frame.pack_propagate(0)
 
 
 # Packing Controls : 
-bottom_frame.pack(side=tk.BOTTOM  ,fill='x' , anchor='s')
+# bottom_frame.pack(side=tk.BOTTOM  ,fill='x' , anchor='s')
 main_scrolled_frame.pack(expand=True , fill='both')
 tiemr_frame.pack(pady=0)
 # Calling the timer class Timer function : 

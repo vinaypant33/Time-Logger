@@ -31,7 +31,7 @@ class Analytics():
         # self.main_frame.pack_propagate(0)
         
         
-        self.main_frame.pack()
+        self.main_frame.pack(pady=(100 , 0))
         self.streak_days.pack(side=tk.RIGHT)
         self.daily_goal.pack(side=tk.RIGHT)
         self.yestarday_goal.pack(side=tk.RIGHT)

@@ -9,6 +9,14 @@ Image.CUBIC = Image.BICUBIC
 from pubsub import pub
 from time import sleep
 
+import pygame
+
+pygame.mixer.init()
+import random
+
+
+
+
 class Spinbox():
 
 
@@ -43,7 +51,6 @@ class Spinbox():
         
         
         
-
 
         # Constatns for the main app  : 
         self.timer_var  = 0
@@ -93,10 +100,16 @@ class Timer():
 
 
     def start_stop(self):
+        pygame.mixer.music.stop()
 
         if self.working == True :
         #    print(self.checkvar.get())
            self.time_selector  = self.time_type_selector.get()
+           try:
+               self.getfocus_label.destroy()
+               
+           except Exception as error:
+               print(error)
 
         #    print(self.main_spin.current_label.cget('text'))
            self.count_value  = int(self.main_spin.current_label.cget('text'))
@@ -141,10 +154,7 @@ class Timer():
         elif self.working == False:
            self.working = True 
            timer_meter_data.delete()
-           try:
-               self.getfocus_label.destroy()
-           except Exception as error:
-               print(error)
+           
             # try:
             #         self.getfocus_label.destroy()
             # except Exception as error:
@@ -184,7 +194,7 @@ class Timer():
 
         # Custom Constatns :  
         label_style  = btk.Style()
-        label_style.configure("custom.TLabel" , font = ('Helvetica', 12 , 'bold'))
+        label_style.configure("custom.TLabel" , font = ('Helvetica', 12 , 'bold') , foreground = "#ffffff" , background  ="#000000")
 
         self.options  = ['Hours' , 'Minutes' , 'Seconds']
 
@@ -239,12 +249,18 @@ class Running_Timer(Timer):
 
     def __init__(self, master, width=480, height=350) -> None:
         
+        
+        alarm_1 = 'assets\1.mp3'
+        alarm_2 = 'assets\2.mp3'
+        alarm_3 = 'assets\3.mp3'
+        
+        self.alarm_music  = [alarm_1 , alarm_2 , alarm_3]
+        
         self.master  = master
         self.height = height
         self.width = width
         '''
         3 meter for the second minutes and hours frame :  and stop meter button 
-        
         '''
 
         self.seconds_count  = 0
@@ -293,8 +309,12 @@ class Running_Timer(Timer):
             toast  = ToastNotification("Time Logger" , "Focus Session Ended - Resetting Timer" , 5000)
             toast.show_toast()
 
-            # call the function for the main application : 
-            self.main_frame.after(2000 , lambda : pub.sendMessage('reset_data'))
+            # call the function for the main application : \
+            # self.music = random.choice(self.alarm_music)
+            pygame.mixer.music.load(r'C:\Users\vinay\desktop\git_hub\Time-Logger\assets\1.mp3')
+            pygame.mixer.music.play(loops=0)
+            # self.main_frame.after(2000 , lambda : pub.sendMessage('reset_data'))
+            # pygame.mixer.music.stop()
             # pub.sendMessage('reset_data')
         else:
             self.seconds_count+=1
@@ -309,7 +329,9 @@ class Running_Timer(Timer):
             toast.show_toast()
             
             self.seconds_timer.configure(amountused=0)
-            self.main_frame.after(2000 , lambda : pub.sendMessage('reset_data'))
+            # self.main_frame.after(2000 , lambda : pub.sendMessage('reset_data'))
+            pygame.mixer.music.load(r'C:\Users\vinay\desktop\git_hub\Time-Logger\assets\1.mp3')
+            pygame.mixer.music.play(loops=0)
         else:
             if self.seconds_count == 60:
                 self.seconds_count = 0
@@ -327,7 +349,9 @@ class Running_Timer(Timer):
             toast.show_toast()
             self.seconds_timer.configure(amountused = 0)
             self.minutes_timer.configure(amountused = 0)
-            self.main_frame.after(10000 , lambda : pub.sendMessage('reset_data'))
+            # self.main_frame.after(10000 , lambda : pub.sendMessage('reset_data'))
+            pygame.mixer.music.load(r'C:\Users\vinay\desktop\git_hub\Time-Logger\assets\1.mp3')
+            pygame.mixer.music.play(loops=0)
         else:
             if self.minutes_count == 60:
                 self.minutes_count = 0
