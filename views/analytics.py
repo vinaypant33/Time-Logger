@@ -37,7 +37,6 @@ class Analytics():
         self.yestarday_goal.pack(side=tk.RIGHT)
         
 
-
 if __name__ == '__main__':
     main_window  = btk.Window()
     Analytics(main_window)

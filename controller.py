@@ -39,11 +39,7 @@ Light Themes  : flatly, journal
 Dark Themes : solar darkly
 '''
 
-
-
 # Functions for the main applicatoin : 
-
-
 
 
 # Defining main window : parameters  : 
@@ -63,8 +59,6 @@ main_application.geometry(f"{window_width}x{window_height}+{x_position}+{y_posit
 # main_application.configure(bg="#656565") # color for the main application  :: #000000    #2b2b2b #656565
 
 main_application.configure(bg=window_base_color)
-
-
 
 '''
 Bottom Frame 
